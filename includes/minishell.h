@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/04 14:40:34 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/04 15:20:23 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 # define BLUE "\033[0;34m"
 # define END_COLOR "\033[0m"
 
-char	*add_color(char *color, char *str);
+char	*create_prompt(char *color, char *str);
 
 #endif

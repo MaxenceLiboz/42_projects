@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/04 14:44:42 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/04 15:20:49 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ int	main(void)
 	char	*cwd;
 	char	*prompt;
 	char	*pd;
-	int 	i = 0;
 
 	pd = ft_strdup("pwd");
-	while (i < 3)
+	while (1)
 	{
 		cwd = pwd(&pd);
-		prompt = add_color(BLUE, cwd);
+		prompt = create_prompt(BLUE, cwd);
 		if (!prompt)
 			return (0);
 		str = readline(prompt);
@@ -53,7 +52,6 @@ int	main(void)
 		str = 0;
 		prompt = 0;
 		cwd = 0;
-		i++;
 	}
 	free(pd);
 	return (0);

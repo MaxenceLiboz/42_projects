@@ -1,4 +1,4 @@
-SRCS		=	add_color.c
+SRCS		=	srcs/create_prompt.c
 				
 OBJS		=	${SRCS:.c=.o}
 

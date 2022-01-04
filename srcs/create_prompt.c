@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:35:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/04 14:40:31 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/04 15:19:25 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_strcat(char *dest, char *src)
 	dest[i_dest + i_src] = '\0';
 }
 
-char	*add_color(char *color, char *str)
+char	*create_prompt(char *color, char *str)
 {
 	char	*dst;
 	int		size;
