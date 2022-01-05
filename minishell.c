@@ -6,13 +6,10 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/04 15:20:49 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/05 09:29:46 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-#include <stdlib.h>
 #include <minishell.h>
 
 char	*pwd(char **str)
