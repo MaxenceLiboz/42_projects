@@ -6,12 +6,11 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 10:09:27 by mliboz            #+#    #+#             */
-/*   Updated: 2021/12/13 10:31:00 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:07:58 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
-#include <stdio.h>
 
 static int	ft_count_words(const char *str, char charset)
 {
