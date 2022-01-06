@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/06 14:19:49 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/06 15:23:41 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ static int	ft_count_words(const char *str, char charset)
 	return (count);
 }
 
-static char	*ft_copy(const char *src, char c, int *i)
+static void	get_copy_size(const char *src, char c, int *i, int *end)
 {
-	int			end;
-	char		*dst;
-	int			size;
 	static int	quotes = 1;
 
 	if (quotes > 0)
@@ -65,11 +62,38 @@ static char	*ft_copy(const char *src, char c, int *i)
 		while (src[*i] == c)
 			*i += 1;
 	}
-	end = *i;
-	while (src[end] != c && src[end] && src[end] && quotes > 0)
-		end++;
+	*end = *i;
+	while ((src[*end] != c || quotes < 1) && src[*end] && src[*end])
+	{
+		if (src[*end] == '"')
+			quotes *= -1;
+		*end += 1;
+	}
+}
+
+static char	*ft_copy(const char *src, char c, int *i)
+{
+	int			end;
+	char		*dst;
+	int			size;
+	int			y;
+
+	y = 0;
+	get_copy_size(src, c, i, &end);
 	size = end - *i;
-	dst = ft_substr(src, *i, size);
+	dst = malloc(sizeof(char) * (size + 1));
+	if (!dst)
+		exit(-1);
+	while (*i < end)
+	{
+		if (src[*i] == '"')
+			*i += 1;
+		if (*i >= end)
+			break ;
+		dst[y++] = src[*i];
+		*i += 1;
+	}
+	dst[y] = 0;
 	*i = end;
 	return (dst);
 }
@@ -85,7 +109,7 @@ static char	**ft_free(char **str)
 		i++;
 	}
 	free(str);
-	return (0);
+	exit(-1);
 }
 
 char	**ft_split_wog(char const *s, char c)
@@ -100,11 +124,9 @@ char	**ft_split_wog(char const *s, char c)
 	i = 0;
 	dsti = 0;
 	words = ft_count_words(s, c);
-	if (!s)
-		return (0);
 	dst = malloc(sizeof(char *) * (words + 1));
 	if (!dst)
-		return (0);
+		exit (-1);
 	while (words--)
 	{
 		dst[dsti] = ft_copy(s, c, &i);
@@ -116,34 +138,44 @@ char	**ft_split_wog(char const *s, char c)
 	return (dst);
 }
 
-
-void	create_command(t_string str)
+void	create_command(char *str, char ***command)
 {
-	
+
+	if (!str)
+		return ;
+	*command = malloc(sizeof(t_string) * ft_count_words(str, ' '));
+	if (!*command)
+		exit(-1);
+	*command = ft_split_wog(str, ' ');
 }
 
 int	main(void)
 {
-	// char		*cwd;
-	// char		*prompt;
-	// char		*pdw;
-	// t_string	string;
+	char		*cwd;
+	char		*prompt;
+	char		*pdw;
+	char		*get;
+	char		**command;
 
-	// pdw = ft_strdup("pwd");
-	// while (1)
-	// {
-	// 	cwd = pwd(&pdw);
-	// 	prompt = create_prompt(BLUE, cwd);
-	// 	if (!prompt)
-	// 		return (0);
-	// 	string.str = readline(prompt);
-	// 	string.size = ft_strlen(string.str);
-	// 	string.max_size = string.size;
-	// 	create_command(string);
-	// 	freestr(string.str);
-	// 	freestr(prompt);
-	// 	freestr(cwd);
-	// }
-	// freestr(pdw);
+	pdw = ft_strdup("pwd");
+	while (1)
+	{
+		cwd = pwd(&pdw);
+		prompt = create_prompt(BLUE, cwd);
+		if (!prompt)
+			return (0);
+		get = readline(prompt);
+		create_command(get, &command);
+		for (int i = 0; command[i]; i++)
+			printf("%s\n", command[i]);
+		freestr(get);
+		freestr(prompt);
+		freestr(cwd);
+	}
+	freestr(pdw);
 	return (0);
+	// int	i = 0;
+	// printf("%s\n", ft_copy("\"E\"cho test \"1 22 34       4\"", ' ', &i));
+	// printf("%s\n", ft_copy("\"E\"cho test \"1 22 34       4\"", ' ', &i));
+	// printf("%s\n", ft_copy("\"E\"cho test \"1 22 34       4\"", ' ', &i));
 }
