@@ -1,5 +1,6 @@
 SRCS		=	srcs/create_prompt.c				\
-				srcs/exec_builtin.c
+				srcs/freestr.c						\
+				# srcs/exec_builtin.c
 				
 OBJS		=	${SRCS:.c=.o}
 
