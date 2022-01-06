@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:59:27 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/06 13:11:02 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:23:56 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	freestr(char *str)
 	i = 0;
 	while (str[i])
 		str[i++] = 0;
-	cleanstr(str);
 	free(str);
 	str = 0;
 }
