@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/07 14:23:29 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/07 16:07:54 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 
 # define BLUE "\033[0;34m"
 # define END_COLOR "\033[0m"
+# define TRUE 1
+# define FALSE 0
+
+typedef int t_bool;
 
 typedef struct s_string
 {
@@ -35,7 +39,7 @@ typedef struct s_string
 typedef struct s_array_string
 {
 	t_string	*array;
-	char		*command;
+	t_string	command;
 	int			size;
 	int			max_size;
 }	t_array_string;
@@ -64,7 +68,10 @@ void		freestr(char *str);
 char		**ft_free(char **str);
 
 /**************** struct functions ********/
-void		init_array_string(t_array_string	*array_string, int size);
-void		init_string(t_string *string, int size);
+void		init_array_string(t_array_string *array_string,
+				int size, int to_malloc);
+void		init_string(t_string *array, int size, t_bool to_malloc);
+void		cat_string(t_string *string, t_string cat);
+void		add_string_str(t_string *string, char *src, int index);
 
 #endif
