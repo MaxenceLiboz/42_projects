@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/06 14:22:24 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/07 14:23:29 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,37 @@ typedef struct s_string
 
 typedef struct s_array_string
 {
-	void	*t_string;
-	int		size;
-	int		max_size;
+	t_string	*array;
+	char		*command;
+	int			size;
+	int			max_size;
 }	t_array_string;
 
-char	*create_prompt(char *color, char *str);
-int		exec_builtin(char **str);
-void	freestr(char *str);
+typedef struct s_env
+{
+	t_string		name_var;
+	t_string		var;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_env_head
+{
+	struct s_env	*first;
+	int				size;
+}	t_env_head;
+
+char		*create_prompt(char *color, char *str);
+int			exec_builtin(char **str);
+int			create_command(t_array_string *command);
+void		split_wog(t_array_string *command, char c);
+int			count_split_wog(const char *str, char charset);
+
+/**************** OPTIONAL ****************/
+void		freestr(char *str);
+char		**ft_free(char **str);
+
+/**************** struct functions ********/
+void		init_array_string(t_array_string	*array_string, int size);
+void		init_string(t_string *string, int size);
 
 #endif
