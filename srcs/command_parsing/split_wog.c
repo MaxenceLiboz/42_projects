@@ -43,7 +43,7 @@ static void	ft_copy(t_array_string *command, char c, int *i, int dsti)
 	y = 0;
 	get_copy_size(command->command.str, c, i, &end);
 	size = end - *i;
-	init_string(&command->array[dsti], size, TRUE);
+	command->array[dsti].str = malloc(sizeof(char) * (size + 1));
 	while (*i < end)
 	{
 		if (command->command.str[*i] == '"')
@@ -56,6 +56,7 @@ static void	ft_copy(t_array_string *command, char c, int *i, int dsti)
 		*i += 1;
 	}
 	command->array[dsti].str[y] = 0;
+	init_string(&command->command, command->command.str, FALSE);
 	*i = end;
 }
 

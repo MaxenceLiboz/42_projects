@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:35:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/07 11:45:37 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/08 16:32:20 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,14 @@ void	ft_strcat(char *dest, char *src)
 	dest[i_dest + i_src] = '\0';
 }
 
-char	*create_prompt(char *color, char *str)
+t_string	create_prompt(char *str)
 {
-	char	*dst;
-	int		size;
-	int		colorlen;
-	int		end_colorlen;
-	int		strlen;
+	t_string	dst;
 
-	colorlen = ft_strlen(color);
-	end_colorlen = ft_strlen(END_COLOR);
-	strlen = ft_strlen(str);
-	size = colorlen + end_colorlen + strlen;
-	dst = malloc(sizeof(char) * (size + 4));
-	if (!dst)
-		exit(-1);
-	ft_strcat(dst, color);
-	ft_strcat(dst, str);
-	ft_strcat(dst, END_COLOR);
-	ft_strcat(dst, " 👉 ");
-	freestr(str);
+	init_string(&dst, BLUE, TRUE);
+	add_string_str(&dst, str, dst.size - 1);
+	add_string_str(&dst, END_COLOR, dst.size - 1);
+	add_string_str(&dst, " 👉 ", dst.size - 1);
+	free(str);
 	return (dst);
 }
