@@ -1,10 +1,9 @@
-SRCS		=	srcs/command_parsing/create_prompt.c	\
-				srcs/freestr.c							\
-				srcs/command_parsing/split_wog.c		\
-				srcs/command_parsing/create_command.c	\
-				srcs/command_parsing/count_split_wog.c	\
-				srcs/array_string_functions.c			\
-				# srcs/exec_builtin.c
+SRCS		=	srcs/command_parsing/create_prompt.c					\
+				srcs/command_parsing/split_wog.c						\
+				srcs/command_parsing/create_command.c					\
+				srcs/command_parsing/count_split_wog.c					\
+				srcs/t_array_string/array_string_functions.c			\
+				srcs/t_string/string_functions.c							\
 				
 OBJS		=	${SRCS:.c=.o}
 
