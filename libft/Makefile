@@ -46,7 +46,7 @@ SRCS		=	./srcs/ft_atoi.c					\
 				./srcs/ft_putendl_fd.c 				\
 				./srcs/ft_putstr_fd.c 				\
 				./srcs/ft_putptr_fd.c 				\
-				./srcs/ft_printf.c 					\
+				# ./srcs/ft_printf.c 					\
 
 OBJS		=	${SRCS:.c=.o}
 

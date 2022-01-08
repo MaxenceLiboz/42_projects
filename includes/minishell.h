@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/07 16:07:54 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/08 08:52:32 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void		init_array_string(t_array_string *array_string,
 void		init_string(t_string *array, int size, t_bool to_malloc);
 void		cat_string(t_string *string, t_string cat);
 void		add_string_str(t_string *string, char *src, int index);
-
+void		replace_string(t_string *string, int index, char *replace_with,
+				int rindex);
 #endif

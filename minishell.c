@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/07 16:24:00 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/08 11:21:01 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,22 @@ int	main(void)
 	t_string	string;
 	t_string	cat;
 
-	init_string(&string, 100, TRUE);
-	init_string(&cat, 100, TRUE);
-	TEST_I(100, string.max_size)
-	TEST_I(100, cat.max_size);
-	TEST_I(0, string.size);
-	TEST_I(0, cat.size);
+	// init_string(&string, 100, TRUE);
+	// init_string(&cat, 100, TRUE);
+	// TEST_I(100, string.max_size)
+	// TEST_I(100, cat.max_size);
+	// TEST_I(0, string.size);
+	// TEST_I(0, cat.size);
 	add_string_str(&string, "test 1 2 3 4", 0);
-	printf("ALED\n");
-	TEST_I(12, string.size);
+	TEST_I(13, string.size);
 	add_string_str(&cat, "cat 1 2 3 4", 0);
-	TEST_I(11, cat.size);
-	add_string_str(&string, " ", string.size);
-	add_string_str(&string, cat.str, string.size);
+	TEST_I(12, cat.size);
+	add_string_str(&string, " ", string.size - 1);
+	add_string_str(&string, cat.str, string.size - 1);
 	TEST_S("test 1 2 3 4 cat 1 2 3 4", string.str)
-	TEST_I(24, string.size);
+	replace_string(&string, 13, "dog", 3);
+	TEST_S("test 1 2 3 4 dog 1 2 3 4", string.str)
+	TEST_I(ft_strlen("test 1 2 3 4 dog 1 2 3 4") + 1, string.size);
 	freestr(cat.str);
 	freestr(string.str);
 }
