@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/08 08:52:32 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/08 16:32:55 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@
 # define TRUE 1
 # define FALSE 0
 
-typedef int t_bool;
+typedef int	t_bool;
 
+/**************** String  ****************/
 typedef struct s_string
 {
 	char	*str;
@@ -36,6 +37,14 @@ typedef struct s_string
 	int		max_size;
 }	t_string;
 
+void		init_string(t_string *string, char *src, t_bool to_malloc);
+void		reinit_string(t_string *string);
+void		cat_string(t_string *string, t_string cat);
+void		add_string_str(t_string *string, char *src, int index);
+void		replace_string(t_string *string, int index, char *replace_with,
+				int rindex);
+
+/**************** Array string ********/
 typedef struct s_array_string
 {
 	t_string	*array;
@@ -44,35 +53,19 @@ typedef struct s_array_string
 	int			max_size;
 }	t_array_string;
 
-typedef struct s_env
-{
-	t_string		name_var;
-	t_string		var;
-	struct s_env	*next;
-}	t_env;
+void		init_array_string(t_array_string *array_string,
+				int size, int to_malloc);
 
-typedef struct s_env_head
-{
-	struct s_env	*first;
-	int				size;
-}	t_env_head;
+/**************** OPTIONAL ****************/
+char		**ft_free(char **str);
 
-char		*create_prompt(char *color, char *str);
+/**************** Built in ********/
 int			exec_builtin(char **str);
+
+/**************** Parsing ******************/
+t_string	create_prompt(char *str);
 int			create_command(t_array_string *command);
 void		split_wog(t_array_string *command, char c);
 int			count_split_wog(const char *str, char charset);
 
-/**************** OPTIONAL ****************/
-void		freestr(char *str);
-char		**ft_free(char **str);
-
-/**************** struct functions ********/
-void		init_array_string(t_array_string *array_string,
-				int size, int to_malloc);
-void		init_string(t_string *array, int size, t_bool to_malloc);
-void		cat_string(t_string *string, t_string cat);
-void		add_string_str(t_string *string, char *src, int index);
-void		replace_string(t_string *string, int index, char *replace_with,
-				int rindex);
 #endif
