@@ -34,7 +34,7 @@ static void	get_copy_size(const char *src, char c, int *i, int *end)
 	}
 }
 
-static void	ft_copy(t_array_string *command, char c, int *i, int dsti)
+static void	ft_copy(t_command *command, char c, int *i, int dsti)
 {
 	int			end;
 	int			size;
@@ -60,7 +60,7 @@ static void	ft_copy(t_array_string *command, char c, int *i, int dsti)
 	*i = end;
 }
 
-void	split_wog(t_array_string *command, char c)
+void	split_wog(t_command *command, char c)
 {
 	int		words;
 	int		i;
@@ -69,7 +69,7 @@ void	split_wog(t_array_string *command, char c)
 	i = 0;
 	dsti = 0;
 	words = count_split_wog(command->command.str, c);
-	init_array_string(command, words, TRUE);
+	init_command(command, words, TRUE);
 	while (words--)
 	{
 		ft_copy(command, c, &i, dsti);

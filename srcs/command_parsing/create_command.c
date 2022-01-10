@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/08 15:26:24 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/10 14:33:11 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	check_command(t_array_string *command)
+int	check_command(t_command *command)
 {
 	int		squotes;
 	int		dquotes;
@@ -40,7 +40,7 @@ int	check_command(t_array_string *command)
 	return (1);
 }
 
-// int	check_arg(t_array_string *command)
+// int	check_arg(t_command *command)
 // {
 // 	int		i;
 
@@ -48,7 +48,7 @@ int	check_command(t_array_string *command)
 // 	if (command->command.str[0] == '$' && )
 // }
 
-int	create_command(t_array_string *command)
+int	create_command(t_command *command)
 {
 	if (!command->command.str)
 		exit(-1);

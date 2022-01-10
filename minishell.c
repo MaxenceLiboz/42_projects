@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 12:55:59 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/10 14:33:11 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(void)
 {
 	char			*cwd;
 	t_string		prompt;
-	t_array_string	command;
+	t_command	command;
 	int				i = 3;
 
 	cwd = NULL;
@@ -50,7 +50,7 @@ int	main(void)
 			for (int i = 0; i < command.size; i++)
 				printf("%s\n", command.array[i].str);
 		}
-		reinit_array_string(&command);
+		reinit_command(&command);
 		cwd = 0;
 	}
 	return (0);
