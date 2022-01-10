@@ -3,7 +3,8 @@ SRCS		=	srcs/command_parsing/create_prompt.c					\
 				srcs/command_parsing/create_command.c					\
 				srcs/command_parsing/count_split_wog.c					\
 				srcs/t_array_string/array_string_functions.c			\
-				srcs/t_string/string_functions.c							\
+				srcs/t_string/string_functions.c						\
+				srcs/t_string/string_functions2.c						\
 				
 OBJS		=	${SRCS:.c=.o}
 
