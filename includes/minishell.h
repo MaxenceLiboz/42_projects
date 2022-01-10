@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/08 16:32:55 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/10 12:54:53 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void		cat_string(t_string *string, t_string cat);
 void		add_string_str(t_string *string, char *src, int index);
 void		replace_string(t_string *string, int index, char *replace_with,
 				int rindex);
+void		sub_string(t_string *string, int start, int end, char *src);
 
 /**************** Array string ********/
 typedef struct s_array_string
@@ -55,7 +56,7 @@ typedef struct s_array_string
 
 void		init_array_string(t_array_string *array_string,
 				int size, int to_malloc);
-
+void		reinit_array_string(t_array_string *array);
 /**************** OPTIONAL ****************/
 char		**ft_free(char **str);
 
