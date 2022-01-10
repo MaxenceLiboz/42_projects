@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 09:25:37 by mliboz            #+#    #+#             */
-/*   Updated: 2021/11/29 11:03:34 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/10 12:33:58 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		i = ft_strlen(s) - start;
 	str = malloc((i + 1) * sizeof(char));
 	if (!str)
-		return (0);
+		exit(-1);
 	i = 0;
 	while (len-- && s[start])
 	{
