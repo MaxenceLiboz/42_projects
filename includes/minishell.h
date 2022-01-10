@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 12:54:53 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/10 15:54:36 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,41 @@ void		replace_string(t_string *string, int index, char *replace_with,
 				int rindex);
 void		sub_string(t_string *string, int start, int end, char *src);
 
-/**************** Array string ********/
-typedef struct s_array_string
+/**************** Command ********/
+typedef struct s_command
 {
 	t_string	*array;
 	t_string	command;
 	int			size;
 	int			max_size;
-}	t_array_string;
+}	t_command;
 
-void		init_array_string(t_array_string *array_string,
+void		init_command(t_command *array_string,
 				int size, int to_malloc);
-void		reinit_array_string(t_array_string *array);
+void		reinit_command(t_command *array);
+
+/**************** ENV ********************/
+typedef struct s_lst_env
+{
+	t_string			name_var;
+	t_string			var;
+	struct s_lst_env	*next;
+}	t_lst_env;
+
+t_lst_env	*lst_env_new(char *name_var, char *var);
+void		lst_env_add_back(t_lst_env **lst, t_lst_env *new);
+void		lst_env_add_front(t_lst_env **lst, t_lst_env *new);
+int			lst_env_clear(t_lst_env **lst);
+void		lst_env_delone(t_lst_env *prev);
+t_lst_env	*lst_env_last(t_lst_env *lst);
+int			lst_env_size(t_lst_env *lst);
+
+typedef struct s_head_env
+{
+	t_lst_env			*env;
+	t_lst_env			*export;
+}	t_head_env;
+
 /**************** OPTIONAL ****************/
 char		**ft_free(char **str);
 
@@ -65,8 +88,8 @@ int			exec_builtin(char **str);
 
 /**************** Parsing ******************/
 t_string	create_prompt(char *str);
-int			create_command(t_array_string *command);
-void		split_wog(t_array_string *command, char c);
+int			create_command(t_command *command);
+void		split_wog(t_command *command, char c);
 int			count_split_wog(const char *str, char charset);
 
 #endif
