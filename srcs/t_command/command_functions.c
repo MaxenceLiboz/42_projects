@@ -6,13 +6,13 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:37:42 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 12:56:45 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/10 14:33:11 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_array_string(t_array_string *array_string, int size, int to_malloc)
+void	init_command(t_command *array_string, int size, int to_malloc)
 {
 	array_string->size = size;
 	array_string->max_size = size;
@@ -23,7 +23,7 @@ void	init_array_string(t_array_string *array_string, int size, int to_malloc)
 		exit(-1);
 }
 
-void	reinit_array_string(t_array_string *array)
+void	reinit_command(t_command *array)
 {
 	int		i;
 	int		y;
