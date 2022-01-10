@@ -1,19 +1,24 @@
-SRCS		=	srcs/command_parsing/create_prompt.c					\
-				srcs/command_parsing/split_wog.c						\
-				srcs/command_parsing/create_command.c					\
-				srcs/command_parsing/count_split_wog.c					\
-				srcs/t_array_string/array_string_functions.c			\
-				srcs/t_string/string_functions.c						\
-				srcs/t_string/string_functions2.c						\
+SRCS		=	command_parsing/create_prompt.c		\
+				command_parsing/split_wog.c			\
+				command_parsing/create_command.c	\
+				command_parsing/count_split_wog.c	\
+				t_command/command_functions.c		\
+				t_string/string_functions.c			\
+				t_string/string_functions2.c		\
+				t_lst_env/lst_env_functions.c		\
+				t_lst_env/lst_env_functions2.c		\
 				
-OBJS		=	${SRCS:.c=.o}
+OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
+
+OBJS_DIR	=	objects
+SRCS_DIR	=	srcs
 
 INCLUDES	=	./includes/minishell.h				\
 				./libft/includes/libft.h			\
 
 CC			= 	gcc
 
-CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror #-g #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 
@@ -22,7 +27,7 @@ EXECINCLUDES =	-lreadline
 LIBS		=	libft.a								\
 				${LIB}
 
-LIB			=	libminishell
+LIB			=	libminishell.a
 
 EXEC		=	minishell
 
@@ -30,7 +35,7 @@ RM			=	rm -f
 
 all:		libft ${EXEC}
 
-%.o: 		%.c	${INCLUDES}
+${OBJS_DIR}/%.o: 	${SRCS_DIR}/%.c	${INCLUDES}
 			${CC} ${CFLAGS} ${LIBINCLUDES} -c $< -o $@
 
 $(LIB):		${OBJS} ${INCLUDES}
