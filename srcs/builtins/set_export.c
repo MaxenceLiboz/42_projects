@@ -6,45 +6,11 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/11 09:57:36 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 16:55:30 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// static void	set_struct(t_swap *swap, t_lst_env **env)
-// {
-// 	swap->last = NULL;
-// 	swap->head = *env;
-// 	swap->next = swap->head->next;
-// }	
-
-// void	ascii_ordering(t_lst_env **env)
-// {
-// 	t_swap	swap;
-
-// 	set_struct(&swap, env);
-// 	while (swap.next)
-// 	{
-// 		if (ft_strncmp(swap.head->name_var.str, swap.next->name_var.str,
-// 				swap.head->name_var.size) > 0)
-// 		{
-// 			swap.head->next = swap.next->next;
-// 			swap.next->next = swap.head;
-// 			if (swap.last)
-// 				swap.last->next = swap.next;
-// 			else
-// 				*env = swap.next;
-// 			set_struct(&swap, env);
-// 		}
-// 		else
-// 		{
-// 				swap.last = swap.head;
-// 				swap.head = swap.last->next;
-// 				swap.next = swap.head->next;
-// 		}
-// 	}
-// }
 
 //In this function, need to set var.type to ENV if the name_var contain '='
 //As well, the substr function isn't working if the = is not found
@@ -71,6 +37,8 @@ int	set_export(char **envp, t_head_env *head)
 	int			i;
 
 	i = 0;
+	head->env = NULL;
+	head->env = NULL;
 	while (envp[i])
 	{
 		new_export = lst_env_new("", "");

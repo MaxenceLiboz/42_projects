@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 13:30:53 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 16:15:27 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_command
 {
 	t_string	*array;
 	t_string	command;
+	int			index;
 	int			size;
 	int			max_size;
 }	t_command;
@@ -90,6 +91,8 @@ char		**ft_free(char **str);
 
 /**************** Built in ********/
 int			exec_builtin(char **str);
+void	ft_export(t_head_env *head, t_command *args);
+
 
 /**************** Parsing ******************/
 t_string	create_prompt(char *str);
