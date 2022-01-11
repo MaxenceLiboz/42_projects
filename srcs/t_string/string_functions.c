@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/08 16:24:18 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/11 13:27:17 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_string(t_string *string, char *src, t_bool to_malloc)
 	string->str = malloc(sizeof(char) * (string->max_size));
 	if (!string->str)
 		exit(-1);
-	add_string_str(string, src, 0);
+	dup_string(string, src, 0);
 }
 
 void	reinit_string(t_string *string)
@@ -50,15 +50,17 @@ void	realloc_string(t_string *string)
 	if (!string->str)
 		exit(-1);
 	string->max_size = dst.max_size * 2;
-	add_string_str(string, dst.str, 0);
+	dup_string(string, dst.str, 0);
 	reinit_string(&dst);
 }
 
-void	add_string_str(t_string *string, char *src, int index)
+void	dup_string(t_string *string, char *src, int index)
 {
 	int		i;
 
 	i = 0;
+	if (!src)
+		return ;
 	if (!string->str)
 	{
 		init_string(string, src, TRUE);
@@ -68,17 +70,18 @@ void	add_string_str(t_string *string, char *src, int index)
 		realloc_string(string);
 	while (src[i])
 		string->str[index++] = src[i++];
-	string->str[index] = 0;
+	while (index <= string->size)
+		string->str[index] = 0;
 	string->size = ft_strlen(string->str) + 1;
 }
 
 void	replace_string(t_string *string, int index, char *replace_with,
-			int rsize)
+			size_t rsize)
 {
 	t_string	save;
 
 	init_string(&save, &string->str[rsize + index], TRUE);
-	add_string_str(string, replace_with, index);
-	add_string_str(string, save.str, index + ft_strlen(replace_with));
+	dup_string(string, replace_with, index);
+	dup_string(string, save.str, index + ft_strlen(replace_with));
 	reinit_string(&save);
 }
