@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/11 13:27:17 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 13:38:38 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	dup_string(t_string *string, char *src, int index)
 	while (src[i])
 		string->str[index++] = src[i++];
 	while (index <= string->size)
-		string->str[index] = 0;
+		string->str[index++] = 0;
 	string->size = ft_strlen(string->str) + 1;
 }
 
