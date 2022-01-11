@@ -7,6 +7,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_string/string_functions2.c		\
 				t_lst_env/lst_env_functions.c		\
 				t_lst_env/lst_env_functions2.c		\
+				builtins/set_export.c				\
 				
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 
@@ -18,7 +19,7 @@ INCLUDES	=	./includes/minishell.h				\
 
 CC			= 	gcc
 
-CFLAGS		= 	-Wall -Wextra -Werror #-g #-fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 
