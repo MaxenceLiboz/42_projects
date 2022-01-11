@@ -11,7 +11,7 @@
 			"program": "${fileDirname}/${fileBasenameNoExtension}",
 			"args": [],
 			"cwd": "${fileDirname}",
-			// "preLaunchTask": "C/C++: gcc build active file"
+			"preLaunchTask": "make"
 		}
 	]
 }
