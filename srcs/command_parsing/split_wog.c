@@ -46,9 +46,9 @@ static void	ft_copy(t_command *command, char c, int *i, int dsti)
 	command->array[dsti].str = malloc(sizeof(char) * (size + 1));
 	while (*i < end)
 	{
-		if (command->command.str[*i] == '"')
+		while (command->command.str[*i] == '"')
 			*i += 1;
-		if (command->command.str[*i] == '\'')
+		while (command->command.str[*i] == '\'')
 			*i += 1;
 		if (*i >= end)
 			break ;

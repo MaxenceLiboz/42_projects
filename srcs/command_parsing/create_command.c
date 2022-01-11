@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 13:31:37 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 15:09:59 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,16 @@ int	check_command(t_command *command)
 	return (1);
 }
 
-t_bool	is_arg(char *arg)
+t_bool	is_arg(char *arg, int *start)
 {
-	if (arg[0] == '$' && arg[1] != '\'')
+	if (arg[*start] == '$' && arg[*start + 1] != '\'')
 		return (TRUE);
-	else if (arg[0] == '\"' && arg[1] == '$' && arg[2] != '\'')
+	else if (arg[*start] == '\"' && arg[*start + 1] == '$'
+		&& arg[*start + 2] != '\'')
+	{
+		*start += 1;
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
@@ -62,11 +66,11 @@ void	find_arg_and_replace(t_string *arg, t_string *command, int start,
 		end++;
 	sub_string(arg, command->str, start + 1, end - (start + 1));
 	temp = lst_env_find_name_var(export, arg->str);
-	// add_string(arg, "$", 0);
+	add_string(arg, "$", 0);
 	if (temp.str)
-		replace_string(command, start - 1, temp.str, temp.size - 1);
+		replace_string(command, start, temp.str, arg->size - 1);
 	else
-		erase_string(command, arg->str, start - 1);
+		erase_string(command, arg->str, start);
 }
 
 int	check_arg(t_command *command, t_head_env *envi)
@@ -74,14 +78,15 @@ int	check_arg(t_command *command, t_head_env *envi)
 	int			start;
 	t_string	arg;
 
-	start = 1;
+	start = 0;
 	init_string(&arg, "", TRUE);
-	if (is_arg(command->command.str))
-		find_arg_and_replace(&arg, &command->command, start - 1, envi->export);
+	if (is_arg(command->command.str, &start))
+		find_arg_and_replace(&arg, &command->command, start, envi->export);
+	start++;
 	while (command->command.str[start])
 	{
-		if (is_arg(&command->command.str[start]))
-			find_arg_and_replace(&arg, &command->command, start - 1,
+		if (is_arg(command->command.str, &start))
+			find_arg_and_replace(&arg, &command->command, start,
 				envi->export);
 		start++;
 	}
