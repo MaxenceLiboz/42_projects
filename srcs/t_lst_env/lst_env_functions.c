@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:57:33 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 15:54:23 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 09:44:33 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_lst_env	*lst_env_new(char *name_var, char *var)
 
 	lst = malloc(sizeof(t_lst_env) * 1);
 	if (!lst)
-		return (0);
+		exit(-1);
 	init_string(&lst->name_var, name_var, TRUE);
 	init_string(&lst->var, var, TRUE);
 	lst->next = 0;
