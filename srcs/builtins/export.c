@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:21 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/11 16:15:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 00:07:26 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ static void	print_export(t_lst_env *export)
 	head = export;
 	while (head)
 	{
-		printf("declare -x %s=\"%s\"\n", head->name_var.str,
-			head->var.str);
+		printf("declare -x %s", head->name_var.str);
+		if (head->var.str && !*head->var.str)
+			printf("=\"\"\n");
+		else if (!head->var.str)
+			printf("\n");
+		else
+			printf("=\"%s\"\n", head->var.str);
 		head = head->next;
 	}
 }
@@ -84,12 +89,19 @@ static void	add_elem_to_lst(char *arg, t_head_env *head)
 
 void	ft_export(t_head_env *head, t_command *args)
 {
-	if (!args->array[args->index].str)
-		print_export(head->export);
-	while (*args->array[args->index].str != '|' && args->index < args->size)
+	printf("1\n");
+	if (args->index + 1 == args->size
+		|| ft_strncmp(args->array[args->index + 1].str, "|", 2) == 0)
 	{
-		if (control_args(args->array[args->index].str) == 0)
-			add_elem_to_lst(args->array[args->index].str, head);
+		printf("2\n");
+		print_export(head->export);
+		return ;
+	}
+	while (ft_strncmp(args->array[args->index].str, "|", 2) != 0
+		&& args->index < args->size - 1)
+	{
+		if (control_args(args->array[args->index + 1].str) == 0)
+			add_elem_to_lst(args->array[args->index + 1].str, head);
 		// else
 		// 	print_wrong_arg(args);
 		args->index += 1;

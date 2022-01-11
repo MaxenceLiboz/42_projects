@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 15:19:44 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/12 00:09:41 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 // 		printf("%s\n", argv[i++]);
 // }
 
+
+// first name_var of export is NULL, that's a problem
 int	main(int argc, char **argv, char **envp)
 {
 	t_head_env		env;
@@ -41,8 +43,9 @@ int	main(int argc, char **argv, char **envp)
 		init_string(&command.command, command.command.str, FALSE);
 		if (create_command(&command, &env))
 		{
-			for (int i = 0; i < command.size; i++)
-				printf("%s\n", command.array[i].str);
+			// for (int i = 0; i < command.size; i++)
+			// 	printf("%s\n", command.array[i].str);
+			ft_export(&env, &command);
 			reinit_command(&command);
 		}
 	}
