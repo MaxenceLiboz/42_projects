@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:35:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/08 16:32:20 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/11 13:23:08 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ t_string	create_prompt(char *str)
 	t_string	dst;
 
 	init_string(&dst, BLUE, TRUE);
-	add_string_str(&dst, str, dst.size - 1);
-	add_string_str(&dst, END_COLOR, dst.size - 1);
-	add_string_str(&dst, " 👉 ", dst.size - 1);
-	free(str);
+	dup_string(&dst, str, dst.size - 1);
+	dup_string(&dst, END_COLOR, dst.size - 1);
+	dup_string(&dst, " 👉 ", dst.size - 1);
 	return (dst);
 }
