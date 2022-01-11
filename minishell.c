@@ -6,36 +6,36 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 09:15:06 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 13:23:53 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
-	char			*cwd;
+	t_head_env		env;
 	t_string		prompt;
 	t_command		command;
 	int				i = 3;
 
-	cwd = NULL;
+	(void)argc;
+	(void)argv;
+	set_export(envp, &env);
 	while (i--)
 	{
-		cwd = getcwd(cwd, 0);
-		if (!cwd)
-			exit(-1);
-		prompt = create_prompt(cwd);
+		prompt = create_prompt(lst_env_find_name_var(env.env, "PWD").str);
 		command.command.str = readline(prompt.str);
 		reinit_string(&prompt);
 		init_string(&command.command, command.command.str, FALSE);
-		if (create_command(&command))
+		if (create_command(&command, &env))
 		{
 			for (int i = 0; i < command.size; i++)
 				printf("%s\n", command.array[i].str);
 		}
 		reinit_command(&command);
-		cwd = 0;
 	}
+	lst_env_clear(&env.env);
+	lst_env_clear(&env.export);
 	return (0);
 }
