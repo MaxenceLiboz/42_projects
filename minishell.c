@@ -6,33 +6,17 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 14:33:11 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 09:15:06 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*pwd(char **str)
-{
-	char	*dst;
-
-	if (!str || strncmp(str[0], "pwd", 4) != 0)
-		return (NULL);
-	if (str[1] != NULL && *str[1])
-		if (str[1] != 0 && strncmp(str[1], "|", 2) != 0)
-			return (NULL);
-	dst = NULL;
-	dst = getcwd(dst, 0);
-	if (!dst)
-		return (NULL);
-	return (dst);
-}
-
 int	main(void)
 {
 	char			*cwd;
 	t_string		prompt;
-	t_command	command;
+	t_command		command;
 	int				i = 3;
 
 	cwd = NULL;
