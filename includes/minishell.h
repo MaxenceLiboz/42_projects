@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 15:54:36 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/11 13:30:53 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ typedef struct s_string
 void		init_string(t_string *string, char *src, t_bool to_malloc);
 void		reinit_string(t_string *string);
 void		cat_string(t_string *string, t_string cat);
-void		add_string_str(t_string *string, char *src, int index);
+void		dup_string(t_string *string, char *src, int index);
 void		replace_string(t_string *string, int index, char *replace_with,
-				int rindex);
-void		sub_string(t_string *string, int start, int end, char *src);
+				size_t rsize);
+void		sub_string(t_string *string, char *src, size_t start, size_t size);
+void		erase_string(t_string *string, char *to_replace, size_t start);
+void		add_string(t_string *string, char *to_add, size_t index);
 
 /**************** Command ********/
 typedef struct s_command
@@ -73,6 +75,9 @@ int			lst_env_clear(t_lst_env **lst);
 void		lst_env_delone(t_lst_env *prev);
 t_lst_env	*lst_env_last(t_lst_env *lst);
 int			lst_env_size(t_lst_env *lst);
+void		lst_env_swap(t_lst_env **head, t_lst_env **next);
+void		lst_env_sort(t_lst_env **env);
+t_string	lst_env_find_name_var(t_lst_env *env, char *str);
 
 typedef struct s_head_env
 {
@@ -88,8 +93,10 @@ int			exec_builtin(char **str);
 
 /**************** Parsing ******************/
 t_string	create_prompt(char *str);
-int			create_command(t_command *command);
+int			create_command(t_command *command, t_head_env *envi);
 void		split_wog(t_command *command, char c);
 int			count_split_wog(const char *str, char charset);
+
+int			set_export(char **envp, t_head_env *head);
 
 #endif
