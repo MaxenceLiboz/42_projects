@@ -37,8 +37,16 @@ RM			=	rm -f
 
 all:		libft ${EXEC}
 
-${OBJS_DIR}/%.o: 	${SRCS_DIR}/%.c	${INCLUDES}
+${OBJS_DIR}/%.o: 	${SRCS_DIR}/%.c	${INCLUDES} object
 			${CC} ${CFLAGS} ${LIBINCLUDES} -c $< -o $@
+
+object:		
+			mkdir objects
+			mkdir objects/builtins
+			mkdir objects/command_parsing
+			mkdir objects/t_command
+			mkdir objects/t_lst_env
+			mkdir objects/t_string
 
 $(LIB):		${OBJS} ${INCLUDES}
 			ar rcs ${LIB} ${OBJS}
@@ -59,4 +67,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY: 	all clean fclean re libft
+.PHONY: 	all clean fclean re libft object
