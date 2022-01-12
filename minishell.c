@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 00:09:41 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 11:41:11 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// static void	printf_argv(int argc, char **argv)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (i < argc)
-// 		printf("%s\n", argv[i++]);
-// }
-
 
 // first name_var of export is NULL, that's a problem
 int	main(int argc, char **argv, char **envp)
@@ -43,8 +33,8 @@ int	main(int argc, char **argv, char **envp)
 		init_string(&command.command, command.command.str, FALSE);
 		if (create_command(&command, &env))
 		{
-			// for (int i = 0; i < command.size; i++)
-			// 	printf("%s\n", command.array[i].str);
+			for (int i = 0; i < command.size; i++)
+				printf("%s\n", command.array[i].str);
 			ft_export(&env, &command);
 			reinit_command(&command);
 		}
