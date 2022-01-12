@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 16:15:27 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:52:41 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,16 @@ typedef struct s_command
 {
 	t_string	*array;
 	t_string	command;
-	int			index;
 	int			size;
 	int			max_size;
+	int			index;
 }	t_command;
 
 void		init_command(t_command *array_string,
 				int size, int to_malloc);
 void		reinit_command(t_command *array);
+char		**get_cmd(t_command *cmd);
+int			pipes_size_cmd(t_command cmd);
 
 /**************** ENV ********************/
 typedef struct s_lst_env
@@ -86,19 +88,32 @@ typedef struct s_head_env
 	t_lst_env			*export;
 }	t_head_env;
 
+/**************** t_lst_command ****************/
+typedef struct s_lst_cmd
+{
+	char				**cmd;
+	struct s_lst_cmd	*next;
+}	t_lst_cmd;
+t_lst_cmd	*lst_cmd_new(char **cmd);
+void		lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item);
+int			lst_cmd_clear(t_lst_cmd **lst);
+void		lst_cmd_put(t_lst_cmd	*lst);
+t_lst_cmd	*lst_cmd_init(t_command *cmd);
+
 /**************** OPTIONAL ****************/
-char		**ft_free(char **str);
+void		ft_free(char **str);
 
 /**************** Built in ********/
 int			exec_builtin(char **str);
-void	ft_export(t_head_env *head, t_command *args);
-
+void		ft_export(t_head_env *head, t_command *args);
 
 /**************** Parsing ******************/
 t_string	create_prompt(char *str);
-int			create_command(t_command *command, t_head_env *envi);
+t_lst_cmd	*create_command(t_command *command, t_head_env *envi);
 void		split_wog(t_command *command, char c);
 int			count_split_wog(const char *str, char charset);
+t_bool		check_quotes(t_string cmd);
+t_bool		check_pipes(t_command cmd);
 
 int			set_export(char **envp, t_head_env *head);
 
