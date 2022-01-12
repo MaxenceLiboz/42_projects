@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_functions2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:19:41 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 13:00:18 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/12 22:48:41 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_string	lst_env_find_name_var(t_lst_env *env, char *str)
 	if (!str)
 		return (null);
 	tmp = env;
-	while (tmp->next)
+	while (tmp)
 	{
 		if (ft_strncmp(tmp->name_var.str, str,
 				tmp->name_var.size) == 0)

@@ -1,5 +1,6 @@
 {
 	"files.associations": {
 		"minishell.h": "c"
-	}
+	},
+	"42norminette.trace.server": "off"
 }

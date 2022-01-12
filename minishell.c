@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 21:56:53 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 22:18:24 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	t_string		prompt;
 	t_command		command;
 	t_lst_cmd		*cmd;
-	// int				i = 3;
 
-	// printf_argv(argc, argv);
-	// (void)envp;
 	(void)argc;
 	(void)argv;
 	set_export(envp, &env);
@@ -35,8 +32,8 @@ int	main(int argc, char **argv, char **envp)
 		if (*command.command.str)
 		{
 			cmd = create_command(&command, &env);
-			lst_cmd_put(cmd);
-			ft_export(&env, &command);
+			// lst_cmd_put(cmd);
+			ft_export(&env, cmd->cmd);
 			lst_cmd_clear(&cmd);
 		}
 		reinit_command(&command);

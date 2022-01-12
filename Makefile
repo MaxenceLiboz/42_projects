@@ -10,6 +10,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_lst_env/lst_env_functions2.c		\
 				builtins/set_export.c				\
 				builtins/export.c					\
+				builtins/error.c					\
+				builtins/env.c						\
 				t_lst_cmd/lst_cmd_functions.c		\
 				freestrs.c							\
 				
