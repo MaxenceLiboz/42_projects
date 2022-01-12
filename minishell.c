@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 11:41:11 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/12 16:54:20 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	t_head_env		env;
 	t_string		prompt;
 	t_command		command;
+	t_lst_cmd		*cmd;
 	// int				i = 3;
 
 	// printf_argv(argc, argv);
@@ -31,13 +32,14 @@ int	main(int argc, char **argv, char **envp)
 		command.command.str = readline(prompt.str);
 		reinit_string(&prompt);
 		init_string(&command.command, command.command.str, FALSE);
-		if (create_command(&command, &env))
+		if (*command.command.str)
 		{
-			for (int i = 0; i < command.size; i++)
-				printf("%s\n", command.array[i].str);
-			ft_export(&env, &command);
-			reinit_command(&command);
+			cmd = create_command(&command, &env);
+			lst_cmd_put(cmd);
+			// ft_export(&env, &command);
+			lst_cmd_clear(&cmd);
 		}
+		reinit_command(&command);
 	}
 	lst_env_clear(&env.env);
 	lst_env_clear(&env.export);
