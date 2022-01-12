@@ -58,7 +58,7 @@ clean:
 
 fclean:		clean
 			make fclean -C libft
-			${RM} ${LIB} ${EXEC} ${LIBS}
+			${RM} ${LIB} ${EXEC} ${LIBS} ${EXEC}.dSYM
 
 re:			fclean all
 
