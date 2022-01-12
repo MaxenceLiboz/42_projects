@@ -6,30 +6,11 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/12 18:29:44 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 23:29:30 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-//Have to check if variable got a value, if no don't print the =
-static void	print_export(t_lst_env *export)
-{
-	t_lst_env	*head;
-
-	head = export;
-	while (head)
-	{
-		printf("declare -x %s", head->name_var.str);
-		if (head->var.str && !*head->var.str)
-			printf("=\"\"\n");
-		else if (!head->var.str)
-			printf("\n");
-		else
-			printf("=\"%s\"\n", head->var.str);
-		head = head->next;
-	}
-}
 
 static int	ft_strchr_len(const char *s, int c)
 {
@@ -54,8 +35,9 @@ int	control_args(char *str)
 	i = 0;
 	if (!str)
 		return (1);
-	if (ft_isalnum(str[i]) == 0)
+	if (ft_isalnum(str[i]) == 0 || (str[i] >= '0' && str[i] <= '9'))
 		return (1);
+	i++;
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0)
@@ -98,13 +80,22 @@ static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name)
 	export = head->export;
 	env = head->env;
 	c = ft_strchr_len(var, '=');
-	while (ft_strncmp(var_name, export->name_var.str, ft_strlen(var_name)) != 0)
+	while (export && ft_strncmp(var_name, export->name_var.str,
+			ft_strlen(var_name) + 1) != 0)
 		export = export->next;
-	while (ft_strncmp(var_name, env->name_var.str, ft_strlen(var_name)) != 0)
+	while (env && ft_strncmp(var_name, env->name_var.str,
+			ft_strlen(var_name) + 1) != 0)
 		env = env->next;
+	if (!env)
+	{
+		env = lst_env_new("", NULL);
+		sub_string(&env->name_var, export->name_var.str, 0,
+			export->name_var.size);
+		sub_string(&env->var, var, c + 1, ft_strlen(var) - c);
+		lst_env_add_front(&head->env, env);
+	}
 	sub_string(&env->var, var, c + 1, ft_strlen(var) - c);
 	sub_string(&export->var, var, c + 1, ft_strlen(var) - c);
-	return ;
 }
 
 void	ft_export(t_head_env *head, char **command)
@@ -112,13 +103,13 @@ void	ft_export(t_head_env *head, char **command)
 	char	*var_name;
 	int		i;
 
-	i = 1;
-	if (!command[i])
+	i = 0;
+	if (!command[i + 1])
 	{
-		print_export(head->export);
+		print_export(head);
 		return ;
 	}
-	while (command[i])
+	while (command[++i])
 	{
 		var_name = ft_substr(command[i], 0, ft_strchr_len(command[i], '='));
 		if (control_args(var_name) == 0)
@@ -130,11 +121,7 @@ void	ft_export(t_head_env *head, char **command)
 					replace_elem_of_lst(head, command[i], var_name);
 		}
 		else
-		{
-			// dprintf(2, "bash: export `%s': not a valid identifier", var_name);
-		}
-		i++;
+			print_stderror("unset: `", command[i], "': not a valid identifier");
+		free(var_name);
 	}
-	free(var_name);
-	return ;
 }
