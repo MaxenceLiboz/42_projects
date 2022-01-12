@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freestrs.c                                         :+:      :+:    :+:   */
+/*   parsing_bash.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 10:33:11 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 16:20:16 by maxencelibo      ###   ########.fr       */
+/*   Created: 2022/01/12 11:15:42 by maxencelibo       #+#    #+#             */
+/*   Updated: 2022/01/12 11:24:54 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <stdio.h>
 
-void	ft_free(char **str)
+static void	printf_argv(int argc, char **argv)
 {
 	int		i;
-	int		y;
 
-	i = 0;
-	y = 0;
-	while (str[i])
-	{
-		while (str[i][y])
-		{
-			str[i][y] = 0;
-			y++;
-		}
-		i++;
-	}
-	free(str);
+	i = 1;
+	while (i < argc)
+		printf("%s\n", argv[i++]);
+}
+
+int	main(int argc, char **argv)
+{
+	printf_argv(argc, argv);
+	return (0);
 }

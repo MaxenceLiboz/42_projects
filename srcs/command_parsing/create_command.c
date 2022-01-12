@@ -3,44 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 15:09:59 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/12 16:56:20 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	check_command(t_command *command)
-{
-	int		squotes;
-	int		dquotes;
-	int		i;
-
-	squotes = 0;
-	dquotes = 0;
-	i = 0;
-	while (command->command.str[i])
-	{
-		if (command->command.str[i] == '\"')
-			dquotes += 1;
-		if (command->command.str[i] == '\'')
-			squotes += 1;
-		i++;
-	}
-	if (squotes % 2 != 0 && dquotes % 2 != 0)
-		printf("Missing both: \" and \'\n");
-	else if (squotes % 2 != 0)
-		printf("Missing: \'\n");
-	else if (dquotes % 2 != 0)
-		printf("Missing: \"\n");
-	if (squotes % 2 != 0 || dquotes % 2 != 0)
-		return (0);
-	return (1);
-}
-
-t_bool	is_arg(char *arg, int *start)
+static t_bool	is_arg(char *arg, int *start)
 {
 	if (arg[*start] == '$' && arg[*start + 1] != '\'')
 		return (TRUE);
@@ -53,7 +25,7 @@ t_bool	is_arg(char *arg, int *start)
 	return (FALSE);
 }
 
-void	find_arg_and_replace(t_string *arg, t_string *command, int start,
+static void	find_arg_and_replace(t_string *arg, t_string *command, int start,
 	t_lst_env *export)
 {
 	int			end;
@@ -73,7 +45,7 @@ void	find_arg_and_replace(t_string *arg, t_string *command, int start,
 		erase_string(command, arg->str, start);
 }
 
-int	check_arg(t_command *command, t_head_env *envi)
+static void	change_arg_command(t_command *command, t_head_env *envi)
 {
 	int			start;
 	t_string	arg;
@@ -91,16 +63,21 @@ int	check_arg(t_command *command, t_head_env *envi)
 		start++;
 	}
 	reinit_string(&arg);
-	return (0);
 }
 
-int	create_command(t_command *command, t_head_env *envi)
+t_lst_cmd	*create_command(t_command *command, t_head_env *envi)
 {
-	if (!command->command.str)
-		exit(-1);
-	if (!check_command(command))
+	t_lst_cmd	*lst;
+
+	lst = 0;
+	command->size = 0;
+	if (!check_quotes(command->command)
+		|| count_split_wog(command->command.str, ' ') == 0)
 		return (0);
-	check_arg(command, envi);
+	change_arg_command(command, envi);
 	split_wog(command, ' ');
-	return (1);
+	// if (!check_pipes(*command))
+	// 	return (0);
+	lst = lst_cmd_init(command);
+	return (lst);
 }
