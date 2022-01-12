@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/11 16:55:30 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/12 11:03:27 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	set_export(char **envp, t_head_env *head)
 
 	i = 0;
 	head->env = NULL;
-	head->env = NULL;
+	head->export = NULL;
 	while (envp[i])
 	{
 		new_export = lst_env_new("", "");

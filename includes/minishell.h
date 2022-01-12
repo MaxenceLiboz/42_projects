@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 16:15:27 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:45:10 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ char		**ft_free(char **str);
 
 /**************** Built in ********/
 int			exec_builtin(char **str);
-void	ft_export(t_head_env *head, t_command *args);
-
+void		ft_export(t_head_env *head, char **command);
+int			control_args(char *str);
 
 /**************** Parsing ******************/
 t_string	create_prompt(char *str);

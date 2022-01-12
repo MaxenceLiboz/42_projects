@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/12 16:54:05 by tarchimb         ###   ########.fr       */
+/*   Created: 2022/01/04 12:59:21 by tarchimb          #+#    #+#             */
+/*   Updated: 2022/01/12 11:36:15 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_strchr_len(const char *s, int c)
 	return (i);
 }
 
-int	control_args(char *str)
+static int	control_args(char *str)
 {
 	int	i;
 
@@ -89,53 +89,50 @@ static void	add_elem_to_lst(char *arg, t_head_env *head)
 	return ;
 }
 
-static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name)
+static void	replace_elem_of_lst(t_head_env *head, char *str)
 {
-	t_lst_env	*export;
-	t_lst_env	*env;
-	int			c;
-
-	export = head->export;
-	env = head->env;
-	c = ft_strchr_len(var, '=');
-	while (ft_strncmp(var_name, export->name_var.str, ft_strlen(var_name)) != 0)
-		export = export->next;
-	while (ft_strncmp(var_name, env->name_var.str, ft_strlen(var_name)) != 0)
-		env = env->next;
-	sub_string(&env->var, var, c + 1, ft_strlen(var) - c);
-	sub_string(&export->var, var, c + 1, ft_strlen(var) - c);
+	(void)head;
+	(void)str;
 	return ;
 }
 
-void	ft_export(t_head_env *head, char **command)
+void	ft_export(t_head_env *head, t_command *args)
 {
 	char	*var_name;
-	int		i;
 
-	i = 1;
-	if (!command[i])
+	var_name = ft_substr(args->array[args->index].str, 0,
+			ft_strchr_len(args->array[args->index].str, '='));
+	args->index += 1;
+	if (args->index == args->size
+		|| ft_strncmp(args->array[args->index].str, "|", 2) == 0)
 	{
 		print_export(head->export);
 		return ;
 	}
-	while (command[i])
+	while (args->array[args->index].str
+		&& ft_strncmp(args->array[args->index].str, "|", 2) != 0
+		&& args->index < args->size)
 	{
-		var_name = ft_substr(command[i], 0, ft_strchr_len(command[i], '='));
-		if (control_args(var_name) == 0)
+		if (control_args(args->array[args->index].str) == 0)
 		{
-			if (lst_env_find_name_var(head->export, var_name).str == 0)
-				add_elem_to_lst(command[i], head);
+			if (lst_env_find_name_var(head->export,
+					var_name).str == 0)
+			{
+				printf("NEW VARIABLE\n");
+				add_elem_to_lst(args->array[args->index].str, head);
+			}
 			else
-				if (ft_strchr(command[i], '=') != 0)
-					replace_elem_of_lst(head->export, command[i], var_name);
+			{
+				replace_elem_of_lst(head, args->array[args->index].str);
+				printf("To change\n");
+			}
 		}
 		else
 		{
-			// dprintf(2, "bash: export `%s': not a valid identifier", var_name);
-
+			// print_wrong_arg(args);
+			printf("WRONG ARG\n");
 		}
-		i++;
+		args->index += 1;
 	}
-	free(var_name);
 	return ;
 }

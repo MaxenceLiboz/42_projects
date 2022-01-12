@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 00:09:41 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 13:21:19 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	main(int argc, char **argv, char **envp)
 	t_head_env		env;
 	t_string		prompt;
 	t_command		command;
+	char			**args;
+
+	args = malloc(sizeof(char *) * 5);
 	// int				i = 3;
 
 	// printf_argv(argc, argv);
@@ -45,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			// for (int i = 0; i < command.size; i++)
 			// 	printf("%s\n", command.array[i].str);
-			ft_export(&env, &command);
+			ft_export(&env, args);
 			reinit_command(&command);
 		}
 	}
