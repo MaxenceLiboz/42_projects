@@ -20,7 +20,7 @@ INCLUDES	=	./includes/minishell.h				\
 
 CC			= 	gcc
 
-CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror #-g #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 
@@ -33,20 +33,15 @@ LIB			=	libminishell.a
 
 EXEC		=	minishell
 
-RM			=	rm -f
+RM			=	rm -rf	
+
+MKDIR		=	mkdir -p
 
 all:		libft ${EXEC}
 
-${OBJS_DIR}/%.o: 	${SRCS_DIR}/%.c	${INCLUDES} object
+${OBJS_DIR}/%.o: 	${SRCS_DIR}/%.c	${INCLUDES} $(OBJDIRS)
+			${MKDIR} $(@D) $(DMPDIR)$(@D)
 			${CC} ${CFLAGS} ${LIBINCLUDES} -c $< -o $@
-
-object:		
-			mkdir objects
-			mkdir objects/builtins
-			mkdir objects/command_parsing
-			mkdir objects/t_command
-			mkdir objects/t_lst_env
-			mkdir objects/t_string
 
 $(LIB):		${OBJS} ${INCLUDES}
 			ar rcs ${LIB} ${OBJS}
@@ -58,7 +53,7 @@ ${EXEC}:	${EXEC}.c ${LIBS}
 			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} ${LIBS} -o ${EXEC}
 
 clean:
-			${RM} ${OBJS}
+			${RM} ${OBJS} $(OBJS_DIR)
 			make clean -C libft
 
 fclean:		clean
