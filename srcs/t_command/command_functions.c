@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   array_string_functions.c                           :+:      :+:    :+:   */
+/*   command_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:37:42 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/10 14:33:11 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/12 00:34:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	reinit_command(t_command *array)
 	free(array->array);
 	reinit_string(&array->command);
 	array->max_size = 0;
+	array->index = 0;
 	array->size = 0;
 }
