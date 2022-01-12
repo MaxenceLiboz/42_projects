@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/12 16:54:05 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:29:44 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,11 @@ void	ft_export(t_head_env *head, char **command)
 				add_elem_to_lst(command[i], head);
 			else
 				if (ft_strchr(command[i], '=') != 0)
-					replace_elem_of_lst(head->export, command[i], var_name);
+					replace_elem_of_lst(head, command[i], var_name);
 		}
 		else
 		{
 			// dprintf(2, "bash: export `%s': not a valid identifier", var_name);
-
 		}
 		i++;
 	}
