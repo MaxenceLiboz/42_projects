@@ -9,6 +9,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_lst_env/lst_env_functions.c		\
 				t_lst_env/lst_env_functions2.c		\
 				builtins/set_export.c				\
+				builtins/unset.c					\
 				builtins/export.c					\
 				builtins/error.c					\
 				builtins/env.c						\
