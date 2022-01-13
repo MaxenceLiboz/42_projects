@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:57:33 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 02:26:35 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 15:02:17 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ int	lst_env_clear(t_lst_env **lst)
 	return (0);
 }
 
-void	lst_env_delone(t_lst_env *prev)
+void	lst_env_delone(t_lst_env *prev, t_lst_env *to_del, t_lst_env **head)
 {
-	t_lst_env	*lst;
-
-	if (!prev || !prev->next)
+	if (!to_del)
 		return ;
-	lst = prev->next;
-	prev->next = lst->next;
-	reinit_string(&lst->name_var);
-	reinit_string(&lst->var);
-	free(lst);
+	if (prev == to_del)
+		*head = to_del->next;
+	else
+		prev->next = to_del->next;
+	reinit_string(&to_del->name_var);
+	reinit_string(&to_del->var);
+	free(to_del);
 }

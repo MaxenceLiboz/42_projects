@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:35 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/13 01:54:39 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:57:45 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_env(t_lst_env *lst, char **command)
 
 	tmp = lst;
 	if (command[1])
-		return ((void)print_stderror(1, 0,
-				"Actually, we are not taking arguments with env\n"));
+		return ((void)print_stderror(1,
+			"Actually, we are not taking arguments with env\n"));
 	while (tmp)
 	{
 		printf("%s=%s\n", tmp->name_var.str, tmp->var.str);

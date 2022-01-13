@@ -6,50 +6,49 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:28 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/13 02:27:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 15:07:31 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	unset_link(t_lst_env *last, t_lst_env *actual,
-	t_lst_env *next, char *name)
+static void	unset_link(t_lst_env **head, t_lst_env *prev,
+	t_lst_env *actual, char *name)
 {
 	if (ft_strncmp(name, actual->name_var.str, ft_strlen(name)) != 0)
 		return ;
-	(void)next;
-	lst_env_delone(last);
+	lst_env_delone(prev, actual, head);
 }
 
-static void	find_link(t_head_env *head, char *name)
+static void	find_link(t_head_env **head, char *name)
 {
-	t_lst_env	*last;
+	t_lst_env	*prev;
 	t_lst_env	*actual;
 	t_lst_env	*next;
 
-	actual = head->export;
-	last = actual;
+	actual = (*head)->export;
+	prev = actual;
 	next = actual->next;
 	while (ft_strncmp(name, actual->name_var.str, ft_strlen(name)) != 0 && next)
 	{
-		last = actual;
+		prev = actual;
 		actual = actual->next;
 		next = actual->next;
 	}
-	unset_link(last, actual, next, name);
-	actual = head->env;
-	last = actual;
+	unset_link(&(*head)->export, prev, actual, name);
+	actual = (*head)->env;
+	prev = actual;
 	next = actual->next;
 	while (ft_strncmp(name, actual->name_var.str, ft_strlen(name)) != 0 && next)
 	{
-		last = actual;
+		prev = actual;
 		actual = actual->next;
 		next = actual->next;
 	}
-	unset_link(last, actual, next, name);
+	unset_link(&(*head)->env, prev, actual, name);
 }
 
-void	ft_unset(t_head_env *head, char **command)
+void	ft_unset(t_head_env **head, char **command)
 {
 	int	i;
 
@@ -61,7 +60,7 @@ void	ft_unset(t_head_env *head, char **command)
 		if (control_args(command[i]) == 0)
 			find_link(head, command[i]);
 		else
-			print_stderror(3, 0, "bash: unset: `", command[i],
+			print_stderror(3, "bash: unset: `", command[i],
 				"': not a valid identifier\n");
 		i++;
 	}

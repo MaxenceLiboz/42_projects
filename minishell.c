@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 13:54:12 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/13 15:06:22 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// first name_var of export is NULL, that's a problem
+// we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
 int	main(int argc, char **argv, char **envp)
 {
 	t_head_env		env;
@@ -32,9 +32,8 @@ int	main(int argc, char **argv, char **envp)
 		if (*command.command.str)
 		{
 			cmd = create_command(&command, &env);
-			lst_cmd_put(cmd);
-			// ft_unset(&env, cmd->cmd);
-			// ft_export(&env, cmd->cmd);
+			// lst_cmd_put(cmd);
+			exec_builtin(cmd->cmd, &env);
 			lst_cmd_clear(&cmd);
 		}
 		reinit_command(&command);

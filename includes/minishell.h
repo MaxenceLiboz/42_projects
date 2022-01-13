@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 13:49:48 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/13 15:06:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_lst_env	*lst_env_new(char *name_var, char *var);
 void		lst_env_add_back(t_lst_env **lst, t_lst_env *new);
 void		lst_env_add_front(t_lst_env **lst, t_lst_env *new);
 int			lst_env_clear(t_lst_env **lst);
-void		lst_env_delone(t_lst_env *prev);
+void		lst_env_delone(t_lst_env *prev, t_lst_env *to_del, t_lst_env **head);
 t_lst_env	*lst_env_last(t_lst_env *lst);
 int			lst_env_size(t_lst_env *lst);
 void		lst_env_swap(t_lst_env **head, t_lst_env **next);
@@ -105,12 +105,12 @@ void		ft_free(char **str);
 int			print_stderror(int size, char *s1, ...);
 
 /**************** Built in ********/
-int			exec_builtin(char **str);
+int			exec_builtin(char **command, t_head_env *head);
 void		ft_export(t_head_env *head, char **command);
 int			control_args(char *str);
 void		print_export(t_head_env *head);
 void		ft_env(t_lst_env *lst, char **command);
-void		ft_unset(t_head_env *head, char **command);
+void		ft_unset(t_head_env **head, char **command);
 
 /**************** Parsing ******************/
 t_string	create_prompt(void);
