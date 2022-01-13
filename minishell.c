@@ -6,13 +6,13 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 02:08:33 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 10:34:57 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// first name_var of export is NULL, that's a problem
+// we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
 int	main(int argc, char **argv, char **envp)
 {
 	t_head_env		env;
@@ -33,8 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			cmd = create_command(&command, &env);
 			// lst_cmd_put(cmd);
-			ft_unset(&env, cmd->cmd);
-			ft_export(&env, cmd->cmd);
+			exec_builtin(cmd->cmd, &env);
 			lst_cmd_clear(&cmd);
 		}
 		reinit_command(&command);

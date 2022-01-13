@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 01:57:28 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 10:24:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void		ft_free(char **str);
 int			print_stderror(int size, char *s1, ...);
 
 /**************** Built in ********/
-int			exec_builtin(char **str);
+int			exec_builtin(char **command, t_head_env *head);
 void		ft_export(t_head_env *head, char **command);
 int			control_args(char *str);
 void		print_export(t_head_env *head);
