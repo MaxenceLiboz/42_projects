@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 16:56:20 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/13 14:30:22 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static t_bool	is_arg(char *arg, int *start)
 {
-	if (arg[*start] == '$' && arg[*start + 1] != '\'')
+	if (arg[*start] == '$'
+		&& ft_isalnum(arg[*start + 1]))
 		return (TRUE);
 	else if (arg[*start] == '\"' && arg[*start + 1] == '$'
-		&& arg[*start + 2] != '\'')
+		&& ft_isalnum(arg[*start + 2]))
 	{
 		*start += 1;
 		return (TRUE);
@@ -32,9 +33,7 @@ static void	find_arg_and_replace(t_string *arg, t_string *command, int start,
 	t_string	temp;
 
 	end = start + 1;
-	while (command->str[end] != ' ' && command->str[end] != '\''
-		&& command->str[end] != '\"' && command->str[end] != '$'
-		&& command->str[end])
+	while (ft_isalnum(command->str[end]))
 		end++;
 	sub_string(arg, command->str, start + 1, end - (start + 1));
 	temp = lst_env_find_name_var(export, arg->str);
