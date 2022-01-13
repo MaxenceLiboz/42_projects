@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 10:24:06 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:16:32 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void		ft_env(t_lst_env *lst, char **command);
 void		ft_unset(t_head_env *head, char **command);
 
 /**************** Parsing ******************/
-t_string	create_prompt(char *str);
+t_string	create_prompt(void);
 t_lst_cmd	*create_command(t_command *command, t_head_env *envi);
 void		split_wog(t_command *command, char c);
 int			count_split_wog(const char *str, char charset);

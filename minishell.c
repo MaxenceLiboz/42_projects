@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 10:34:57 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:17:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	set_export(envp, &env);
 	while (1)
 	{
-		prompt = create_prompt(lst_env_find_name_var(env.env, "PWD").str);
+		prompt = create_prompt();
 		command.command.str = readline(prompt.str);
 		reinit_string(&prompt);
 		init_string(&command.command, command.command.str, FALSE);

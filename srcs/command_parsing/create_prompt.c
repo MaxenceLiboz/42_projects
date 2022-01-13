@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:35:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/11 13:55:37 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/13 13:49:37 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,17 @@ void	ft_strcat(char *dest, char *src)
 	dest[i_dest + i_src] = '\0';
 }
 
-t_string	create_prompt(char *str)
+t_string	create_prompt(void)
 {
 	t_string	dst;
+	char		*pwd;
 
-	if (!str)
-		exit(-1);
+	pwd = 0;
+	pwd = getcwd(pwd, 0);
 	init_string(&dst, BLUE, TRUE);
-	dup_string(&dst, str, dst.size - 1);
+	dup_string(&dst, pwd, dst.size - 1);
 	dup_string(&dst, END_COLOR, dst.size - 1);
 	dup_string(&dst, " 👉 ", dst.size - 1);
+	free(pwd);
 	return (dst);
 }
