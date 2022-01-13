@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 22:18:24 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 02:08:33 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			cmd = create_command(&command, &env);
 			// lst_cmd_put(cmd);
+			ft_unset(&env, cmd->cmd);
 			ft_export(&env, cmd->cmd);
 			lst_cmd_clear(&cmd);
 		}

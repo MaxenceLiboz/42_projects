@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 23:29:46 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 01:57:28 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,15 @@ t_lst_cmd	*lst_cmd_init(t_command *cmd);
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
+int			print_stderror(int size, char *s1, ...);
 
 /**************** Built in ********/
 int			exec_builtin(char **str);
 void		ft_export(t_head_env *head, char **command);
 int			control_args(char *str);
 void		print_export(t_head_env *head);
-int			print_stderror(char	*s1, char *s2, char *s3);
+void		ft_env(t_lst_env *lst, char **command);
+void		ft_unset(t_head_env *head, char **command);
 
 /**************** Parsing ******************/
 t_string	create_prompt(char *str);
