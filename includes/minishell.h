@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 01:57:28 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 13:49:48 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void		ft_env(t_lst_env *lst, char **command);
 void		ft_unset(t_head_env *head, char **command);
 
 /**************** Parsing ******************/
-t_string	create_prompt(char *str);
+t_string	create_prompt(void);
 t_lst_cmd	*create_command(t_command *command, t_head_env *envi);
 void		split_wog(t_command *command, char c);
 int			count_split_wog(const char *str, char charset);

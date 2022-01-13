@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 02:08:33 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 13:54:12 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	main(int argc, char **argv, char **envp)
 	set_export(envp, &env);
 	while (1)
 	{
-		prompt = create_prompt(lst_env_find_name_var(env.env, "PWD").str);
+		prompt = create_prompt();
 		command.command.str = readline(prompt.str);
 		reinit_string(&prompt);
 		init_string(&command.command, command.command.str, FALSE);
 		if (*command.command.str)
 		{
 			cmd = create_command(&command, &env);
-			// lst_cmd_put(cmd);
-			ft_unset(&env, cmd->cmd);
-			ft_export(&env, cmd->cmd);
+			lst_cmd_put(cmd);
+			// ft_unset(&env, cmd->cmd);
+			// ft_export(&env, cmd->cmd);
 			lst_cmd_clear(&cmd);
 		}
 		reinit_command(&command);

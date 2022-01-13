@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:33:11 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 16:20:16 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/13 13:53:29 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_free(char **str)
 			str[i][y] = 0;
 			y++;
 		}
+		free(str[i]);
 		i++;
 	}
 	free(str);
