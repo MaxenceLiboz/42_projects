@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 14:30:22 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/13 14:51:42 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ t_lst_cmd	*create_command(t_command *command, t_head_env *envi)
 		return (0);
 	change_arg_command(command, envi);
 	split_wog(command, ' ');
-	// if (!check_pipes(*command))
-	// 	return (0);
+	if (!check_pipes(*command))
+		return (0);
 	lst = lst_cmd_init(command);
 	return (lst);
 }

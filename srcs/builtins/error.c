@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:01:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/13 02:01:43 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:54:35 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	print_stderror(int size, char *s1, ...)
 	va_list	arg;
 
 	va_start(arg, s1);
+	if (s1)
+	{
+		ft_putstr_fd(s1, 2);
+		size--;
+	}
 	while (size--)
 		ft_putstr_fd(va_arg(arg, char *), 2);
 	va_end(arg);
