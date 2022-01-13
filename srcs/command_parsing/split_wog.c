@@ -26,38 +26,56 @@ static void	get_copy_size(const char *src, char c, int *i, int *end)
 	while ((src[*end] != c || dquotes < 1 || squotes < 1)
 		&& src[*end] && src[*end])
 	{
-		if (src[*end] == '"')
+		if (src[*end] == '"' && squotes == 1)
 			dquotes *= -1;
-		if (src[*end] == '\'')
+		if (src[*end] == '\'' && dquotes == 1)
 			squotes *= -1;
 		*end += 1;
 	}
 }
 
-static void	ft_copy(t_command *command, char c, int *i, int dsti)
+static void	ft_copy2(t_command *command, int *i, int end, int dsti)
 {
-	int			end;
-	int			size;
-	int			y;
+	int		dquotes;
+	int		squotes;
+	int		y;
 
+	dquotes = 1;
+	squotes = 1;
 	y = 0;
-	get_copy_size(command->command.str, c, i, &end);
-	size = end - *i;
-	command->array[dsti].str = malloc(sizeof(char) * (size + 1));
 	while (*i < end)
 	{
-		while (command->command.str[*i] == '"')
+		while (command->command.str[*i] == '"' && squotes == 1)
+		{
 			*i += 1;
-		while (command->command.str[*i] == '\'')
+			dquotes *= -1;
+		}
+		while (command->command.str[*i] == '\'' && dquotes == 1)
+		{
 			*i += 1;
+			squotes *= -1;
+		}
 		if (*i >= end)
 			break ;
 		command->array[dsti].str[y++] = command->command.str[*i];
 		*i += 1;
 	}
 	command->array[dsti].str[y] = 0;
-	init_string(&command->command, command->command.str, FALSE);
 	*i = end;
+}
+
+static void	ft_copy(t_command *command, char c, int *i, int dsti)
+{
+	int			end;
+	int			size;
+
+	get_copy_size(command->command.str, c, i, &end);
+	size = end - *i;
+	command->array[dsti].str = malloc(sizeof(char) * (size + 1));
+	if (!command->array[dsti].str)
+		exit(-1);
+	ft_copy2(command, i, end, dsti);
+	init_string(&command->command, command->command.str, FALSE);
 }
 
 void	split_wog(t_command *command, char c)
