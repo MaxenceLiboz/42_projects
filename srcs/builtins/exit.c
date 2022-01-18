@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/05 14:36:44 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/18 14:58:28 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,15 @@ void	ft_exit(char **str)
 		exit(0);
 	if (!isnum(str[1]))
 	{
-		ft_putstr_fd("bash: exit: ", 2);
-		ft_putstr_fd(str[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
+		print_stderror(3, "bash: exit: ", str[1],
+			": numeric argument required\n");
 		exit(255);
 	}
 	if (str[2])
 	{
 		if (ft_strncmp(str[2], "|", 2) != 0)
 		{
-			ft_putstr_fd("bash: exit: too many arguments", 2);
+			print_stderror(1, "bash: exit: too many arguments\n");
 			exit(255);
 		}
 	}

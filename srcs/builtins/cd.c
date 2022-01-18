@@ -6,69 +6,55 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/08 11:44:46 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/18 14:55:31 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// static char	*get_new_path(char **str)
-// {
-// 	char	*dst;
-// 	int		i;
-
-// 	i = 0;
-// 	dst = NULL;
-// 	if (!str[1])
-// 		dst = getenv("HOME");
-// 	if (ft_strncmp(str[1], "../", 3) == 0)
-// 	{
-// 		while ()
-// 		dst = ft_strjoin(dst, str[1])
-// 	}
-// 	return (dst);
-// }
-
-int	ft_cd(char **str)
+static int	get_new_path(char **str, t_lst_env *env, char **path)
 {
-	char		*path;
-	char		*cpy;
-
-	path = NULL;
-	cpy = ft_strdup(str[1]);
-	if (!str[1] || !*str[1] || (str[1][0] == '~' && ft_strlen(str[1]) < 2))
+	if (!str[1] || !*str[1] || ft_strncmp("~", str[1], 2) == 0)
+		*path = getenv("HOME");
+	else if (str[1][0] == '-')
 	{
-		path = getenv("HOME");
+		*path = lst_env_find_name_var(env, "OLDPWD").str;
+		if (!*path)
+			return (print_stderror(1, "bash: cd: OLDPWD not set\n"));
+	}	
+	else if (str[1][0] != '/')
+	{
+		*path = getcwd(*path, 0);
+		*path = ft_strjoin(*path, "/");
+		*path = ft_strjoin(*path, str[1]);
 	}
-	else if (str[1][0] != '/' && str[1][0] != '~')
-		path = ft_strjoin(ft_strjoin(getcwd(path, 0), "/"), str[1]);
 	else
 	{
 		if (str[1][0] == '~')
 			str[1] = ft_substr(str[1], 1, ft_strlen(str[1]) - 1);
-		path = ft_strdup(getenv("HOME"));
-		path = ft_strjoin(path, str[1]);
-		// printf("%s\n", path);
+		*path = ft_strdup("/");
+		*path = ft_strjoin(*path, str[1]);
 	}
+	return (1);
+}
+
+int	ft_cd(char **str, t_lst_env *env)
+{
+	char		*path;
+
+	path = NULL;
+	if (!get_new_path(str, env, &path))
+		return (1);
 	if (access((const char *)path, F_OK) == 0)
 	{
 		if (access((const char *)path, X_OK) == 0)
 			chdir(path);
 		else
-		{
-			ft_putstr_fd("bash: cd: ", 2);
-			ft_putstr_fd(cpy, 2);
-			return ((int)error(": Permission denied", 0));
-		}
+			return (print_stderror(3, "bash: cd: ",
+					str[1], ": Permission denied\n"));
 	}
 	else
-	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(cpy, 2);
-		return ((int)error(": No such file or directory", 0));
-	}
-	path = NULL;
-	path = getcwd(path, 0);
-	printf("%s\n", path);
+		return (print_stderror(3, "bash: cd: ",
+				str[1], ": No such file or directory\n"));
 	return (0);
 }

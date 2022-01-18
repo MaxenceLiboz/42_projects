@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/18 09:35:37 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/18 14:59:01 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,10 @@ int			control_args(char *str);
 void		print_export(t_head_env *head);
 void		ft_env(t_lst_env *lst, char **command);
 void		ft_unset(t_head_env **head, char **command);
+int			ft_echo(char **str);
+int			ft_cd(char **str, t_lst_env *env);
+int			ft_pwd(char **str);
+void		ft_exit(char **str);
 
 /**************** Parsing ******************/
 t_string	create_prompt(void);
