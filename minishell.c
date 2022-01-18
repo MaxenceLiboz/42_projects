@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 15:06:22 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:36:24 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,27 @@
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
 int	main(int argc, char **argv, char **envp)
 {
-	t_head_env		env;
-	t_string		prompt;
-	t_command		command;
-	t_lst_cmd		*cmd;
+	t_prg	prg;
 
 	(void)argc;
 	(void)argv;
-	set_export(envp, &env);
+	set_export(envp, &prg.env);
 	while (1)
 	{
-		prompt = create_prompt();
-		command.command.str = readline(prompt.str);
-		reinit_string(&prompt);
-		init_string(&command.command, command.command.str, FALSE);
-		if (*command.command.str)
+		prg.prompt = create_prompt();
+		prg.cmd.command.str = readline(prg.prompt.str);
+		reinit_string(&prg.prompt);
+		init_string(&prg.cmd.command, prg.cmd.command.str, FALSE);
+		if (*prg.cmd.command.str)
 		{
-			cmd = create_command(&command, &env);
+			prg.lst_cmd = create_command(&prg.cmd, &prg.env);
 			// lst_cmd_put(cmd);
-			exec_builtin(cmd->cmd, &env);
-			lst_cmd_clear(&cmd);
+			exec_builtin(prg.lst_cmd->cmd, &prg.env);
+			lst_cmd_clear(&prg.cmd);
 		}
-		reinit_command(&command);
+		reinit_command(&prg.cmd);
 	}
-	lst_env_clear(&env.env);
-	lst_env_clear(&env.export);
+	lst_env_clear(&prg.env.env);
+	lst_env_clear(&prg.env.export);
 	return (0);
 }
