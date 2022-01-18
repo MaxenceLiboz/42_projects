@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 15:06:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:35:37 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,15 @@ void		lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item);
 int			lst_cmd_clear(t_lst_cmd **lst);
 void		lst_cmd_put(t_lst_cmd	*lst);
 t_lst_cmd	*lst_cmd_init(t_command *cmd);
+
+/**************** t_prg ***********************/
+typedef struct s_prg
+{
+	t_head_env	env;
+	t_string	prompt;
+	t_command	cmd;
+	t_lst_cmd	*lst_cmd;
+}	t_prg;
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
