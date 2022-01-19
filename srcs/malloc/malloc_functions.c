@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_prompt.c                                    :+:      :+:    :+:   */
+/*   malloc_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 13:35:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/19 09:13:54 by maxencelibo      ###   ########.fr       */
+/*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
+/*   Updated: 2022/01/19 14:00:53 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_string	create_prompt(t_list **mem)
+void	*ft_malloc(t_list **mem, size_t size)
 {
-	t_string	dst;
-	char		*pwd;
+	void	*new_item;
 
-	pwd = 0;
-	pwd = getcwd(pwd, 0);
-	init_string(&dst, BLUE, TRUE, mem);
-	dup_string(&dst, pwd, dst.size - 1, mem);
-	dup_string(&dst, END_COLOR, dst.size - 1, mem);
-	dup_string(&dst, " 👉 ", dst.size - 1, mem);
-	free(pwd);
-	return (dst);
+	new_item = malloc(size);
+	if (!size)
+		ft_error_free(mem);
+	ft_lstadd_front(mem, ft_lstnew(new_item));
+	return (new_item);
+}
+
+void	ft_error_free(t_list **mem)
+{
+	ft_lstclear(mem, free);
+	exit(-1);
 }

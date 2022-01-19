@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:57:33 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 15:02:17 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/19 13:45:24 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_lst_env	*lst_env_new(char *name_var, char *var)
+t_lst_env	*lst_env_new(char *name_var, char *var, t_list **mem)
 {
 	t_lst_env	*lst;
 
-	lst = malloc(sizeof(t_lst_env) * 1);
-	if (!lst)
-		exit(-1);
-	init_string(&lst->name_var, name_var, TRUE);
-	init_string(&lst->var, var, TRUE);
+	lst = ft_malloc(mem, sizeof(t_lst_env) * 1);
+	init_string(&lst->name_var, name_var, TRUE, mem);
+	init_string(&lst->var, var, TRUE, mem);
 	lst->next = 0;
 	return (lst);
 }

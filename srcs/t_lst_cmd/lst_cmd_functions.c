@@ -6,19 +6,17 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:51:33 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/12 16:59:06 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 09:37:24 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_lst_cmd	*lst_cmd_new(char **cmd)
+t_lst_cmd	*lst_cmd_new(char **cmd, t_list **mem)
 {
 	t_lst_cmd	*lst;
 
-	lst = malloc(sizeof(t_lst_cmd) * 1);
-	if (!lst)
-		return (0);
+	lst = ft_malloc(mem, sizeof(t_lst_cmd) * 1);
 	lst->cmd = cmd;
 	lst->next = 0;
 	return (lst);
@@ -60,7 +58,7 @@ int	lst_cmd_clear(t_lst_cmd **lst)
 	return (0);
 }
 
-t_lst_cmd	*lst_cmd_init(t_command *cmd)
+t_lst_cmd	*lst_cmd_init(t_command *cmd, t_list **mem)
 {
 	int			i;
 	t_lst_cmd	*new;
@@ -70,7 +68,7 @@ t_lst_cmd	*lst_cmd_init(t_command *cmd)
 	lst = NULL;
 	while (i >= 0)
 	{
-		new = lst_cmd_new(get_cmd(cmd));
+		new = lst_cmd_new(get_cmd(cmd, mem), mem);
 		lst_cmd_add_back(&lst, new);
 		i--;
 	}
