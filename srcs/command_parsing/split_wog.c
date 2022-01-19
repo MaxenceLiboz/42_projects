@@ -64,21 +64,21 @@ static void	ft_copy2(t_command *command, int *i, int end, int dsti)
 	*i = end;
 }
 
-static void	ft_copy(t_command *command, char c, int *i, int dsti)
+static void	ft_copy(t_prg *prg, char c, int *i, int dsti)
 {
 	int			end;
 	int			size;
 
-	get_copy_size(command->command.str, c, i, &end);
+	get_copy_size(prg->cmd.command.str, c, i, &end);
 	size = end - *i;
-	command->array[dsti].str = malloc(sizeof(char) * (size + 1));
-	if (!command->array[dsti].str)
+	prg->cmd.array[dsti].str = ft_malloc(&prg->mem, sizeof(char) * (size + 1));
+	if (!prg->cmd.array[dsti].str)
 		exit(-1);
-	ft_copy2(command, i, end, dsti);
-	init_string(&command->command, command->command.str, FALSE);
+	ft_copy2(&prg->cmd, i, end, dsti);
+	init_string(&prg->cmd.command, prg->cmd.command.str, FALSE, &prg->mem);
 }
 
-void	split_wog(t_command *command, char c)
+void	split_wog(t_prg *prg, char c)
 {
 	int		words;
 	int		i;
@@ -86,11 +86,11 @@ void	split_wog(t_command *command, char c)
 
 	i = 0;
 	dsti = 0;
-	words = count_split_wog(command->command.str, c);
-	init_command(command, words, TRUE);
+	words = count_split_wog(prg->cmd.command.str, c);
+	init_command(&prg->cmd, words, TRUE, &prg->mem);
 	while (words--)
 	{
-		ft_copy(command, c, &i, dsti);
+		ft_copy(prg, c, &i, dsti);
 		dsti++;
 	}
 }

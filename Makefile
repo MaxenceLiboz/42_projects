@@ -13,9 +13,10 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/export.c					\
 				builtins/error.c					\
 				builtins/env.c						\
-				builtins/exec_builtin.c			\
+				builtins/exec_builtin.c				\
 				t_lst_cmd/lst_cmd_functions.c		\
 				freestrs.c							\
+				malloc/malloc_functions.c			\
 				
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 

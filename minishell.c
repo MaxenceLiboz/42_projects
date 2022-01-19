@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/18 09:53:10 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 13:57:56 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,21 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	set_export(envp, &prg.env);
+	prg.mem = 0;
+	set_export(envp, &prg.env, &prg.mem);
 	while (1)
 	{
-		prg.prompt = create_prompt();
+		prg.prompt = create_prompt(&prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
-		reinit_string(&prg.prompt);
-		init_string(&prg.cmd.command, prg.cmd.command.str, FALSE);
+		init_string(&prg.cmd.command, prg.cmd.command.str, FALSE, &prg.mem);
+		ft_lstadd_front(&prg.mem, ft_lstnew(prg.cmd.command.str));
 		if (*prg.cmd.command.str)
 		{
-			prg.lst_cmd = create_command(&prg.cmd, &prg.env);
+			prg.lst_cmd = create_command(&prg);
 			// lst_cmd_put(cmd);
-			exec_builtin(prg.lst_cmd->cmd, &prg.env);
-			lst_cmd_clear(&prg.lst_cmd);
+			exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
 		}
 		reinit_command(&prg.cmd);
 	}
-	lst_env_clear(&prg.env.env);
-	lst_env_clear(&prg.env.export);
-	return (0);
+	return (ft_lstclear(&prg.mem, free));
 }
