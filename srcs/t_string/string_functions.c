@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/19 13:58:51 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:11:29 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ void	init_string(t_string *string, char *src, t_bool to_malloc, t_list **mem)
 
 void	reinit_string(t_string *string)
 {
-	int		i;
-
-	i = 0;
-	if (!string->str)
-		return ;
-	while (string->str[i])
-		string->str[i++] = 0;
-	free(string->str);
 	string->str = 0;
 	string->max_size = 0;
 	string->size = 0;
