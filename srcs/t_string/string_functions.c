@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/19 14:11:29 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 15:19:35 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	dup_string(t_string *string, char *src, int index, t_list **mem)
 
 	i = 0;
 	if (!src)
+	{
+		string->str = NULL;
 		return ;
+	}
 	if (!string->str)
 	{
 		init_string(string, src, TRUE, mem);
