@@ -11,6 +11,10 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/set_export.c				\
 				builtins/unset.c					\
 				builtins/export.c					\
+				builtins/echo.c						\
+				builtins/cd.c						\
+				builtins/pwd.c						\
+				builtins/exit.c						\
 				builtins/error.c					\
 				builtins/env.c						\
 				builtins/exec_builtin.c				\

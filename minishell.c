@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/19 13:57:56 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:53:40 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
+// Need to reset OLDPWD at each command
+//At start, we need to set OLDPWD to 0;
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;

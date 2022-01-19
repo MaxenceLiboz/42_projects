@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/19 13:59:39 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:54:18 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	ft_export(t_head_env *head, char **command, t_list **mem)
 					replace_elem_of_lst(head, command[i], var_name, mem);
 		}
 		else
-			print_stderror(3, "bash: export: `", command[i],
+			print_stderror(1, 3, "bash: export: `", command[i],
 				"': not a valid identifier\n");
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/19 11:05:47 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:54:30 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <libft.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include <sys/stat.h> 
+# include <unistd.h>
 
 #define TEST_PS(expectation, ft) printf("Expected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m", expectation); ft; printf("\e[0m\n");
 #define TEST_S(expectation, str) ft_strncmp(expectation, str, ft_strlen(expectation) + 1) == 0 ? printf("\e[0;32mOK\e[0m\n") : printf("\e[0;31mFALSE\e[0m\nExpected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m%s\e[0m\n\n", expectation, str);
@@ -122,15 +126,19 @@ typedef struct s_prg
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
-int			print_stderror(int size, char *s1, ...);
+int			print_stderror(int error, int size, char *s1, ...);
 
 /**************** Built in ********/
 int			exec_builtin(char **command, t_head_env *head, t_list **mem);
 void		ft_export(t_head_env *head, char **command, t_list **mem);
 int			control_args(char *str);
 void		print_export(t_head_env *head);
-void		ft_env(t_lst_env *lst, char **command);
-void		ft_unset(t_head_env **head, char **command);
+int			ft_env(t_lst_env *lst, char **command);
+int			ft_unset(t_head_env **head, char **command);
+int			ft_echo(char **str);
+int			ft_cd(char **str, t_head_env *head);
+int			ft_pwd(char **str);
+void		ft_exit(char **str);
 
 /**************** Parsing ******************/
 t_string	create_prompt(t_list **mem);

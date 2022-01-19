@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 09:35:58 by mliboz            #+#    #+#             */
-/*   Updated: 2021/12/12 13:27:47 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/18 11:38:21 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		dst[i + ft_strlen(s1)] = s2[i];
 	dst[i + ft_strlen(s1)] = '\0';
 	free(s1);
-	free(s2);
+	// free(s2);
 	return (dst);
 }
