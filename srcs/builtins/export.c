@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/19 14:23:37 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:54:18 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,22 @@ int	control_args(char *str)
 }
 
 //change sorting to avoid to iterate on all the lst again
-static void	add_elem_to_lst(char *arg, t_head_env *head)
+static void	add_elem_to_lst(char *arg, t_head_env *head, t_list **mem)
 {
 	t_lst_env	*new_export;
 	t_lst_env	*new_env;
 	int			c;
 
-	new_export = lst_env_new("", NULL);
+	new_export = lst_env_new("", NULL, mem);
 	c = ft_strchr_len(arg, '=');
 	new_env = NULL;
-	sub_string(&new_export->name_var, arg, 0, c);
+	new_export->name_var = sub_string(arg, 0, c, mem);
 	if (ft_strchr(arg, '=') != 0)
 	{
-		new_env = lst_env_new("", NULL);
-		sub_string(&new_env->name_var, arg, 0, c);
-		sub_string(&new_env->var, arg, c + 1, ft_strlen(arg) - c);
-		sub_string(&new_export->var, arg, c + 1, ft_strlen(arg) - c);
+		new_env = lst_env_new("", NULL, mem);
+		new_env->name_var = sub_string(arg, 0, c, mem);
+		new_env->var = sub_string(arg, c + 1, ft_strlen(arg) - c, mem);
+		new_export->var = sub_string(arg, c + 1, ft_strlen(arg) - c, mem);
 		lst_env_add_front(&head->env, new_env);
 	}
 	lst_env_add_front(&head->export, new_export);
@@ -71,7 +71,8 @@ static void	add_elem_to_lst(char *arg, t_head_env *head)
 	return ;
 }
 
-static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name)
+static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
+		t_list **mem)
 {
 	t_lst_env	*export;
 	t_lst_env	*env;
@@ -88,17 +89,17 @@ static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name)
 		env = env->next;
 	if (!env)
 	{
-		env = lst_env_new("", NULL);
-		sub_string(&env->name_var, export->name_var.str, 0,
-			export->name_var.size);
-		sub_string(&env->var, var, c + 1, ft_strlen(var) - c);
+		env = lst_env_new("", NULL, mem);
+		env->name_var = sub_string(export->name_var.str, 0,
+				export->name_var.size, mem);
+		env->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
 		lst_env_add_front(&head->env, env);
 	}
-	sub_string(&env->var, var, c + 1, ft_strlen(var) - c);
-	sub_string(&export->var, var, c + 1, ft_strlen(var) - c);
+	env->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
+	export->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
 }
 
-void	ft_export(t_head_env *head, char **command)
+void	ft_export(t_head_env *head, char **command, t_list **mem)
 {
 	char	*var_name;
 	int		i;
@@ -111,18 +112,18 @@ void	ft_export(t_head_env *head, char **command)
 	}
 	while (command[++i])
 	{
-		var_name = ft_substr(command[i], 0, ft_strchr_len(command[i], '='));
+		var_name = sub_string(command[i], 0, ft_strchr_len(command[i], '='),
+				mem).str;
 		if (control_args(var_name) == 0)
 		{
 			if (lst_env_find_name_var(head->export, var_name).str == 0)
-				add_elem_to_lst(command[i], head);
+				add_elem_to_lst(command[i], head, mem);
 			else
 				if (ft_strchr(command[i], '=') != 0)
-					replace_elem_of_lst(head, command[i], var_name);
+					replace_elem_of_lst(head, command[i], var_name, mem);
 		}
 		else
 			print_stderror(1, 3, "bash: export: `", command[i],
 				"': not a valid identifier\n");
-		free(var_name);
 	}
 }

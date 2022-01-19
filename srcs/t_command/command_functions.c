@@ -6,42 +6,31 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:37:42 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 17:10:21 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:01:30 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_command(t_command *array_string, int size, int to_malloc)
+void	init_command(t_command *array_string, int size, int to_malloc,
+			t_list **mem)
 {
 	array_string->size = size;
 	array_string->max_size = size;
+	array_string->index = 0;
 	if (to_malloc != TRUE)
 		return ;
-	array_string->array = malloc(sizeof(t_string) * size);
-	if (!array_string->array)
-		exit(-1);
+	array_string->array = ft_malloc(mem, sizeof(t_string) * size);
 }
 
 void	reinit_command(t_command *cmd)
 {
-	int		i;
-	int		y;
-
-	i = 0;
-	y = 0;
-	reinit_string(&cmd->command);
-	if (cmd->size == 0)
-		return ;
-	while (y < cmd->max_size)
-		reinit_string(&cmd->array[y++]);
-	free(cmd->array);
 	cmd->max_size = 0;
 	cmd->index = 0;
 	cmd->size = 0;
 }
 
-char	**get_cmd(t_command *cmd)
+char	**get_cmd(t_command *cmd, t_list **mem)
 {
 	int		end;
 	char	**dst;
@@ -54,13 +43,12 @@ char	**get_cmd(t_command *cmd)
 	while (end < cmd->size
 		&& ft_strncmp(cmd->array[end].str, "|", 2) != 0)
 		end++;
-	dst = malloc(sizeof(char *) * ((end - cmd->index) + 1));
-	if (!dst)
-		exit(-1);
+	dst = ft_malloc(mem, sizeof(char *) * ((end - cmd->index) + 1));
 	while (cmd->index < end)
 	{
 		if (*cmd->array[cmd->index].str)
-			dst[i++] = ft_strdup(cmd->array[cmd->index].str);
+			dst[i++] = sub_string(cmd->array[cmd->index].str, 0,
+					cmd->array[cmd->index].size - 1, mem).str;
 		cmd->index += 1;
 	}
 	dst[i] = 0;

@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freestrs.c                                         :+:      :+:    :+:   */
+/*   malloc_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 10:33:11 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/13 13:53:29 by maxencelibo      ###   ########.fr       */
+/*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
+/*   Updated: 2022/01/19 14:00:53 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_free(char **str)
+void	*ft_malloc(t_list **mem, size_t size)
 {
-	int		i;
-	int		y;
+	void	*new_item;
 
-	i = 0;
-	y = 0;
-	while (str[i])
-	{
-		while (str[i][y])
-		{
-			str[i][y] = 0;
-			y++;
-		}
-		free(str[i]);
-		i++;
-	}
-	free(str);
+	new_item = malloc(size);
+	if (!size)
+		ft_error_free(mem);
+	ft_lstadd_front(mem, ft_lstnew(new_item));
+	return (new_item);
+}
+
+void	ft_error_free(t_list **mem)
+{
+	ft_lstclear(mem, free);
+	exit(-1);
 }
