@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:57:33 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/19 13:45:24 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:10:36 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,6 @@ void	lst_env_add_front(t_lst_env **lst, t_lst_env *new)
 	*lst = new;
 }
 
-int	lst_env_clear(t_lst_env **lst)
-{
-	t_lst_env	*save;
-
-	if (!*lst)
-		return (0);
-	while (*lst)
-	{
-		save = (*lst)->next;
-		if ((*lst)->name_var.str)
-			reinit_string(&(*lst)->name_var);
-		if ((*lst)->var.str)
-			reinit_string(&(*lst)->var);
-		free(*lst);
-		*lst = save;
-	}
-	*lst = 0;
-	return (0);
-}
-
 void	lst_env_delone(t_lst_env *prev, t_lst_env *to_del, t_lst_env **head)
 {
 	if (!to_del)
@@ -79,7 +59,4 @@ void	lst_env_delone(t_lst_env *prev, t_lst_env *to_del, t_lst_env **head)
 		*head = to_del->next;
 	else
 		prev->next = to_del->next;
-	reinit_string(&to_del->name_var);
-	reinit_string(&to_del->var);
-	free(to_del);
 }

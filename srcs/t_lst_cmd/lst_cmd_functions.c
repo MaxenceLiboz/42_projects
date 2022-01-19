@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:51:33 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/19 09:37:24 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:09:00 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@ void	lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item)
 			last = last->next;
 		last->next = new_item;
 	}
-}
-
-int	lst_cmd_clear(t_lst_cmd **lst)
-{
-	t_lst_cmd	*save;
-
-	if (!*lst)
-		return (0);
-	while (*lst)
-	{
-		save = (*lst)->next;
-		if ((*lst)->cmd)
-			ft_free((*lst)->cmd);
-		free(*lst);
-		*lst = save;
-	}
-	*lst = 0;
-	return (0);
 }
 
 t_lst_cmd	*lst_cmd_init(t_command *cmd, t_list **mem)
