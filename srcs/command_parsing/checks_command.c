@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/13 14:58:43 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/19 14:12:13 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ t_bool	check_quotes(t_string cmd)
 		i++;
 	}
 	if (squotes % 2 != 0 && dquotes % 2 != 0)
-		print_stderror(1, "Missing: both: \', \"\n");
+		print_stderror(0, 1, "Missing: both: \', \"\n");
 	else if (squotes % 2 != 0)
-		print_stderror(1, "Missing: \'\n");
+		print_stderror(0, 1, "Missing: \'\n");
 	else if (dquotes % 2 != 0)
-		print_stderror(1, "Missing: \"\n");
+		print_stderror(0, 1, "Missing: \"\n");
 	if (squotes % 2 != 0 || dquotes % 2 != 0)
 		return (FALSE);
 	return (TRUE);
@@ -49,7 +49,7 @@ t_bool	check_pipes(t_command cmd)
 	{
 		if (ft_strncmp(cmd.array[i].str, "|", 2) == 0
 			&& i == cmd.size - 1)
-			return (print_stderror(1, "Missing: command after |\n"));
+			return (print_stderror(0, 1, "Missing: command after |\n"));
 		i++;
 	}
 	return (TRUE);

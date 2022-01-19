@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:35 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/13 14:57:45 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:27:02 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 /*Still need to fix check ENV, it's not yet working,
 	 have to check the '=' in set_lst_env*/
-void	ft_env(t_lst_env *lst, char **command)
+int	ft_env(t_lst_env *lst, char **command)
 {
 	t_lst_env	*tmp;
 
 	tmp = lst;
 	if (command[1])
-		return ((void)print_stderror(1,
-			"Actually, we are not taking arguments with env\n"));
+		return (print_stderror(0, 1, "use the command whitout arguments\n"));
 	while (tmp)
 	{
 		printf("%s=%s\n", tmp->name_var.str, tmp->var.str);
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
 //Have to check if variable got a value, if no don't print the =

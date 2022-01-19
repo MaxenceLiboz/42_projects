@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/18 14:55:31 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:13:26 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static int	get_new_path(char **str, t_lst_env *env, char **path)
 		*path = getenv("HOME");
 	else if (str[1][0] == '-')
 	{
-		*path = lst_env_find_name_var(env, "OLDPWD").str;
+		*path = ft_strdup(lst_env_find_name_var(env, "OLDPWD").str);
 		if (!*path)
-			return (print_stderror(1, "bash: cd: OLDPWD not set\n"));
+			return (print_stderror(1, 1, "bash: cd: OLDPWD not set\n"));
 	}	
 	else if (str[1][0] != '/')
 	{
@@ -38,23 +38,47 @@ static int	get_new_path(char **str, t_lst_env *env, char **path)
 	return (1);
 }
 
-int	ft_cd(char **str, t_lst_env *env)
+void	init_oldpwd(t_head_env *head, char *cwd)
+{
+	t_lst_env	*env;
+	t_lst_env	*export;
+
+	env = head->env;
+	export = head->export;
+	while (ft_strncmp(env->name_var.str, "OLDPWD", 7) != 0)
+		env = env->next;
+	while (ft_strncmp(export->name_var.str, "OLDPWD", 7) != 0)
+		export = export->next;
+	sub_string(&export->var, cwd, 0, ft_strlen(cwd));
+	sub_string(&env->var, cwd, 0, ft_strlen(cwd));
+}
+
+int	ft_cd(char **str, t_head_env *head)
 {
 	char		*path;
+	struct stat	sb;
 
 	path = NULL;
-	if (!get_new_path(str, env, &path))
+	if (!get_new_path(str, head->env, &path))
 		return (1);
+	init_oldpwd(head, getcwd(NULL, 0));
+	stat(path, &sb);
 	if (access((const char *)path, F_OK) == 0)
 	{
-		if (access((const char *)path, X_OK) == 0)
-			chdir(path);
+		if (S_ISDIR(sb.st_mode))
+		{
+			if (access((const char *)path, X_OK) == 0)
+				chdir(path);
+			else
+				return (print_stderror(1, 3, "bash: cd: ",
+						str[1], ": Permission denied\n"));
+		}
 		else
-			return (print_stderror(3, "bash: cd: ",
-					str[1], ": Permission denied\n"));
+			return (print_stderror(1, 3, "bash: cd: ",
+					str[1], ": Not a directory\n"));
 	}
 	else
-		return (print_stderror(3, "bash: cd: ",
+		return (print_stderror(1, 3, "bash: cd: ",
 				str[1], ": No such file or directory\n"));
 	return (0);
 }

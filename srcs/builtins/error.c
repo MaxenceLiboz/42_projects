@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:01:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/18 09:58:50 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:14:10 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*error(char *str, int error)
 }
 
 // first arg is size of arg, set second one to 0, then add string
-int	print_stderror(int size, char *s1, ...)
+int	print_stderror(int error, int size, char *s1, ...)
 {
 	va_list	arg;
 
@@ -33,5 +33,5 @@ int	print_stderror(int size, char *s1, ...)
 	while (size--)
 		ft_putstr_fd(va_arg(arg, char *), 2);
 	va_end(arg);
-	return (0);
+	return (error);
 }
