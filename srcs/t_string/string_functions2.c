@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/19 13:58:58 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/21 08:50:42 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ void	erase_string(t_string *string, char *to_replace, size_t start,
 
 void	add_string(t_string *string, char *to_add, size_t index, t_list **mem)
 {
-	t_string	temp;
+	t_string	before;
+	t_string	after;
 
-	init_string(&temp, &string->str[index], TRUE, mem);
-	dup_string(string, to_add, 0, mem);
-	dup_string(string, temp.str, string->size - 1, mem);
+	before = sub_string(string->str, 0, index, mem);
+	after = sub_string(string->str, index, string->size - 1 - index, mem);
+	dup_string(string, before.str, 0, mem);
+	dup_string(string, to_add, string->size - 1, mem);
+	dup_string(string, after.str, string->size - 1, mem);
 }

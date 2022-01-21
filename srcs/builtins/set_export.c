@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/19 13:47:28 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/20 10:57:31 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 	while (envp[i] != '=' && envp[i])
 		i++;
 	new_export->name_var = sub_string(envp, 0, i, mem);
-	new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
-			mem);
 	new_env->name_var = sub_string(envp, 0, i, mem);
-	new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1, mem);
+	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7))
+	{
+		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
+				mem);
+		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1, mem);
+	}
 	return (1);
 }
 
@@ -42,8 +45,8 @@ int	set_export(char **envp, t_head_env *head, t_list **mem)
 	head->export = NULL;
 	while (envp[i])
 	{
-		new_export = lst_env_new("", "", mem);
-		new_env = lst_env_new("", "", mem);
+		new_export = lst_env_new(NULL, NULL, mem);
+		new_env = lst_env_new(NULL, NULL, mem);
 		lst_env_add_back(&head->export, new_export);
 		lst_env_add_back(&head->env, new_env);
 		if (!head_env_init(envp[i], new_export, new_env, mem))
