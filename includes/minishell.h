@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/21 16:00:27 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/24 15:36:57 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,9 @@ int			print_stderror(int error, int size, char *s1, ...);
 
 /**************** Built in ********/
 int			exec_builtin(char **command, t_head_env *head, t_list **mem);
-void		ft_export(t_head_env *head, char **command, t_list **mem);
 int			control_args(char *str);
-void		print_export(t_head_env *head);
+int			print_export(t_head_env *head);
+int			ft_export(t_head_env *head, char **command, t_list **mem);
 int			ft_env(t_lst_env *lst, char **command);
 int			ft_unset(t_head_env **head, char **command);
 int			ft_echo(char **str);

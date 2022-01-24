@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:35 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/19 14:27:02 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:36:06 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_env(t_lst_env *lst, char **command)
 }
 
 //Have to check if variable got a value, if no don't print the =
-void	print_export(t_head_env *head)
+int	print_export(t_head_env *head)
 {
 	t_lst_env	*export;
 	t_lst_env	*env;
@@ -48,4 +48,5 @@ void	print_export(t_head_env *head)
 			printf("=\"\"\n");
 		export = export->next;
 	}
+	return (0);
 }
