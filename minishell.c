@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/21 16:27:08 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/24 10:36:42 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ int	main(int argc, char **argv, char **envp)
 		if (*prg.cmd.command.str)
 		{
 			prg.lst_cmd = create_command(&prg);
-			// lst_cmd_put(cmd);
-			exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
+			if (prg.lst_cmd)
+			{
+				// lst_cmd_put(cmd);
+				exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
+			}
 		}
 		reinit_command(&prg.cmd);
 	}
