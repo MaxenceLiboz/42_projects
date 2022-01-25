@@ -1,4 +1,5 @@
 SRCS		=	./srcs/ft_atoi.c					\
+				./srcs/is_atoi.c				\
 				./srcs/ft_atoi_base.c				\
 				./srcs/ft_calloc.c					\
 				./srcs/ft_isalpha.c 				\
