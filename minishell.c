@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/24 10:36:42 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/25 16:36:38 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
+	int		i = 10;
 
 	(void)argc;
 	(void)argv;
 	prg.mem = 0;
 	set_export(envp, &prg.env, &prg.mem);
-	while (1)
+	while (i--)
 	{
 		prg.prompt = create_prompt(&prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
@@ -34,10 +35,11 @@ int	main(int argc, char **argv, char **envp)
 		if (*prg.cmd.command.str)
 		{
 			prg.lst_cmd = create_command(&prg);
-			if (prg.lst_cmd)
+			if (prg.lst_cmd && *prg.lst_cmd->cmd[0] != 0)
 			{
 				// lst_cmd_put(cmd);
-				exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
+				exec_command(&prg, envp);
+				// exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
 			}
 		}
 		reinit_command(&prg.cmd);
