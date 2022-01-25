@@ -31,7 +31,7 @@ INCLUDES	=	./includes/minishell.h				\
 
 CC			= 	gcc
 
-CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror -g  -ltermcap #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 

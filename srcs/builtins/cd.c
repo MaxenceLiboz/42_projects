@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/21 16:16:03 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/24 09:40:00 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,7 @@ int	ft_cd(char **str, t_head_env *head, t_list **mem)
 		return (1);
 	init_oldpwd(head, getcwd(NULL, 0), mem);
 	stat(path.str, &sb);
-	if (access((const char *)path.str, F_OK) == 0)
-	{
-		if (S_ISDIR(sb.st_mode))
-		{
-			if (access((const char *)path.str, X_OK) == 0)
-				chdir(path.str);
-			else
-				return (print_stderror(1, 3, "bash: cd: ",
-						str[1], ": Permission denied\n"));
-		}
-		else
-			return (print_stderror(1, 5, "bash: cd: ",
-					str[1], ": ", strerror(errno), "\n"));
-	}
-	else
+	if (chdir(path.str) != 0)
 		return (print_stderror(1, 5, "bash: cd: ",
 				str[1], ": ", strerror(errno), "\n"));
 	return (0);

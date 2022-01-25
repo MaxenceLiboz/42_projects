@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/21 16:00:27 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/24 11:58:37 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <sys/stat.h> 
 # include <unistd.h>
 # include <errno.h>
+# include <curses.h>
+# include <term.h>
+# include <termcap.h>
 
 #define TEST_PS(expectation, ft) printf("Expected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m", expectation); ft; printf("\e[0m\n");
 #define TEST_S(expectation, str) ft_strncmp(expectation, str, ft_strlen(expectation) + 1) == 0 ? printf("\e[0;32mOK\e[0m\n") : printf("\e[0;31mFALSE\e[0m\nExpected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m%s\e[0m\n\n", expectation, str);
@@ -131,14 +134,14 @@ int			print_stderror(int error, int size, char *s1, ...);
 
 /**************** Built in ********/
 int			exec_builtin(char **command, t_head_env *head, t_list **mem);
-void		ft_export(t_head_env *head, char **command, t_list **mem);
+int			ft_export(t_head_env *head, char **command, t_list **mem);
 int			control_args(char *str);
-void		print_export(t_head_env *head);
 int			ft_env(t_lst_env *lst, char **command);
 int			ft_unset(t_head_env **head, char **command);
 int			ft_echo(char **str);
 int			ft_cd(char **str, t_head_env *head, t_list **mem);
 int			ft_pwd(char **str);
+int			print_export(t_head_env *head);
 void		ft_exit(char **str);
 
 /**************** Parsing ******************/
