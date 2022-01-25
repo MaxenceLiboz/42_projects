@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:51:33 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/19 14:09:00 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/25 09:19:45 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,19 @@ void	lst_cmd_put(t_lst_cmd	*lst)
 		printf("\n");
 		head = head->next;
 	}
+}
+
+int	lst_cmd_size(t_lst_cmd *lst)
+{
+	int		size;
+
+	if (!lst)
+		return (0);
+	size = 0;
+	while (lst)
+	{
+		size++;
+		lst = lst->next;
+	}
+	return (size);
 }
