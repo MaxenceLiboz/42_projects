@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/21 08:50:42 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/25 15:02:59 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,39 @@ void	add_string(t_string *string, char *to_add, size_t index, t_list **mem)
 	dup_string(string, before.str, 0, mem);
 	dup_string(string, to_add, string->size - 1, mem);
 	dup_string(string, after.str, string->size - 1, mem);
+}
+
+char	**strings_to_array(t_string *strings, t_list **mem)
+{
+	int		i;
+	char	**dst;
+
+	i = 0;
+	while (strings[i].str)
+		i++;
+	dst = ft_malloc(mem, sizeof(char *) * (i + 1));
+	i = 0;
+	while (strings[i].str)
+	{
+		dst[i] = strings[i].str;
+		i++;
+	}
+	dst[i] = 0;
+	return (dst);
+}
+
+t_string	join_string(char *s1, char *s2, t_list **mem)
+{
+	t_string	string;
+
+	string.str = 0;
+	if (!s1 && !s2)
+		return (string);
+	if (!s1)
+		return (sub_string(s2, 0, ft_strlen(s2), mem));
+	if (!s2)
+		return (sub_string(s1, 0, ft_strlen(s2), mem));
+	init_string(&string, s1, TRUE, mem);
+	add_string(&string, s2, string.size - 1, mem);
+	return (string);
 }
