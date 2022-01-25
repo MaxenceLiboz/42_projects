@@ -29,9 +29,8 @@ SRCS_DIR	=	srcs
 INCLUDES	=	./includes/minishell.h				\
 				./libft/includes/libft.h			\
 
-CC			= 	gcc
-
-CFLAGS		= 	-Wall -Wextra -Werror -g  -ltermcap #-fsanitize=address
+CC			= 	gcc -Wno-unused-command-line-argument
+CFLAGS		= 	-Wall -Wextra -Werror -g   -lncurses #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 
