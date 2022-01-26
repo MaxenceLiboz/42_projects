@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/26 11:22:03 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:53:12 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	ft_exit(char **str)
 		exit(0);
 	if (!isnum(str[1]) || !is_atoll(ft_atold(str[1])))
 	{
-		print_stderror(0, str[0], strerror(errno));
+		print_stderror(0, 3, "exit: ", str[1], ": numeric argument required");
 		exit(255);
 	}
 	if (str[2])
 	{
 		if (ft_strncmp(str[2], "|", 2) != 0)
 		{
-			print_stderror(0, str[0], strerror(errno));
+			print_stderror(0, 1, "exit: too many arguments");
 			exit(255);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/26 11:04:38 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:54:24 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ t_bool	check_quotes(t_string cmd)
 		i++;
 	}
 	if (squotes % 2 != 0 && dquotes % 2 != 0)
-		ft_putstr_fd("Missing: both: \', \"\n", 2);
+		print_stderror(0, 1, "Missing: both: \', \"");
 	else if (squotes % 2 != 0)
-		ft_putstr_fd("Missing: \'\n", 2);
+		print_stderror(0, 1, "Missing: \'");
 	else if (dquotes % 2 != 0)
-		ft_putstr_fd("Missing: \"\n", 2);
+		print_stderror(0, 1, "Missing: \"");
 	if (squotes % 2 != 0 || dquotes % 2 != 0)
 		return (FALSE);
 	return (TRUE);
@@ -49,7 +49,7 @@ t_bool	check_pipes(t_command cmd)
 	{
 		if (ft_strncmp(cmd.array[i].str, "|", 2) == 0
 			&& i == cmd.size - 1)
-			return (ft_putstr_fd("Missing: command after |\n", 2));
+			return (print_stderror(0, 1, "Missing: command after |"));
 		i++;
 	}
 	return (TRUE);
