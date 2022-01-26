@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/25 11:22:08 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:21:51 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	get_new_path(char **str, t_lst_env *env,
 	{
 		dup_string(path, lst_env_find_name_var(env, "HOME").str, 0, mem);
 		if (!path->str)
-			return (print_stderror(0, 1, "bash: cd: HOME not set\n"));
+			return (ft_putstr_fd("bash: cd: HOME not set\n", 2));
 	}
 	else if (!*str[1])
 		return (0);
@@ -29,7 +29,7 @@ static int	get_new_path(char **str, t_lst_env *env,
 	{
 		dup_string(path, lst_env_find_name_var(env, "OLDPWD").str, 0, mem);
 		if (!path->str)
-			return (print_stderror(0, 1, "bash: cd: OLDPWD not set\n"));
+			return (ft_putstr_fd("bash: cd: OLDPWD not set\n", 2));
 		else
 			printf("%s\n", path->str);
 	}	
@@ -106,8 +106,7 @@ int	ft_cd(char **str, t_head_env *head, t_list **mem)
 	init_oldpwd(head, getcwd(NULL, 0), mem);
 	stat(path.str, &sb);
 	if (chdir(path.str) != 0)
-		return (print_stderror(1, 5, "bash: cd: ",
-				str[1], ": ", strerror(errno), "\n"));
+		return (print_stderror(1, str[0], strerror(errno)));
 	set_new_pwd(head, mem);
 	return (0);
 }

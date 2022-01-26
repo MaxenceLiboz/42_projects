@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/26 10:54:48 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 11:20:43 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ typedef struct s_prg
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
-int			print_stderror(int error, int size, char *s1, ...);
+int			print_stderror(int error, char *cmd, char *strerr);
 
 /**************** Built in ********/
 int			exec_builtin(char **command, t_head_env *head, t_prg *prg);
