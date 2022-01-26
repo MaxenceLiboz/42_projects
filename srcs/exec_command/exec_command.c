@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/25 16:33:45 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 10:46:07 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,22 @@ int	ft_execve(t_prg *prg, char **envp)
 	int			i;
 	t_string	cmd;
 
-	dup2(prg->fd.fd1, STDIN);
-	// dup2(prg->fd.fd2, STDOUT);
 	prg->fd.pid = fork();
 	if (prg->fd.pid == 0)
 	{
+		if (prg->fd.fd_in > 0)
+			dup2(prg->fd.fd_in, STDIN);
+		if (prg->fd.fd_out > 0)
+			dup2(prg->fd.fd_out, STDOUT);
 		init_string(&cmd, "", TRUE, &prg->mem);
 		i = -1;
 		while (prg->paths[++i])
 		{
 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
-			if (access(cmd.str, F_OK) == 0)
-				execve(cmd.str, prg->lst_cmd->cmd, envp);
+			// if (access(cmd.str, F_OK) == 0)
+			execve(cmd.str, prg->lst_cmd->cmd, envp);
 		}
+		print_stderror(-1, 3, "bash: ", strerror(errno), "\n");
 	}
 	else
 		waitpid(-1, 0, 0);
@@ -63,9 +66,10 @@ int	exec_command(t_prg *prg, char **envp)
 {
 	int			return_value;
 
+	errno = 0;
 	if (check_cmd(prg, prg->lst_cmd) == -1)
 		return (0);
-	return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, &prg->mem);
+	return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
 	if (return_value != -1)
 		return (return_value);
 	prg->paths = get_path(prg->env.export, &prg->mem);

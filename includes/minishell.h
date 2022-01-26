@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/25 16:23:48 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 09:28:19 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ int			lst_cmd_size(t_lst_cmd *lst);
 typedef struct s_fd
 {
 	int		fd[2];
-	int		fd1;
-	int		fd2;
+	int		fd_in;
+	int		fd_out;
 	pid_t	pid;
 	int		pipe_nb;
 }	t_fd;
@@ -152,7 +152,7 @@ void		ft_free(char **str);
 int			print_stderror(int error, int size, char *s1, ...);
 
 /**************** Built in ********/
-int			exec_builtin(char **command, t_head_env *head, t_list **mem);
+int			exec_builtin(char **command, t_head_env *head, t_prg *prg);
 int			control_args(char *str);
 int			print_export(t_head_env *head);
 int			ft_export(t_head_env *head, char **command, t_list **mem);

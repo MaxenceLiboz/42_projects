@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/25 16:24:06 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 10:40:14 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_open(char *file, char *options)
 					strerror(errno), "\n"));
 	}
 	if (fd == -1)
-		return (print_stderror(-1, 1, "bash: open: error"));
+		return (print_stderror(-1, 2, "bash: open: ", strerror(errno)));
 	return (fd);
 }
 
@@ -80,18 +80,20 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 	int		i;
 
 	i = 0;
+	prg->fd.fd_in = 0;
+	prg->fd.fd_out = 0;
 	while (cmd->cmd[i])
 	{
 		if (ft_strncmp(cmd->cmd[i], "<", 2) == 0)
-			prg->fd.fd1 = ft_open(cmd->cmd[i + 1], "R_OK");
+			prg->fd.fd_in = ft_open(cmd->cmd[i + 1], "R_OK");
 		if (ft_strncmp(cmd->cmd[i], ">", 2) == 0)
-			prg->fd.fd2 = ft_open(cmd->cmd[i + 1], "CRT");
+			prg->fd.fd_out = ft_open(cmd->cmd[i + 1], "CRT");
 		if (ft_strncmp(cmd->cmd[i], ">>", 3) == 0)
-			prg->fd.fd2 = ft_open(cmd->cmd[i + 1], "CRA");
+			prg->fd.fd_out = ft_open(cmd->cmd[i + 1], "CRA");
 		i++;
 	}
 	cmd->cmd = f_cmd(cmd->cmd, &prg->mem);
-	if (prg->fd.fd1 == -1 || prg->fd.fd2 == -1)
+	if (prg->fd.fd_in == -1 || prg->fd.fd_out == -1)
 		return (-1);
 	return (0);
 }
