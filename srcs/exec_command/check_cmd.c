@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/26 11:22:22 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:55:56 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ int	ft_open(char *file, char *options)
 		if (access(file, R_OK) == 0)
 			fd = open(file, O_RDONLY);
 		else
-			return (print_stderror(-1, "open", strerror(errno)));
+			return (print_stderror(-1, 4, "open: ",
+					file, ": ", strerror(errno)));
 	}
 	if (fd == -1)
-		return (print_stderror(-1, "open", strerror(errno)));
+		return (print_stderror(-1, 2, "open: ", strerror(errno)));
 	return (fd);
 }
 

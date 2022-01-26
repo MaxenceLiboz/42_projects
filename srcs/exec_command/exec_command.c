@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/26 11:22:10 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:56:20 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_execve(t_prg *prg, char **envp)
 			// if (access(cmd.str, F_OK) == 0)
 			execve(cmd.str, prg->lst_cmd->cmd, envp);
 		}
-		print_stderror(-1, cmd.str, strerror(errno));
+		print_stderror(-1, 1, strerror(errno));
 	}
 	else
 		waitpid(-1, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:01:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/26 11:22:54 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:49:58 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,22 @@ void	*error(char *str, int error)
 	return ((void *)(size_t)error);
 }
 
-// first arg is error number, second one is errno, third one is cmd name
-int	print_stderror(int error, char *cmd, char *strerr)
+// first arg is size of arg, set second one to 0, then add string
+int	print_stderror(int error, int size, char *s1, ...)
 {
+	va_list	arg;
+
+	va_start(arg, s1);
 	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerr, 2);
+	if (s1)
+	{
+		ft_putstr_fd(s1, 2);
+		size--;
+	}
+	while (size--)
+		ft_putstr_fd(va_arg(arg, char *), 2);
 	ft_putstr_fd("\n", 2);
+	va_end(arg);
 	errno = 0;
 	return (error);
 }
