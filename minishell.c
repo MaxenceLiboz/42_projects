@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/26 10:54:19 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 11:15:37 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	set_term_env(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
-	int		i = 10;
+	// int		i = 10;
 
 	(void)argc;
 	(void)argv;

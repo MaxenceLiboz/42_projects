@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:28 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/24 10:47:14 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:21:30 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	ft_unset(t_head_env **head, char **command)
 		if (control_args(command[i]) == 0)
 			find_link(head, command[i]);
 		else
-			print_stderror(1, 3, "bash: unset: `", command[i],
-				"': not a valid identifier\n");
+			print_stderror(1, command[0], strerror(errno));
 		i++;
 	}
 	return (0);
