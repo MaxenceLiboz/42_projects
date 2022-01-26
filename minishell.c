@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/25 16:04:32 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:54:19 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	set_term_env()
+static void	set_term_env(void)
 {
 	int		ret;
 	char	*tmp;
@@ -29,6 +29,7 @@ static void	set_term_env()
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
+	int		i = 10;
 
 	(void)argc;
 	(void)argv;
@@ -46,8 +47,8 @@ int	main(int argc, char **argv, char **envp)
 		if (*prg.cmd.command.str)
 		{
 			prg.lst_cmd = create_command(&prg);
-			if (prg.lst_cmd)
-				exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
+			if (prg.lst_cmd && *prg.lst_cmd->cmd[0] != 0)
+				exec_command(&prg, envp);
 		}
 		reinit_command(&prg.cmd);
 	}

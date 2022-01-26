@@ -6,6 +6,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_command/command_functions.c		\
 				t_string/string_functions.c			\
 				t_string/string_functions2.c		\
+				t_string/split_string.c				\
 				t_lst_env/lst_env_functions.c		\
 				t_lst_env/lst_env_functions2.c		\
 				builtins/set_export.c				\
@@ -20,6 +21,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/exec_builtin.c				\
 				t_lst_cmd/lst_cmd_functions.c		\
 				malloc/malloc_functions.c			\
+				exec_command/exec_command.c			\
+				exec_command/check_cmd.c			\
 				
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 

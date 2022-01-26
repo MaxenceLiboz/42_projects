@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/25 14:22:43 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:54:48 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define END_COLOR "\033[0m"
 # define TRUE 1
 # define FALSE 0
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 typedef int	t_bool;
 
@@ -64,6 +67,9 @@ void		erase_string(t_string *string, char *to_replace, size_t start,
 				t_list **mem);
 void		add_string(t_string *string, char *to_add, size_t index,
 				t_list **mem);
+t_string	*split_string(char *s, char c, t_list **mem);
+char		**strings_to_array(t_string *strings, t_list **mem);
+t_string	join_string(char *s1, char *s2, t_list **mem);
 
 /**************** Command ********/
 typedef struct s_command
@@ -118,6 +124,17 @@ void		lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item);
 int			lst_cmd_clear(t_lst_cmd **lst);
 void		lst_cmd_put(t_lst_cmd	*lst);
 t_lst_cmd	*lst_cmd_init(t_command *cmd, t_list **mem);
+int			lst_cmd_size(t_lst_cmd *lst);
+
+/**************** fd ********/
+typedef struct s_fd
+{
+	int		fd[2];
+	int		fd_in;
+	int		fd_out;
+	pid_t	pid;
+	int		pipe_nb;
+}	t_fd;
 
 /**************** t_prg ***********************/
 typedef struct s_prg
@@ -127,14 +144,21 @@ typedef struct s_prg
 	t_command	cmd;
 	t_lst_cmd	*lst_cmd;
 	t_list		*mem;
+	char		**paths;
+	t_fd		fd;
 }	t_prg;
+
+/**************** t_pipe ***********************/
+
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
 int			print_stderror(int error, int size, char *s1, ...);
 
 /**************** Built in ********/
-int			exec_builtin(char **command, t_head_env *head, t_list **mem);
+int			exec_builtin(char **command, t_head_env *head, t_prg *prg);
+int			control_args(char *str);
+int			print_export(t_head_env *head);
 int			ft_export(t_head_env *head, char **command, t_list **mem);
 int			control_args(char *str);
 int			ft_env(t_lst_env *lst, char **command);
@@ -154,5 +178,9 @@ t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
 
 int			set_export(char **envp, t_head_env *head, t_list **mem);
+
+/**************** Exec_command *************/
+int			exec_command(t_prg *prg, char **envp);
+int			check_cmd(t_prg *prg, t_lst_cmd *cmd);
 
 #endif
