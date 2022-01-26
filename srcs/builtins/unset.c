@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:28 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/19 14:25:38 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/24 10:47:14 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	find_link(t_head_env **head, char *name)
 	actual = (*head)->export;
 	prev = actual;
 	next = actual->next;
-	while (ft_strncmp(name, actual->name_var.str, ft_strlen(name)) != 0 && next)
+	while (ft_strncmp(name, actual->name_var.str, ft_strlen(name) + 1) != 0 && next)
 	{
 		prev = actual;
 		actual = actual->next;
@@ -39,7 +39,7 @@ static void	find_link(t_head_env **head, char *name)
 	actual = (*head)->env;
 	prev = actual;
 	next = actual->next;
-	while (ft_strncmp(name, actual->name_var.str, ft_strlen(name)) != 0 && next)
+	while (ft_strncmp(name, actual->name_var.str, ft_strlen(name) + 1) != 0 && next)
 	{
 		prev = actual;
 		actual = actual->next;

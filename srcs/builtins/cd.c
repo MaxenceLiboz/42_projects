@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/21 16:16:03 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/25 11:22:08 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,30 @@ static void	init_oldpwd(t_head_env *head, char *cwd, t_list **mem)
 	free(cwd);
 }
 
+static void	set_new_pwd(t_head_env *head, t_list **mem)
+{
+	char		*new_cwd;
+	t_lst_env	*env;
+	t_lst_env	*export;
+
+	env = head->env;
+	export = head->export;
+	if (lst_env_find_name_var(head->export, "PWD").max_size != 0)
+	{
+		new_cwd = getcwd(NULL, 0);
+		while (ft_strncmp(env->name_var.str, "PWD", 4) != 0 && env->next)
+		env = env->next;
+		if (!env->next)
+			lst_env_add_front(&head->env, lst_env_new("PWD",
+					sub_string(new_cwd, 0, ft_strlen(new_cwd), mem).str, mem));
+		while (ft_strncmp(export->name_var.str, "PWD", 4) != 0 && export->next)
+		export = export->next;
+		export->var = sub_string(new_cwd, 0, ft_strlen(new_cwd), mem);
+		env->var = sub_string(new_cwd, 0, ft_strlen(new_cwd), mem);
+		free(new_cwd);
+	}
+}
+
 int	ft_cd(char **str, t_head_env *head, t_list **mem)
 {
 	t_string	path;
@@ -81,22 +105,9 @@ int	ft_cd(char **str, t_head_env *head, t_list **mem)
 		return (1);
 	init_oldpwd(head, getcwd(NULL, 0), mem);
 	stat(path.str, &sb);
-	if (access((const char *)path.str, F_OK) == 0)
-	{
-		if (S_ISDIR(sb.st_mode))
-		{
-			if (access((const char *)path.str, X_OK) == 0)
-				chdir(path.str);
-			else
-				return (print_stderror(1, 3, "bash: cd: ",
-						str[1], ": Permission denied\n"));
-		}
-		else
-			return (print_stderror(1, 5, "bash: cd: ",
-					str[1], ": ", strerror(errno), "\n"));
-	}
-	else
+	if (chdir(path.str) != 0)
 		return (print_stderror(1, 5, "bash: cd: ",
 				str[1], ": ", strerror(errno), "\n"));
+	set_new_pwd(head, mem);
 	return (0);
 }

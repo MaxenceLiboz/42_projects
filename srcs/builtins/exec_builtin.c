@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/26 10:35:15 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 10:55:17 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 {
-	int saved;
-	int return_value;
+	int	saved;
+	int	return_value;
 
 	return_value = -1;
 	saved = dup(STDOUT_FILENO);

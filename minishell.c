@@ -6,15 +6,26 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/25 16:36:38 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/26 10:54:19 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+static void	set_term_env(void)
+{
+	int		ret;
+	char	*tmp;
+
+	ret = tgetent(NULL, getenv("TERM"));
+	tmp = tgetstr("cl", NULL);
+	tputs(tmp, 10, putchar);
+}
+
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
 // Need to reset OLDPWD at each command
 //At start, we need to set OLDPWD to 0;
+//need to set PWD at each loop, unless PWD is unset
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
@@ -24,7 +35,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	prg.mem = 0;
 	set_export(envp, &prg.env, &prg.mem);
-	while (i--)
+	set_term_env();
+	while (1)
 	{
 		prg.prompt = create_prompt(&prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
@@ -36,11 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			prg.lst_cmd = create_command(&prg);
 			if (prg.lst_cmd && *prg.lst_cmd->cmd[0] != 0)
-			{
-				// lst_cmd_put(cmd);
 				exec_command(&prg, envp);
-				// exec_builtin(prg.lst_cmd->cmd, &prg.env, &prg.mem);
-			}
 		}
 		reinit_command(&prg.cmd);
 	}
