@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/26 11:56:20 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/27 09:41:39 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,40 @@ int	ft_execve(t_prg *prg, char **envp)
 		while (prg->paths[++i])
 		{
 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
-			// if (access(cmd.str, F_OK) == 0)
 			execve(cmd.str, prg->lst_cmd->cmd, envp);
 		}
-		print_stderror(-1, 1, strerror(errno));
+		print_stderror(-1, 2, prg->lst_cmd->cmd[0], ": command not found");
 	}
-	else
-		waitpid(-1, 0, 0);
 	return (0);
 }
 
-int	exec_command(t_prg *prg, char **envp)
+int	exec_one(t_prg *prg)
 {
-	int			return_value;
+	char	**envp;
+	int		return_value;
 
-	errno = 0;
+	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	if (check_cmd(prg, prg->lst_cmd) == -1)
-		return (0);
+		return (-1);
+	if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
+		return (-1);
 	return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
 	if (return_value != -1)
 		return (return_value);
 	prg->paths = get_path(prg->env.export, &prg->mem);
+	ft_execve(prg, envp);
+	waitpid(-1, 0, 0);
+	return (-1);
+}
+
+int	exec_command(t_prg *prg)
+{
+	int			return_value;
+
+	errno = 0;
+	return_value = 1;
 	if (lst_cmd_size(prg->lst_cmd) == 1)
-		ft_execve(prg, envp);
+		return_value = exec_one(prg);
 	// else
 	// 	ft_pipex();
 	

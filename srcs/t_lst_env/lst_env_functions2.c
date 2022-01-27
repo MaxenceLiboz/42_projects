@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_functions2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:19:41 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/12 22:48:41 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/26 13:28:55 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-t_lst_env	*lst_env_last(t_lst_env *lst)
-{
-	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
 
 int	lst_env_size(t_lst_env *lst)
 {
@@ -87,4 +78,29 @@ t_string	lst_env_find_name_var(t_lst_env *env, char *str)
 		tmp = tmp->next;
 	}
 	return (null);
+}
+
+char	**lst_env_to_array(t_lst_env *env, t_list **mem)
+{
+	char		**envp;
+	t_string	*temp;
+	t_lst_env	*head;
+	int			i;
+
+	envp = 0;
+	if (!env)
+		return (envp);
+	i = 0;
+	head = env;
+	temp = ft_malloc(mem, sizeof(t_string) * (lst_env_size(env) + 1));
+	while (head)
+	{
+		init_string(&temp[i], head->name_var.str, TRUE, mem);
+		add_string(&temp[i], "=", temp[i].size - 1, mem);
+		add_string(&temp[i], head->var.str, temp[i].size - 1, mem);
+		head = head->next;
+		i++;
+	}
+	temp[i].str = 0;
+	return (envp = strings_to_array(temp, mem));
 }

@@ -3,57 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/26 11:55:56 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/27 14:31:17 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	f_cmd_size(char **cmd)
-{
-	int			i;
-	int			y;
-
-	i = 0;
-	y = 0;
-	while (cmd[i])
-	{
-		if (ft_strncmp(cmd[i], ">", 2) == 0 || ft_strncmp(cmd[i], "<", 2) == 0
-			|| ft_strncmp(cmd[i], ">>", 2) == 0
-			|| ft_strncmp(cmd[i], "<<", 2) == 0)
-			i += 2;
-		i++;
-		y++;
-	}
-	return (y);
-}
-
-static char	**f_cmd(char **cmd, t_list **mem)
-{
-	int			i;
-	int			y;
-	t_string	*strings;
-
-	i = 0;
-	y = 0;
-	strings = ft_malloc(mem, sizeof(t_string) * (f_cmd_size(cmd) + 1));
-	while (cmd[i])
-	{
-		if (ft_strncmp(cmd[i], ">", 2) == 0 || ft_strncmp(cmd[i], "<", 2) == 0
-			|| ft_strncmp(cmd[i], ">>", 2) == 0
-			|| ft_strncmp(cmd[i], "<<", 2) == 0)
-			i += 2;
-		else
-			init_string(&strings[y++], cmd[i++], TRUE, mem);
-	}
-	strings[y].str = 0;
-	return (strings_to_array(strings, mem));
-}
-
-int	ft_open(char *file, char *options)
+static int	ft_open(char *file, char *options)
 {
 	int		fd;
 
@@ -75,6 +34,42 @@ int	ft_open(char *file, char *options)
 	return (fd);
 }
 
+t_bool	check_limiter(char *limiter, char *prompt)
+{
+	int		i;
+
+	i = 0;
+	while (prompt[i] && limiter[i])
+	{
+		if (prompt[i] != limiter[i])
+			return (FALSE);
+		i++;
+	}
+	if (prompt[i] != '\n' || limiter[i] != '\0')
+		return (FALSE);
+	return (TRUE);
+}
+
+int	here_doc(char *limiter, t_prg *prg)
+{
+	t_string	prompt;
+
+	if (pipe(prg->fd.fd) == -1)
+		return (print_stderror(-1, 1, strerror(errno)));
+	while (1)
+	{
+		ft_putstr_fd("here_doc > ", 0);
+		init_string(&prompt, get_next_line(0), TRUE, &prg->mem);
+		if (check_limiter(limiter, prompt.str) == TRUE)
+			break ;
+		change_arg_command(prg, &prompt);
+		if (write(prg->fd.fd[1], prompt.str, prompt.size - 1) == -1)
+			return (print_stderror(-1, 1, strerror(errno)));
+	}
+	close(prg->fd.fd[1]);
+	return (prg->fd.fd[0]);
+}
+
 int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 {
 	int		i;
@@ -86,6 +81,8 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 	{
 		if (ft_strncmp(cmd->cmd[i], "<", 2) == 0)
 			prg->fd.fd_in = ft_open(cmd->cmd[i + 1], "R_OK");
+		if (ft_strncmp(cmd->cmd[i], "<<", 3) == 0)
+			prg->fd.fd_in = here_doc(cmd->cmd[i + 1], prg);
 		if (ft_strncmp(cmd->cmd[i], ">", 2) == 0)
 			prg->fd.fd_out = ft_open(cmd->cmd[i + 1], "CRT");
 		if (ft_strncmp(cmd->cmd[i], ">>", 3) == 0)
