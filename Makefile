@@ -35,8 +35,8 @@ SRCS_DIR	=	srcs
 INCLUDES	=	./includes/minishell.h				\
 				./libft/includes/libft.h			\
 
-CC			= 	gcc -Wno-unused-command-line-argument
-CFLAGS		= 	-Wall -Wextra -Werror -g -lncurses #-fsanitize=address
+CC			= 	gcc
+CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 
@@ -66,7 +66,7 @@ libft:		${INCLUDES}
 			make -C libft
 
 ${EXEC}:	${EXEC}.c ${LIBS}
-			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -L../readline/lib -I../readline/include ${LIBS} -o ${EXEC}  
+			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -lncurses -Ireadline/include ${LIBS} -o ${EXEC}  
 
 clean:
 			${RM} ${OBJS} $(OBJS_DIR)
