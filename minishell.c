@@ -3,23 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/27 14:02:00 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/27 15:41:40 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	set_term_env(void)
+static void	handler(int signum)
 {
-	int		ret;
-	char	*tmp;
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
 
-	ret = tgetent(NULL, getenv("TERM"));
-	tmp = tgetstr("cl", NULL);
-	tputs(tmp, 10, putchar);
+void	get_signal(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = handler;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
@@ -39,8 +49,11 @@ int	main(int argc, char **argv, char **envp)
 	rl_replace_line("", 0);
 	while (i--)
 	{
+		get_signal();
 		prg.prompt = create_prompt(&prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
+		if (!prg.cmd.command.str)
+			exit(0);
 		if (*prg.cmd.command.str)
 			add_history(prg.cmd.command.str);
 		init_string(&prg.cmd.command, prg.cmd.command.str, FALSE, &prg.mem);

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/01/27 15:35:09 by tarchimb         ###   ########.fr       */
+=======
 /*   Updated: 2022/01/27 14:32:24 by maxencelibo      ###   ########.fr       */
+>>>>>>> 4066a27c8e3f3ab421d0f356997a4404861b50e7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +29,7 @@
 # include <curses.h>
 # include <term.h>
 # include <termcap.h>
-#include <signal.h>
+# include <signal.h>
 
 #define TEST_PS(expectation, ft) printf("Expected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m", expectation); ft; printf("\e[0m\n");
 #define TEST_S(expectation, str) ft_strncmp(expectation, str, ft_strlen(expectation) + 1) == 0 ? printf("\e[0;32mOK\e[0m\n") : printf("\e[0;31mFALSE\e[0m\nExpected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m%s\e[0m\n\n", expectation, str);
@@ -149,6 +153,12 @@ typedef struct s_prg
 }	t_prg;
 
 /**************** t_pipe ***********************/
+
+
+
+/**************** set_env ***********************/
+void		set_term_env(void);
+void		get_signal(void);
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
