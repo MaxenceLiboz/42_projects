@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/27 15:38:25 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:41:40 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ void	get_signal(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
+	int		i = 20;
 
 	(void)argc;
 	(void)argv;
 	prg.mem = 0;
 	set_export(envp, &prg.env, &prg.mem);
 	set_term_env();
-	while (1)
+	rl_replace_line("", 0);
+	while (i--)
 	{
 		get_signal();
 		prg.prompt = create_prompt(&prg.mem);
@@ -60,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			prg.lst_cmd = create_command(&prg);
 			if (prg.lst_cmd && *prg.lst_cmd->cmd[0] != 0)
-				exec_command(&prg, envp);
+				exec_command(&prg);
 		}
 		reinit_command(&prg.cmd);
 	}

@@ -6,7 +6,11 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:37:52 by mliboz            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/01/27 15:35:09 by tarchimb         ###   ########.fr       */
+=======
+/*   Updated: 2022/01/27 14:32:24 by maxencelibo      ###   ########.fr       */
+>>>>>>> 4066a27c8e3f3ab421d0f356997a4404861b50e7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +105,11 @@ void		lst_env_add_front(t_lst_env **lst, t_lst_env *new);
 int			lst_env_clear(t_lst_env **lst);
 void		lst_env_delone(t_lst_env *prev, t_lst_env *to_del,
 				t_lst_env **head);
-t_lst_env	*lst_env_last(t_lst_env *lst);
 int			lst_env_size(t_lst_env *lst);
 void		lst_env_swap(t_lst_env **head, t_lst_env **next);
 void		lst_env_sort(t_lst_env **env);
 t_string	lst_env_find_name_var(t_lst_env *env, char *str);
+char		**lst_env_to_array(t_lst_env *env, t_list **mem);
 
 typedef struct s_head_env
 {
@@ -181,11 +185,19 @@ void		split_wog(t_prg *prg, char c);
 int			count_split_wog(const char *str, char charset);
 t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
+t_bool		check_chevrons(t_string *cmd, t_list **mem);
+
 
 int			set_export(char **envp, t_head_env *head, t_list **mem);
 
 /**************** Exec_command *************/
-int			exec_command(t_prg *prg, char **envp);
+int			exec_command(t_prg *prg);
 int			check_cmd(t_prg *prg, t_lst_cmd *cmd);
+char		**f_cmd(char **cmd, t_list **mem);
 
+/**************** ARGS *************/
+void		change_arg_command(t_prg *prg, t_string *str);
+void		find_arg_and_replace(t_prg *prg, t_string *arg, int start,
+				t_string *str);
+t_bool		is_arg(char *arg, int *start);
 #endif

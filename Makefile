@@ -24,6 +24,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				malloc/malloc_functions.c			\
 				exec_command/exec_command.c			\
 				exec_command/check_cmd.c			\
+				exec_command/f_command.c			\
+				args/args_functions.c				\
 				
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 
@@ -34,7 +36,7 @@ INCLUDES	=	./includes/minishell.h				\
 				./libft/includes/libft.h			\
 
 CC			= 	gcc -Wno-unused-command-line-argument
-CFLAGS		= 	-Wall -Wextra -Werror -g   -lncurses #-fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror -g -lncurses #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 

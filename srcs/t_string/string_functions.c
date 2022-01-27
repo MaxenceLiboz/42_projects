@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/19 15:19:35 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:13:07 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 
 void	init_string(t_string *string, char *src, t_bool to_malloc, t_list **mem)
 {
-	string->size = ft_strlen(src) + 1;
-	string->max_size = string->size * 2;
+	int		size;
+
+	if (!src)
+		size = 1;
+	else
+		size = ft_strlen(src) + 1;
+	string->size = size;
+	string->max_size = size * 2;
 	if (to_malloc != TRUE)
 		return ;
 	string->str = ft_malloc(mem, sizeof(char) * (string->max_size));
@@ -47,7 +53,7 @@ void	dup_string(t_string *string, char *src, int index, t_list **mem)
 	i = 0;
 	if (!src)
 	{
-		string->str = NULL;
+		init_string(string, "", TRUE, mem);
 		return ;
 	}
 	if (!string->str)
