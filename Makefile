@@ -18,6 +18,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/exit.c						\
 				builtins/error.c					\
 				builtins/env.c						\
+				signal/set_term.c					\
 				builtins/exec_builtin.c				\
 				t_lst_cmd/lst_cmd_functions.c		\
 				malloc/malloc_functions.c			\
@@ -40,7 +41,7 @@ LIBINCLUDES	=	-Iincludes -Ilibft/includes
 EXECINCLUDES =	-lreadline
 
 LIBS		=	libft.a								\
-				${LIB}
+				${LIB}								\
 
 LIB			=	libminishell.a
 
@@ -63,7 +64,7 @@ libft:		${INCLUDES}
 			make -C libft
 
 ${EXEC}:	${EXEC}.c ${LIBS}
-			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} ${LIBS} -o ${EXEC}
+			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -L../readline/lib -I../readline/include ${LIBS} -o ${EXEC}  
 
 clean:
 			${RM} ${OBJS} $(OBJS_DIR)
