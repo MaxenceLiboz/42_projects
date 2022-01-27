@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/26 11:50:29 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/27 14:02:00 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ static void	set_term_env(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
+	int		i = 20;
 
 	(void)argc;
 	(void)argv;
 	prg.mem = 0;
 	set_export(envp, &prg.env, &prg.mem);
 	set_term_env();
-	while (1)
+	rl_replace_line("", 0);
+	while (i--)
 	{
 		prg.prompt = create_prompt(&prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
@@ -47,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			prg.lst_cmd = create_command(&prg);
 			if (prg.lst_cmd && *prg.lst_cmd->cmd[0] != 0)
-				exec_command(&prg, envp);
+				exec_command(&prg);
 		}
 		reinit_command(&prg.cmd);
 	}

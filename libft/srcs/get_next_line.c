@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 17:05:46 by mliboz            #+#    #+#             */
-/*   Updated: 2021/11/29 09:26:22 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/01/27 08:40:49 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ static int	ft_read(char *buffer, char **save, char **pos, int fd)
 {
 	int		iread;
 
-	*pos = *save;
 	*save = ft_strjoin(*save, buffer);
-	free(*pos);
 	iread = read(fd, buffer, BUFFER_SIZE);
 	buffer[iread] = '\0';
 	if (iread <= 0)
