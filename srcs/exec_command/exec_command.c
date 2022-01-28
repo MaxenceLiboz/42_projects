@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/28 08:34:15 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/28 14:00:57 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,5 @@ int	exec_command(t_prg *prg)
 		return_value = exec_one(prg);
 	// else
 	// 	ft_pipex();
-	
-	printf("%d\n", return_value);
 	return (return_value);
 }
