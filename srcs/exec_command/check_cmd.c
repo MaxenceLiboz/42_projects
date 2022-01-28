@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/27 14:31:17 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/28 13:36:29 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 	int		i;
 
 	i = 0;
-	prg->fd.fd_in = 0;
-	prg->fd.fd_out = 0;
 	while (cmd->cmd[i])
 	{
 		if (ft_strncmp(cmd->cmd[i], "<", 2) == 0)
@@ -92,5 +90,9 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 	cmd->cmd = f_cmd(cmd->cmd, &prg->mem);
 	if (prg->fd.fd_in == -1 || prg->fd.fd_out == -1)
 		return (-1);
+	if (prg->fd.fd_in > 0)
+		dup2(prg->fd.fd_in, STDIN);
+	if (prg->fd.fd_out > 0)
+		dup2(prg->fd.fd_out, STDOUT);
 	return (0);
 }

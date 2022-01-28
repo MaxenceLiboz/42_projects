@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/25 15:02:59 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/28 13:56:03 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_string	sub_string(char *src, size_t start, size_t size, t_list **mem)
 
 	dst = ft_substr(src, start, size);
 	if (!dst)
-		ft_error_free(mem);
+		ft_error_free(mem, "Substr: error malloc occured");
 	init_string(&string, dst, TRUE, mem);
 	free(dst);
 	return (string);
