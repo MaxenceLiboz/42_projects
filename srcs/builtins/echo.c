@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:58:59 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/25 10:14:12 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/28 08:36:43 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_echo(char **str)
 	n = 0;
 	i = 1;
 	if (!str[1])
-		return (printf("\n"));
+		return (printf("\n") - 1);
 	if (!str[2] && n == 1)
 		return (printf(""));
 	check_arg(str, &i, &n);

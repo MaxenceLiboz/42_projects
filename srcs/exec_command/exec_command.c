@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/27 09:41:39 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/28 08:34:15 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	ft_execve(t_prg *prg, char **envp)
 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
 			execve(cmd.str, prg->lst_cmd->cmd, envp);
 		}
-		print_stderror(-1, 2, prg->lst_cmd->cmd[0], ": command not found");
+		exit(print_stderror(2, 2, prg->lst_cmd->cmd[0],
+				": command not found"));
 	}
 	return (0);
 }
@@ -74,7 +75,13 @@ int	exec_one(t_prg *prg)
 		return (return_value);
 	prg->paths = get_path(prg->env.export, &prg->mem);
 	ft_execve(prg, envp);
-	waitpid(-1, 0, 0);
+	waitpid(-1, &return_value, 0);
+	if (return_value == 0)
+		return (0);
+	if (return_value == 256)
+		return (1);
+	else
+		return (127);
 	return (-1);
 }
 
@@ -89,5 +96,6 @@ int	exec_command(t_prg *prg)
 	// else
 	// 	ft_pipex();
 	
+	printf("%d\n", return_value);
 	return (return_value);
 }
