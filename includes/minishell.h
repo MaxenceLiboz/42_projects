@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/27 15:45:20 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/28 13:48:23 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef int	t_bool;
 /**************** Malloc  ****************/
 
 void		*ft_malloc(t_list **mem, size_t size);
-void		ft_error_free(t_list **mem);
+void		ft_error_free(t_list **mem, char *msg);
 
 /**************** String  ****************/
 typedef struct s_string
