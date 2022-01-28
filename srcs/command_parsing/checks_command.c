@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/27 14:24:24 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/28 08:17:27 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,23 @@ t_bool	check_quotes(t_string cmd)
 	int		dquotes;
 	int		i;
 
-	squotes = 0;
-	dquotes = 0;
+	squotes = -1;
+	dquotes = -1;
 	i = 0;
 	while (cmd.str[i])
 	{
-		if (cmd.str[i] == '\"')
-			dquotes += 1;
-		if (cmd.str[i] == '\'')
-			squotes += 1;
+		if (cmd.str[i] == '\"' && squotes < 0)
+			dquotes *= -1;
+		if (cmd.str[i] == '\'' && dquotes < 0)
+			squotes *= -1;
 		i++;
 	}
-	if (squotes % 2 != 0 && dquotes % 2 != 0)
-		print_stderror(0, 1, "Missing: both: \', \"");
-	else if (squotes % 2 != 0)
-		print_stderror(0, 1, "Missing: \'");
-	else if (dquotes % 2 != 0)
-		print_stderror(0, 1, "Missing: \"");
-	if (squotes % 2 != 0 || dquotes % 2 != 0)
-		return (FALSE);
+	if (squotes > 0 && dquotes > 0)
+		return (print_stderror(FALSE, 1, "Missing: both: \', \""));
+	else if (squotes > 0)
+		return (print_stderror(FALSE, 1, "Missing: \'"));
+	else if (dquotes > 0)
+		return (print_stderror(FALSE, 1, "Missing: \""));
 	return (TRUE);
 }
 
@@ -76,9 +74,9 @@ t_bool	check_chevrons(t_string *cmd, t_list **mem)
 	squotes = -1;
 	while (cmd->str[++i])
 	{
-		if (cmd->str[i] == '\"' && squotes < 1)
+		if (cmd->str[i] == '\"' && squotes < 0)
 			dquotes *= -1;
-		if (cmd->str[i] == '\'' && dquotes < 1)
+		if (cmd->str[i] == '\'' && dquotes < 0)
 			squotes *= -1;
 		if ((cmd->str[i] == '>' || cmd->str[i] == '<')
 			&& (dquotes < 0 || squotes < 0))
