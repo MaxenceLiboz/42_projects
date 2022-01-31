@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/28 15:27:22 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 10:24:55 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ int	exec_one(t_prg *prg)
 		return (-1);
 	if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 		return (-1);
+	return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
+	if (return_value != 2)
+		return (return_value);
 	return_value = ft_execve(prg, envp);
 	waitpid(-1, &return_value, 0);
 	if (return_value == 0)
