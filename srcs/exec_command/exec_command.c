@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/31 10:24:55 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 15:33:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	ft_execve(t_prg *prg, char **envp)
 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
 			execve(cmd.str, prg->lst_cmd->cmd, envp);
 		}
+		cmd = sub_string(prg->lst_cmd->cmd[0], 1, cmd.size, &prg->mem);
+		cmd = join_string(getcwd(0, 0), cmd.str, &prg->mem);
+		execve(cmd.str, prg->lst_cmd->cmd, envp);
 		exit(print_stderror(2, 2, prg->lst_cmd->cmd[0],
 				": command not found"));
 	}
@@ -108,6 +111,9 @@ void	ft_exec_process(t_prg *prg, char **envp)
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
 		execve(cmd.str, prg->lst_cmd->cmd, envp);
 	}
+	cmd = sub_string(prg->lst_cmd->cmd[0], 1, cmd.size, &prg->mem);
+	cmd = join_string(getcwd(0, 0), cmd.str, &prg->mem);
+	execve(cmd.str, prg->lst_cmd->cmd, envp);
 	exit(print_stderror(2, 2, prg->lst_cmd->cmd[0],
 			": command not found"));
 }

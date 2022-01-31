@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/26 11:51:59 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:19:48 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	get_new_path(char **str, t_lst_env *env,
 	if (!str[1])
 	{
 		dup_string(path, lst_env_find_name_var(env, "HOME").str, 0, mem);
-		if (!path->str)
+		if (!*path->str)
 			return (print_stderror(0, 1, "cd: HOME not set"));
 	}
 	else if (!*str[1])
