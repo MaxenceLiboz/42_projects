@@ -6,22 +6,22 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:32:15 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/24 11:33:01 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 10:30:35 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int	is_atoi(long long nb)
+int	is_atoi(int nb, char *str)
 {
-	if (nb > INT_MAX || nb < INT_MIN)
+	if (nb == 0 && ft_strncmp(str, "0", 2) != 0)
 		return (0);
 	return (1);
 }
 
-int	is_atoll(long double nb)
+int	is_atoll(long long nb, char *str)
 {
-	if (nb > LLONG_MAX || nb < LLONG_MIN)
+	if (nb == 0 && ft_strncmp(str, "0", 2) != 0)
 		return (0);
 	return (1);
 }

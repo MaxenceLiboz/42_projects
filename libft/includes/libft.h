@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:55:08 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/24 11:34:17 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 10:34:11 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_list
 int				ft_atoi(const char *nptr);
 long long		ft_atoll(const char *nptr);
 long double		ft_atold(const char *nptr);
-int				is_atoi(long long nb);
-int				is_atoll(long double nb);
+int				is_atoi(int nb, char *str);
+int				is_atoll(long long nb, char *str);
 int				ft_atoi_base(char *str, char *base);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);

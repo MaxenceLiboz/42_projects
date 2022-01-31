@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/31 15:25:50 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:32:41 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,31 @@ static int	isnum(char *str)
 	return (1);
 }
 
-void	ft_exit(char **str)
+static void	print_exit(char *arg, char *msg, int r, t_list **mem)
 {
+	print_stderror(0, 3, "exit: ", arg, msg);
+	ft_lstclear(mem, free);
+	exit(r);
+}
+
+void	ft_exit(char **str, t_list **mem)
+{
+	int		nb;
+
 	printf("exit\n");
 	if (!str[1])
-		exit(0);
-	if (!isnum(str[1]) || !is_atoll(ft_atold(str[1])))
 	{
-		print_stderror(0, 3, "exit: ", str[1], ": numeric argument required");
-		exit(255);
+		ft_lstclear(mem, free);
+		exit(0);
 	}
+	if (!isnum(str[1]) || !is_atoll(ft_atoll(str[1]), str[1]))
+		print_exit(str[1], ": numeric argument required", 255, mem);
 	if (str[2])
 	{
 		if (ft_strncmp(str[2], "|", 2) != 0)
-		{
-			print_stderror(0, 1, "exit: too many arguments");
-			exit(255);
-		}
+			print_exit(NULL, "too many arguments", 255, mem);
 	}
-	exit(ft_atoi(str[1]));
+	nb = ft_atoll(str[1]);
+	ft_lstclear(mem, free);
+	exit(nb);
 }

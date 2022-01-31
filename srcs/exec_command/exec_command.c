@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/31 15:09:41 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:33:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int	exec_one(t_prg *prg)
 		return (-1);
 	if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 		return (-1);
+	return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
+	if (return_value != 2)
+		return (return_value);
 	return_value = ft_execve(prg, envp);
 	waitpid(-1, &return_value, 0);
 	if (return_value == 0)

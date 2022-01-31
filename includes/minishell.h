@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/28 15:27:34 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 09:31:20 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int			ft_echo(char **str);
 int			ft_cd(char **str, t_head_env *head, t_list **mem);
 int			ft_pwd(char **str);
 int			print_export(t_head_env *head);
-void		ft_exit(char **str);
+void		ft_exit(char **str, t_list **mem);
 
 /**************** Parsing ******************/
 t_string	create_prompt(t_list **mem);
