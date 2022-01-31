@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/31 09:31:20 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 21:54:10 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,11 @@ int			lst_cmd_clear(t_lst_cmd **lst);
 void		lst_cmd_put(t_lst_cmd	*lst);
 t_lst_cmd	*lst_cmd_init(t_command *cmd, t_list **mem);
 int			lst_cmd_size(t_lst_cmd *lst);
+
+/**************** custom ****************/
+
+void		print_title(void);
+int			biography(char *command);
 
 /**************** fd ********/
 typedef struct s_fd

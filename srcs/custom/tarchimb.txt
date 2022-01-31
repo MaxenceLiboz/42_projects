@@ -1,0 +1,17 @@
+
+Who is tarchimb?
+
+After left the secondary school very young , Theo Archimbaud started to learn
+cooking for few years in the beautiful region of Clermont-Ferrand, the city of
+the emblematic and huge Michelin business..!
+
+A few dishes later, and some travel, and drinks, and fun, and sex, and drugs, 
+and... lot of things later.. Theo found the answer of everything, 42!
+
+This is how, after the mythic pool of 42, he was taken in the school. Spending a
+lot of time to debug his code, because of some SEGMENTATION FAULT / BUS ERROR
+/ ABORT and fews leaks (really not that much), he finally land to this beautiful 
+project, Minishell.
+
+We hope you will enjoy our project :)
+

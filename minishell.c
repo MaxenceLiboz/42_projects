@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/28 08:21:43 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 21:49:39 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	prg.mem = 0;
 	set_export(envp, &prg.env, &prg.mem);
 	set_term_env();
+	print_title();
 	while (i--)
 	{
 		get_signal();

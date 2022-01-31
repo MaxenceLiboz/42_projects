@@ -18,6 +18,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/exit.c						\
 				builtins/error.c					\
 				builtins/env.c						\
+				custom/custom.c						\
 				signal/set_term.c					\
 				builtins/exec_builtin.c				\
 				t_lst_cmd/lst_cmd_functions.c		\
@@ -66,7 +67,7 @@ libft:		${INCLUDES}
 			make -C libft
 
 ${EXEC}:	${EXEC}.c ${LIBS}
-			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -lncurses -I./readline/include -L./readline/lib ${LIBS} -o ${EXEC}  
+			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -lncurses -I../readline/include -L../readline/lib ${LIBS} -o ${EXEC}  
 
 clean:
 			${RM} ${OBJS} $(OBJS_DIR)
