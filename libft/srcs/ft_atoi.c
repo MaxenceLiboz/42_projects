@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 08:29:13 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/24 11:31:30 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 10:31:22 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_atoi(const char *nptr)
 {
 	int		neg;
 	int		str_i;
-	int		nb;
+	long	nb;
 
 	neg = 1;
 	str_i = 0;
@@ -50,14 +50,17 @@ int	ft_atoi(const char *nptr)
 		nb = nb * 10 + (nptr[str_i] - '0');
 		str_i++;
 	}
-	return (nb * neg);
+	nb *= neg;
+	if (nb > INT_MAX || nb < INT_MIN)
+		return (0);
+	return (nb);
 }
 
 long long	ft_atoll(const char *nptr)
 {
 	int				neg;
 	int				str_i;
-	long long		nb;
+	long double		nb;
 
 	neg = 1;
 	str_i = 0;
@@ -69,7 +72,10 @@ long long	ft_atoll(const char *nptr)
 		nb = nb * 10 + (nptr[str_i] - '0');
 		str_i++;
 	}
-	return (nb * neg);
+	nb *= neg;
+	if (nb > LLONG_MAX || nb < LLONG_MIN)
+		return (0);
+	return (nb);
 }
 
 long double	ft_atold(const char *nptr)

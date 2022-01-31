@@ -6,7 +6,7 @@
 /*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/28 09:15:34 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/01/31 09:35:26 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 	else if (ft_strncmp(command[0], "env", 4) == 0)
 		return_value = ft_env(head->env, command);
 	else if (ft_strncmp(command[0], "exit", 5) == 0)
-		ft_exit(command);
+		ft_exit(command, &prg->mem);
 	dup2(saved, STDOUT_FILENO);
 	close(saved);
 	return (return_value);
