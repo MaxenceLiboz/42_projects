@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:37:42 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/21 15:49:19 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/01 14:39:37 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ char	**get_cmd(t_command *cmd, t_list **mem)
 	dst = ft_malloc(mem, sizeof(char *) * ((end - cmd->index) + 1));
 	while (cmd->index < end)
 	{
-		dst[i++] = sub_string(cmd->array[cmd->index].str, 0,
+		dst[i] = sub_string(cmd->array[cmd->index].str, 0,
 				cmd->array[cmd->index].size - 1, mem).str;
+		i++;
 		cmd->index += 1;
 	}
 	dst[i] = 0;

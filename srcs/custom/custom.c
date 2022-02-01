@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 21:49:02 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/31 22:37:44 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:55:51 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	print_title(void)
 		dest = get_next_line(fd);
 	}
 	printf("\t\t\t\t\t\t\t\t\t \e[0;37m by tarchimb and mliboz\n");
+	if (close(fd) == -1)
+		print_stderror(0, 1, strerror(errno));
 	return ;
 }
 
@@ -49,6 +51,7 @@ void	print_biography(char *user)
 		free(dest);
 		dest = get_next_line(fd);
 	}
+	close(fd);
 	return ;
 }
 

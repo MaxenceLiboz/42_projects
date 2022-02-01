@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_cmd_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:51:33 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/25 09:19:45 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/01 14:36:45 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,17 @@ void	lst_cmd_put(t_lst_cmd	*lst)
 
 int	lst_cmd_size(t_lst_cmd *lst)
 {
-	int		size;
+	int			size;
+	t_lst_cmd	*tmp;
 
 	if (!lst)
 		return (0);
 	size = 0;
-	while (lst)
+	tmp = lst;
+	while (tmp)
 	{
 		size++;
-		lst = lst->next;
+		tmp = tmp->next;
 	}
 	return (size);
 }
