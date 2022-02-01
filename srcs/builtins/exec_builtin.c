@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/31 21:54:21 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/01 08:24:53 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 {
-	int	saved;
 	int	return_value;
 
 	return_value = 2;
-	saved = dup(STDOUT_FILENO);
-	if (prg->fd.fd_out > 0)
-		dup2(prg->fd.fd_out, STDOUT_FILENO);
+	double_dup(prg->fd.fd_in, prg->fd.fd_out, &prg->mem);
 	if (ft_strncmp(command[0], "echo", 5) == 0)
 		return_value = ft_echo(command);
 	else if (ft_strncmp(command[0], "cd", 3) == 0)
@@ -38,7 +35,5 @@ int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 		return_value = biography(command[0]);
 	else if (ft_strncmp(command[0], "exit", 5) == 0)
 		ft_exit(command, &prg->mem);
-	dup2(saved, STDOUT_FILENO);
-	close(saved);
 	return (return_value);
 }

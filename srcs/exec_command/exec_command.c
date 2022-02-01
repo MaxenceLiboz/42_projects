@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/31 15:33:06 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/01 08:34:14 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,16 @@ int	ft_execve(t_prg *prg, char **envp)
 
 void	double_dup(int fd1, int fd2, t_list **mem)
 {
-	if (dup2(fd1, STDIN_FILENO) == -1)
-		ft_error_free(mem, "error: STDIN dup failed");
-	if (dup2(fd2, STDOUT_FILENO) == -1)
-		ft_error_free(mem, "error: STDOUT dup failed");
+	if (fd1 > 0)
+	{
+		if (dup2(fd1, STDIN_FILENO) == -1)
+			ft_error_free(mem, "error: STDIN dup failed");
+	}
+	if (fd2 > 0)
+	{
+		if (dup2(fd2, STDOUT_FILENO) == -1)
+			ft_error_free(mem, "error: STDOUT dup failed");
+	}
 }
 
 int	exec_one(t_prg *prg)
@@ -89,15 +95,11 @@ int	exec_one(t_prg *prg)
 		return (return_value);
 	return_value = ft_execve(prg, envp);
 	waitpid(-1, &return_value, 0);
-	if (return_value == 0)
-		return (0);
-	else if (return_value == 1)
-		return (1);
-	else if (return_value == 256)
+	if (return_value == 256)
 		return (1);
 	else
 		return (127);
-	return (-1);
+	return (return_value);
 }
 
 void	ft_exec_process(t_prg *prg, char **envp)
@@ -143,11 +145,7 @@ int	ft_pipex(t_prg *prg)
 {
 	int		j;
 	char	**envp;
-	int		stdin_save;
-	int		stdout_save;
 
-	stdin_save = dup(STDIN_FILENO);
-	stdout_save = dup(STDOUT_FILENO);
 	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	j = 1;
 	prg->fd.pipe_nb = lst_cmd_size(prg->lst_cmd);
@@ -160,18 +158,17 @@ int	ft_pipex(t_prg *prg)
 	}
 	while (waitpid(-1, 0, 0) != -1)
 		;
-	close(prg->fd.fd[0]);
-	close(prg->fd.fd[1]);
-	close(prg->fd.fd_in);
-	close(prg->fd.fd_out);
-	double_dup(stdin_save, stdout_save, &prg->mem);
 	return (0);
 }
 
 int	exec_command(t_prg *prg)
 {
 	int			return_value;
+	int			stdin_save;
+	int			stdout_save;
 
+	stdin_save = dup(STDIN_FILENO);
+	stdout_save = dup(STDOUT_FILENO);
 	errno = 0;
 	return_value = 1;
 	prg->paths = get_path(prg->env.export, &prg->mem);
@@ -180,5 +177,6 @@ int	exec_command(t_prg *prg)
 	else
 		ft_pipex(prg);
 	// printf("%d\n", return_value);
+	double_dup(stdin_save, stdout_save, &prg->mem);
 	return (return_value);
 }

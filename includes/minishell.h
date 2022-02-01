@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/31 21:54:10 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/01 08:21:37 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,13 +188,13 @@ t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
 t_bool		check_chevrons(t_string *cmd, t_list **mem);
 
-
 int			set_export(char **envp, t_head_env *head, t_list **mem);
 
 /**************** Exec_command *************/
 int			exec_command(t_prg *prg);
 int			check_cmd(t_prg *prg, t_lst_cmd *cmd);
 char		**f_cmd(char **cmd, t_list **mem);
+void		double_dup(int fd1, int fd2, t_list **mem);
 
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);

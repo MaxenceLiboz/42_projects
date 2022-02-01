@@ -67,7 +67,7 @@ libft:		${INCLUDES}
 			make -C libft
 
 ${EXEC}:	${EXEC}.c ${LIBS}
-			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -lncurses -I../readline/include -L../readline/lib ${LIBS} -o ${EXEC}  
+			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -lncurses -Ireadline/include -Lreadline/lib ${LIBS} -o ${EXEC}
 
 clean:
 			${RM} ${OBJS} $(OBJS_DIR)
