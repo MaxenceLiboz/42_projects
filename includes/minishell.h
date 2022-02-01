@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/01 08:21:37 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/01 14:32:20 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@
 # define END_COLOR "\033[0m"
 # define TRUE 1
 # define FALSE 0
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
+# define SUCCESS 0
+# define FAIL 1
 
 typedef int	t_bool;
 
@@ -139,6 +138,8 @@ typedef struct s_fd
 	int		fd_out;
 	pid_t	pid;
 	int		pipe_nb;
+	int		stdin_save;
+	int		stdout_save;
 }	t_fd;
 
 /**************** t_prg ***********************/
@@ -151,6 +152,7 @@ typedef struct s_prg
 	t_list		*mem;
 	char		**paths;
 	t_fd		fd;
+	int			return_value;
 }	t_prg;
 
 /**************** t_pipe ***********************/

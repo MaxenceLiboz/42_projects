@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/28 08:17:27 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/01 10:29:11 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,13 @@ t_bool	check_pipes(t_command cmd)
 
 static void	check_chevrons_p2(t_string *cmd, int i, int *chevrons, t_list **mem)
 {
-	if (cmd->str[i - 1] != ' ')
+	if (cmd->str[i + 1] != ' '
+		&& cmd->str[i + 1] != '>' && cmd->str[i + 1] != '<')
+		add_string(cmd, " ", i + 1, mem);
+	if (cmd->str[i - 1] != ' '
+		&& cmd->str[i - 1] != '>' && cmd->str[i - 1] != '<')
 		add_string(cmd, " ", i, mem);
-	*chevrons = 0;
+	*chevrons += 1;
 }
 
 t_bool	check_chevrons(t_string *cmd, t_list **mem)
@@ -80,11 +84,11 @@ t_bool	check_chevrons(t_string *cmd, t_list **mem)
 			squotes *= -1;
 		if ((cmd->str[i] == '>' || cmd->str[i] == '<')
 			&& (dquotes < 0 || squotes < 0))
-			chevrons++;
+			check_chevrons_p2(cmd, i, &chevrons, mem);
 		else if (cmd->str[i] != '>' && cmd->str[i] != '<'
 			&& cmd->str[i] != ' ' && chevrons != 0
 			&& squotes < 1 && dquotes < 1)
-			check_chevrons_p2(cmd, i, &chevrons, mem);
+			chevrons = 0;
 	}
 	if (chevrons != 0)
 		return (print_stderror(FALSE, 1, "syntax error"));

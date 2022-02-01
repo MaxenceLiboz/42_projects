@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/28 14:15:24 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/01 14:09:24 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_malloc(t_list **mem, size_t size)
 	void	*new_item;
 
 	new_item = malloc(size);
-	if (!size)
+	if (!new_item)
 		ft_error_free(mem, "Malloc error occured");
 	ft_lstadd_front(mem, ft_lstnew(new_item));
 	return (new_item);

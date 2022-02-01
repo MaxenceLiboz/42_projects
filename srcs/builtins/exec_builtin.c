@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/01 08:24:53 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/01 13:50:17 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 	int	return_value;
 
 	return_value = 2;
-	double_dup(prg->fd.fd_in, prg->fd.fd_out, &prg->mem);
 	if (ft_strncmp(command[0], "echo", 5) == 0)
 		return_value = ft_echo(command);
 	else if (ft_strncmp(command[0], "cd", 3) == 0)
