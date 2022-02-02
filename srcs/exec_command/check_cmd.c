@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/01 14:18:32 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/02 09:40:45 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ t_bool	here_doc(char *limiter, t_prg *prg, int *fd)
 		return (print_stderror(FAIL, 1, strerror(errno)));
 	while (1)
 	{
-		ft_putstr_fd("here_doc > ", 0);
-		init_string(&prompt, get_next_line(0), TRUE, &prg->mem);
+		init_string(&prompt, readline("here_doc > "), TRUE, &prg->mem);
 		if (check_limiter(limiter, prompt.str) == SUCCESS)
 			break ;
 		change_arg_command(prg, &prompt);
@@ -80,9 +79,9 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 		if (ft_strncmp(cmd->cmd[i], "<", 2) == 0)
 			if (ft_open(cmd->cmd[i + 1], "ROK", &prg->fd.fd_in, prg) == FAIL)
 				return (FAIL);
-		if (ft_strncmp(cmd->cmd[i], "<<", 3) == 0)
-			if (here_doc(cmd->cmd[i + 1], prg, &prg->fd.fd_in) == FAIL)
-				return (FAIL);
+		// if (ft_strncmp(cmd->cmd[i], "<<", 3) == 0)
+		// 	if (here_doc(cmd->cmd[i + 1], prg, &prg->fd.fd_in) == FAIL)
+		// 		return (FAIL);
 		if (ft_strncmp(cmd->cmd[i], ">", 2) == 0)
 			if (ft_open(cmd->cmd[i + 1], "CRT", &prg->fd.fd_out, prg) == FAIL)
 				return (FAIL);

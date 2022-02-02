@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/28 13:56:03 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/02 08:25:57 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	add_string(t_string *string, char *to_add, size_t index, t_list **mem)
 	t_string	before;
 	t_string	after;
 
+	if (!to_add)
+		return ;
 	before = sub_string(string->str, 0, index, mem);
 	after = sub_string(string->str, index, string->size - 1 - index, mem);
 	dup_string(string, before.str, 0, mem);
