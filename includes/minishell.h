@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/01 14:32:20 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/02 10:56:15 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,16 @@ void		add_string(t_string *string, char *to_add, size_t index,
 t_string	*split_string(char *s, char c, t_list **mem);
 char		**strings_to_array(t_string *strings, t_list **mem);
 t_string	join_string(char *s1, char *s2, t_list **mem);
+
+/**************** t_heredoc  ****************/
+
+typedef struct s_heredoc
+{
+	t_string	*table;
+	int			size;
+	int			malloc_size;
+	int			index;
+}	t_heredoc;
 
 /**************** Command ********/
 typedef struct s_command
@@ -153,10 +163,8 @@ typedef struct s_prg
 	char		**paths;
 	t_fd		fd;
 	int			return_value;
+	t_heredoc	heredocs;
 }	t_prg;
-
-/**************** t_pipe ***********************/
-
 
 
 /**************** set_env ***********************/

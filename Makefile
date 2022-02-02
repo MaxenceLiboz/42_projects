@@ -3,6 +3,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				command_parsing/create_command.c	\
 				command_parsing/count_split_wog.c	\
 				command_parsing/checks_command.c	\
+				command_parsing/init_table_heredoc.c\
 				t_command/command_functions.c		\
 				t_string/string_functions.c			\
 				t_string/string_functions2.c		\
