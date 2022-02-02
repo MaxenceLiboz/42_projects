@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/01 10:29:11 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/02 08:43:15 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,38 @@ t_bool	check_quotes(t_string cmd)
 		i++;
 	}
 	if (squotes > 0 && dquotes > 0)
-		return (print_stderror(FALSE, 1, "Missing: both: \', \""));
+		return (print_stderror(FAIL, 1, "Missing: both: \', \""));
 	else if (squotes > 0)
-		return (print_stderror(FALSE, 1, "Missing: \'"));
+		return (print_stderror(FAIL, 1, "Missing: \'"));
 	else if (dquotes > 0)
-		return (print_stderror(FALSE, 1, "Missing: \""));
-	return (TRUE);
+		return (print_stderror(FAIL, 1, "Missing: \""));
+	return (SUCCESS);
 }
 
 t_bool	check_pipes(t_command cmd)
 {
 	int		i;
+	int		pipes;
 
 	i = 0;
+	pipes = 0;
+	if (!cmd.command.str || cmd.size == 0)
+		return (FAIL);
+	if (ft_strncmp(cmd.array[0].str, "|", 2) == 0)
+		return (print_stderror(-1, 1,
+				"syntax error near unexpected token `|'"));
 	while (i < cmd.size)
 	{
 		if (ft_strncmp(cmd.array[i].str, "|", 2) == 0
 			&& i == cmd.size - 1)
-			return (print_stderror(0, 1, "Missing: command after |"));
+			return (FAIL);
+		if (ft_strncmp(cmd.array[i].str, "|", 2) == 0
+			&& i < cmd.size && ft_strncmp(cmd.array[i + 1].str, "|", 2) == 0)
+			return (print_stderror(-1, 1,
+					"syntax error near unexpected token `|'"));
 		i++;
 	}
-	return (TRUE);
+	return (SUCCESS);
 }
 
 static void	check_chevrons_p2(t_string *cmd, int i, int *chevrons, t_list **mem)
@@ -61,7 +72,12 @@ static void	check_chevrons_p2(t_string *cmd, int i, int *chevrons, t_list **mem)
 	if (cmd->str[i - 1] != ' '
 		&& cmd->str[i - 1] != '>' && cmd->str[i - 1] != '<')
 		add_string(cmd, " ", i, mem);
-	*chevrons += 1;
+	if (cmd->str[i] == '|' && cmd->str[i + 1] != ' ' && cmd->str[i + 1] != '|')
+		add_string(cmd, " ", i + 1, mem);
+	if (cmd->str[i] == '|' && cmd->str[i - 1] != ' ' && cmd->str[i - 1] != '|')
+		add_string(cmd, " ", i, mem);
+	if (cmd->str[i] == '<' || cmd->str[i] == '>')
+		*chevrons += 1;
 }
 
 t_bool	check_chevrons(t_string *cmd, t_list **mem)
@@ -82,7 +98,7 @@ t_bool	check_chevrons(t_string *cmd, t_list **mem)
 			dquotes *= -1;
 		if (cmd->str[i] == '\'' && dquotes < 0)
 			squotes *= -1;
-		if ((cmd->str[i] == '>' || cmd->str[i] == '<')
+		if ((cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|')
 			&& (dquotes < 0 || squotes < 0))
 			check_chevrons_p2(cmd, i, &chevrons, mem);
 		else if (cmd->str[i] != '>' && cmd->str[i] != '<'
@@ -91,6 +107,6 @@ t_bool	check_chevrons(t_string *cmd, t_list **mem)
 			chevrons = 0;
 	}
 	if (chevrons != 0)
-		return (print_stderror(FALSE, 1, "syntax error"));
-	return (TRUE);
+		return (print_stderror(FAIL, 1, "syntax error"));
+	return (SUCCESS);
 }
