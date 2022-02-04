@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/01 14:42:36 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/04 13:34:15 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,9 @@ int	ft_pipex(t_prg *prg)
 	while (++j <= prg->fd.pipe_nb + 1)
 	{
 		ft_get_fd(prg, &j, envp);
+		// dprintf(2, "%d\n", prg->heredocs.index);
+		// dprintf(2, "%d\n", prg->return_value);
+		prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
 	while (waitpid(-1, 0, 0) != -1)
@@ -185,12 +188,10 @@ static void	init_prg(t_prg *prg)
 int	exec_command(t_prg *prg)
 {
 	init_prg(prg);
-	// printf("%d, %d, %d, %d\n", prg->fd.fd_in, prg->fd.fd_out, prg->fd.stdin_save, prg->fd.stdout_save);
 	if (lst_cmd_size(prg->lst_cmd) == 1)
 		prg->return_value = exec_one(prg);
 	else
 		ft_pipex(prg);
-	// printf("%d\n", return_value);
 	double_dup(prg->fd.stdin_save, prg->fd.stdout_save, &prg->mem);
 	close(prg->fd.stdin_save);
 	close(prg->fd.stdout_save);

@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/02 08:43:15 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/04 16:19:31 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,49 +64,85 @@ t_bool	check_pipes(t_command cmd)
 	return (SUCCESS);
 }
 
-static void	check_chevrons_p2(t_string *cmd, int i, int *chevrons, t_list **mem)
+static void	add_space_after_special_char(t_string *cmd, int i, t_list **mem)
 {
 	if (cmd->str[i + 1] != ' '
 		&& cmd->str[i + 1] != '>' && cmd->str[i + 1] != '<')
 		add_string(cmd, " ", i + 1, mem);
-	if (cmd->str[i - 1] != ' '
+	if (i != 0 && cmd->str[i - 1] != ' '
 		&& cmd->str[i - 1] != '>' && cmd->str[i - 1] != '<')
 		add_string(cmd, " ", i, mem);
 	if (cmd->str[i] == '|' && cmd->str[i + 1] != ' ' && cmd->str[i + 1] != '|')
 		add_string(cmd, " ", i + 1, mem);
-	if (cmd->str[i] == '|' && cmd->str[i - 1] != ' ' && cmd->str[i - 1] != '|')
+	if (i != 0 && cmd->str[i] == '|' && cmd->str[i - 1] != ' '
+		&& cmd->str[i - 1] != '|')
 		add_string(cmd, " ", i, mem);
-	if (cmd->str[i] == '<' || cmd->str[i] == '>')
-		*chevrons += 1;
 }
 
-t_bool	check_chevrons(t_string *cmd, t_list **mem)
+static void	add_space_after_db_chevrons(t_string *cmd, t_list **mem)
+{
+	int		i;
 
+	i = -1;
+	while (cmd->str[++i])
+	{
+		if (cmd->str[i] == '\"')
+			while (cmd->str[i] && cmd->str[++i] != '\"')
+				;
+		if (cmd->str[i] == '\'')
+			while (cmd->str[i] && cmd->str[++i] != '\'')
+				;
+		if (ft_strncmp(&cmd->str[i], "<<", 2) == 0
+			|| ft_strncmp(&cmd->str[i], ">>", 2) == 0)
+			if (cmd->str[i + 2] == '<' || cmd->str[i + 2] == '>'
+				|| cmd->str[i + 2] == '|')
+				add_string(cmd, " ", i + 2, mem);
+	}
+}
+
+static t_bool	is_delimiter_heredoc(t_string *cmd, int i)
+{
+	if (ft_strncmp(&cmd->str[i], "<<", 2) == 0
+		|| ft_strncmp(&cmd->str[i], ">>", 2) == 0)
+	{
+		i += 2;
+		while (cmd->str[i] && cmd->str[i] == ' ')
+			i++;
+		if (cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|')
+			return (FALSE);
+	}
+	else if (cmd->str[i] == '<' || cmd->str[i] == '>')
+	{
+		i += 1;
+		while (cmd->str[i] && cmd->str[i] == ' ')
+			i++;
+		if (cmd->str[i] == 0
+			|| cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|')
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+t_bool	syntax_special_char(t_string *cmd, t_list **mem)
 {
 	int		i;
 	int		chevrons;
-	int		squotes;
-	int		dquotes;
 
 	i = -1;
 	chevrons = 0;
-	dquotes = -1;
-	squotes = -1;
+	add_space_after_db_chevrons(cmd, mem);
 	while (cmd->str[++i])
 	{
-		if (cmd->str[i] == '\"' && squotes < 0)
-			dquotes *= -1;
-		if (cmd->str[i] == '\'' && dquotes < 0)
-			squotes *= -1;
-		if ((cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|')
-			&& (dquotes < 0 || squotes < 0))
-			check_chevrons_p2(cmd, i, &chevrons, mem);
-		else if (cmd->str[i] != '>' && cmd->str[i] != '<'
-			&& cmd->str[i] != ' ' && chevrons != 0
-			&& squotes < 1 && dquotes < 1)
-			chevrons = 0;
-	}
-	if (chevrons != 0)
-		return (print_stderror(FAIL, 1, "syntax error"));
+		if (cmd->str[i] == '\"')
+			while (cmd->str[i] && cmd->str[++i] != '\"')
+				;
+		if (cmd->str[i] == '\'')
+			while (cmd->str[i] && cmd->str[++i] != '\'')
+				;
+		if ((cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|'))
+			add_space_after_special_char(cmd, i, mem);
+		if (is_delimiter_heredoc(cmd, i) == FALSE)
+			return (print_stderror(FAIL, 1, "syntax error"));
+	}	
 	return (SUCCESS);
 }

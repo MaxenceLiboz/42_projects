@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/02 10:56:15 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/04 15:21:41 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ typedef struct s_heredoc
 	int			malloc_size;
 	int			index;
 }	t_heredoc;
+
+void		init_heredoc(t_heredoc *heredocs);
+t_heredoc	realloc_heredoc(t_heredoc heredocs, t_list **mem);
+void		add_heredoc(t_heredoc *heredocs, t_string new, int index,
+				t_list **mem);
 
 /**************** Command ********/
 typedef struct s_command
@@ -166,7 +171,6 @@ typedef struct s_prg
 	t_heredoc	heredocs;
 }	t_prg;
 
-
 /**************** set_env ***********************/
 void		set_term_env(void);
 void		get_signal(void);
@@ -196,7 +200,8 @@ void		split_wog(t_prg *prg, char c);
 int			count_split_wog(const char *str, char charset);
 t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
-t_bool		check_chevrons(t_string *cmd, t_list **mem);
+t_bool		syntax_special_char(t_string *cmd, t_list **mem);
+void		init_table_heredoc(t_prg *prg, int *save);
 
 int			set_export(char **envp, t_head_env *head, t_list **mem);
 

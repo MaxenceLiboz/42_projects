@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/02 09:40:45 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:24 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,23 @@ static t_bool	ft_open(char *file, char *options, int *fd, t_prg *prg)
 	return (SUCCESS);
 }
 
-t_bool	check_limiter(char *limiter, char *prompt)
+	// while (1)
+	// {
+	// 	init_string(&prompt, readline("here_doc > "), TRUE, &prg->mem);
+	// 	if (check_limiter(limiter, prompt.str) == SUCCESS)
+	// 		break ;
+	// 	change_arg_command(prg, &prompt);
+	// 	if (write(STDOUT_FILENO prompt.str, prompt.size - 1) == -1)
+	// 		return (print_stderror(FAIL, 1, strerror(errno)));
+	// }
+
+t_bool	here_doc(t_prg *prg, int *fd, int *index)
 {
-	int		i;
-
-	i = 0;
-	while (prompt[i] && limiter[i])
-	{
-		if (prompt[i] != limiter[i])
-			return (FAIL);
-		i++;
-	}
-	if (prompt[i] != '\n' || limiter[i] != '\0')
-		return (FAIL);
-	return (SUCCESS);
-}
-
-t_bool	here_doc(char *limiter, t_prg *prg, int *fd)
-{
-	t_string	prompt;
-
 	if (pipe(prg->fd.fd) == -1)
 		return (print_stderror(FAIL, 1, strerror(errno)));
-	while (1)
-	{
-		init_string(&prompt, readline("here_doc > "), TRUE, &prg->mem);
-		if (check_limiter(limiter, prompt.str) == SUCCESS)
-			break ;
-		change_arg_command(prg, &prompt);
-		if (write(prg->fd.fd[1], prompt.str, prompt.size - 1) == -1)
-			return (print_stderror(FAIL, 1, strerror(errno)));
-	}
+	if (write(prg->fd.fd[1], prg->heredocs.table[*index].str,
+			prg->heredocs.table[*index].size - 1) == -1)
+		return (print_stderror(FAIL, 1, strerror(errno)));
 	close(prg->fd.fd[1]);
 	*fd = prg->fd.fd[0];
 	return (SUCCESS);
@@ -74,14 +60,15 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 	int		i;
 
 	i = 0;
+	// dprintf(2, "%d", prg->heredocs.index);
 	while (cmd->cmd[i])
 	{
 		if (ft_strncmp(cmd->cmd[i], "<", 2) == 0)
 			if (ft_open(cmd->cmd[i + 1], "ROK", &prg->fd.fd_in, prg) == FAIL)
 				return (FAIL);
-		// if (ft_strncmp(cmd->cmd[i], "<<", 3) == 0)
-		// 	if (here_doc(cmd->cmd[i + 1], prg, &prg->fd.fd_in) == FAIL)
-		// 		return (FAIL);
+		if (ft_strncmp(cmd->cmd[i], "<<", 3) == 0)
+			if (here_doc(prg, &prg->fd.fd_in, &prg->heredocs.index) == FAIL)
+				return (FAIL);
 		if (ft_strncmp(cmd->cmd[i], ">", 2) == 0)
 			if (ft_open(cmd->cmd[i + 1], "CRT", &prg->fd.fd_out, prg) == FAIL)
 				return (FAIL);
@@ -90,6 +77,7 @@ int	check_cmd(t_prg *prg, t_lst_cmd *cmd)
 				return (FAIL);
 		i++;
 	}
+	// dprintf(2, ", %d\n", prg->heredocs.index);
 	cmd->cmd = f_cmd(cmd->cmd, &prg->mem);
 	// dprintf(2, "%d, %d\n", prg->fd.fd_in, prg->fd.fd_out);
 	if (prg->fd.fd_in > 0)

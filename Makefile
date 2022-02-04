@@ -3,7 +3,6 @@ SRCS		=	command_parsing/create_prompt.c		\
 				command_parsing/create_command.c	\
 				command_parsing/count_split_wog.c	\
 				command_parsing/checks_command.c	\
-				command_parsing/init_table_heredoc.c\
 				t_command/command_functions.c		\
 				t_string/string_functions.c			\
 				t_string/string_functions2.c		\
@@ -28,6 +27,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				exec_command/check_cmd.c			\
 				exec_command/f_command.c			\
 				args/args_functions.c				\
+				t_heredoc/heredoc_functions.c		\
+				t_heredoc/init_table_heredoc.c		\
 				
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 
