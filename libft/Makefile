@@ -55,7 +55,7 @@ INCLUDES	=	./includes/libft.h
 
 CC			= 	gcc
 
-CFLAGS		= 	-Wall -Wextra -Werror #-g
+CFLAGS		= 	-Wall -Wextra -Werror -g
 
 LIBNAME		=	libft.a
 

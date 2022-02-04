@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/27 14:29:24 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/03 10:43:09 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ static void	next_arg(char *arg, int *start)
 {
 	if (arg[*start] == '<' || arg[*start] == '>')
 	{
-		while (arg[*start] != ' ')
+		while (arg[*start] != ' ' && arg[*start])
 			*start += 1;
-		while (arg[*start] == ' ')
+		while (arg[*start] == ' ' && arg[*start])
 			*start += 1;
 		while (arg[*start] != ' ' && arg[*start])
 			*start += 1;
 	}
-	*start += 1;
 }
 
 void	find_arg_and_replace(t_prg *prg, t_string *arg, int start,

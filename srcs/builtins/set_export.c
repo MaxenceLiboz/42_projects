@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/31 13:59:39 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:32:33 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 	shlvl = 1;
 	while (envp[i] != '=' && envp[i])
 		i++;
-	if (!ft_strncmp(new_export->name_var.str, "SHLVL", 6))
+	if (ft_strncmp(new_export->name_var.str, "SHLVL", 6) == 0)
 	{
-		shlvl = shlvl + ft_atoi(envp + i + 1);
+		shlvl = shlvl + ft_atoi(new_export->var.str);
 		char_shlvl = shlvl + '0';
-		path = strdup(&char_shlvl);
+		path = ft_strdup(&char_shlvl);
 		if (!path)
 		{
 			ft_error_free(mem, "Malloc error\n");

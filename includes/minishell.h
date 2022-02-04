@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/01 14:32:20 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/04 15:21:41 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,21 @@ void		add_string(t_string *string, char *to_add, size_t index,
 t_string	*split_string(char *s, char c, t_list **mem);
 char		**strings_to_array(t_string *strings, t_list **mem);
 t_string	join_string(char *s1, char *s2, t_list **mem);
+
+/**************** t_heredoc  ****************/
+
+typedef struct s_heredoc
+{
+	t_string	*table;
+	int			size;
+	int			malloc_size;
+	int			index;
+}	t_heredoc;
+
+void		init_heredoc(t_heredoc *heredocs);
+t_heredoc	realloc_heredoc(t_heredoc heredocs, t_list **mem);
+void		add_heredoc(t_heredoc *heredocs, t_string new, int index,
+				t_list **mem);
 
 /**************** Command ********/
 typedef struct s_command
@@ -153,11 +168,8 @@ typedef struct s_prg
 	char		**paths;
 	t_fd		fd;
 	int			return_value;
+	t_heredoc	heredocs;
 }	t_prg;
-
-/**************** t_pipe ***********************/
-
-
 
 /**************** set_env ***********************/
 void		set_term_env(void);
@@ -188,7 +200,8 @@ void		split_wog(t_prg *prg, char c);
 int			count_split_wog(const char *str, char charset);
 t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
-t_bool		check_chevrons(t_string *cmd, t_list **mem);
+t_bool		syntax_special_char(t_string *cmd, t_list **mem);
+void		init_table_heredoc(t_prg *prg, int *save);
 
 int			set_export(char **envp, t_head_env *head, t_list **mem);
 
