@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/04 13:34:15 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/04 18:10:25 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,82 @@ void	double_dup(int fd1, int fd2, t_list **mem)
 	}
 }
 
+static int	get_size_to_dup(const char *src)
+{
+	int		i;
+	int		quotes;
+
+	i = 0;
+	quotes = 0;
+	while (src[i])
+	{
+		if (src[i] == '\'')
+		{
+			quotes += 2;
+			while (src[i] && src[++i] != '\'')
+				;
+		}
+		if (src[i] == '\'')
+		{
+			quotes += 2;
+			while (src[i] && src[++i] != '\'')
+				;
+		}
+		i++;
+	}
+	return (i - quotes);
+}
+
+char	*ft_strdup_and_trim(const char *src, t_list **mem)
+{
+	int		i;
+	int		j;
+	char	*dest;
+
+	j = 0;
+	dest = ft_malloc(mem, sizeof(char) * (get_size_to_dup(src) + 1));
+	i = 0;
+	while (src[i])
+	{
+		if (src[i] == '\'')
+		{
+			while (src[i] && src[++i] != '\'')
+				dest[j++] = src[i];
+			j++;
+		}
+		if (src[i] == '\"')
+		{
+			while (src[i] && src[++i] != '\"')
+				dest[j++] = src[i];
+			j++;
+		}
+		dest[j++] = src[i++];
+	}
+	dest[j] = '\0';
+	return (dest);
+}
+
+char	**trim_quotes_unneeded(char **cmd, t_list **mem)
+{
+	char	**dst;
+	int		i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+	dst = malloc(sizeof(char *) * (i + 1));
+	if (!dst)
+		return (NULL);
+	i = 0;
+	while (cmd[i])
+	{
+		dst[i] = ft_strdup_and_trim(cmd[i], mem);
+		i++;
+	}
+	dst[i] = 0;
+	return (dst);
+}
+
 int	exec_one(t_prg *prg)
 {
 	char	**envp;
@@ -91,6 +167,7 @@ int	exec_one(t_prg *prg)
 		return (FAIL);
 	if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 		return (FAIL);
+	prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
 	double_dup(prg->fd.fd_in, prg->fd.fd_out, &prg->mem);
 	prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
 	if (prg->return_value != 2)
@@ -142,6 +219,7 @@ void	ft_get_fd(t_prg *prg, int *j, char **envp)
 			exit(FAIL);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			exit(FAIL);
+		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
 		prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
 		if (prg->return_value != 2)
 			exit(prg->return_value);
