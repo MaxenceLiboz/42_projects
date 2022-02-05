@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:14 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/18 14:36:00 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/05 13:25:10 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_pwd(char **str)
+int	ft_pwd(t_string pwd)
 {
-	char	*dst;
-
-	dst = NULL;
-	(void)str;
-	printf("%s\n", getcwd(dst, 0));
+	printf("%s\n", pwd.str);
 	return (0);
 }

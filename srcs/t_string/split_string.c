@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:44:10 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/25 09:00:59 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/05 11:20:40 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ t_string	*split_string(char *s, char c, t_list **mem)
 	i = 0;
 	dsti = 0;
 	words = ft_count_words(s, c);
-	if (!s)
-		return (0);
 	dst = ft_malloc(mem, sizeof(t_string) * (words + 1));
 	while (words--)
 	{
