@@ -1,3 +1,19 @@
 
-mliboz is a grosse pute
+Who is mliboz?
+
+Maxence Liboz is a former swimmer. Indeed, he practiced this sport since he was
+a little boy. Many years, and many kilometers after, he got the opportunity to
+spend two years in America, working, studing and swimming.
+
+After his carrer done, he heard about a school, a very special school. Over there,
+they were talking about doing a Piscine to enter the school. Immediatly it caught
+his attention. Indeed, after all his life spending in pools, beatches, oceans he
+couldn't resist to this call.
+
+This is how, after the mythic Piscine of 42, he was taken in the school. Spending a
+lot of time debugging his code, because of some SEGMENTATION FAULT / BUS ERROR
+/ ABORT, and few leaks (really not that much), he finally land to this beautiful 
+project, Minishell.
+
+We hope you will enjoy our project :)
 
