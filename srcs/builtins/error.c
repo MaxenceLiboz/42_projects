@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:01:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/26 11:49:58 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/04 18:16:22 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	print_stderror(int error, int size, char *s1, ...)
 	va_list	arg;
 
 	va_start(arg, s1);
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	if (s1)
 	{
 		ft_putstr_fd(s1, 2);

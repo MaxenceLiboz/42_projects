@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 11:55:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/04 13:08:24 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 09:45:19 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_heredoc	realloc_heredoc(t_heredoc heredocs, t_list **mem)
 	}
 	dst.size = heredocs.size;
 	dst.index = heredocs.index;
+	dst.malloc_size = heredocs.malloc_size * 2;
 	while (heredocs.size--)
 		dst.table[heredocs.size] = heredocs.table[heredocs.size];
 	return (dst);

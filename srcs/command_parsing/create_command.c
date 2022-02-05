@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/04 15:21:14 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 09:35:14 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,10 @@ t_lst_cmd	*create_command(t_prg *prg)
 			break ;
 		if (status == -1)
 			return (NULL);
-		add_string(&prg->cmd.command, readline("> "),
+		add_string(&prg->cmd.command, readline("pipe > "),
 			prg->cmd.command.size, &prg->mem);
 	}
 	prg->heredocs.index = 0;
-	// for (int i = 0; i < prg->heredocs.size; i++)
-	// 	printf("%s", prg->heredocs.table[i].str);
-	// printf("%s\n", prg->cmd.command.str);
 	lst = lst_cmd_init(&prg->cmd, &prg->mem);
 	return (lst);
 }

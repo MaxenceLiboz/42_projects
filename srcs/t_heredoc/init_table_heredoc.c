@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 10:57:54 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/04 16:18:39 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 09:43:01 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@
 	Check if heredoc and return adress
 	Also check if pipe to increment the index of the table
 */
-static int	check_heredoc(char *str, int i, int *index)
+int	check_heredoc(char *str, int i, int *index)
 {
+	int		pipe;
+
+	pipe = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -37,8 +40,11 @@ static int	check_heredoc(char *str, int i, int *index)
 		if (str[i] == '\'')
 			while (str[i] && str[++i] != '\'')
 				;
-		if (str[i] == '|')
+		if (str[i] == '|' && pipe == 0)
+		{
 			*index += 1;
+			pipe++;
+		}
 		if (ft_strncmp(&str[i], "<<", 2) == 0)
 			return (i);
 		i++;
@@ -158,20 +164,7 @@ void	init_table_heredoc(t_prg *prg, int *save)
 {
 	int			i;
 	int			expand;
-	// int		check;
 
-	// i = 0;
-	// while (check_heredoc(prg->cmd.command.str, i, &prg->heredocs.index) != -1)
-	// {
-	// 	while (prg->heredocs.index <= prg->heredocs.size)
-	// 	{
-	// 		i = check_heredoc(prg->cmd.command.str, i, &prg->heredocs.index) + 2;
-	// 	}
-	// 	expand = delimiter_syntax(&prg->cmd.command, &i, &prg->mem);
-	// 	add_heredoc(&prg->heredocs,
-	// 		get_heredoc(prg, expand, i), &prg->mem);
-	// }
-	// printf("%s\n", prg->cmd.command.str);
 	i = check_heredoc(prg->cmd.command.str, *save, &prg->heredocs.index) + 2;
 	while (i != 1)
 	{
