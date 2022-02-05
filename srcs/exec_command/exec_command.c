@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/04 18:10:25 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 09:27:50 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,17 +230,25 @@ void	ft_get_fd(t_prg *prg, int *j, char **envp)
 int	ft_pipex(t_prg *prg)
 {
 	int		j;
+	int		heredoc;
+	int		i;
 	char	**envp;
 
-	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	j = 1;
+	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	prg->fd.pipe_nb = lst_cmd_size(prg->lst_cmd);
 	while (++j <= prg->fd.pipe_nb + 1)
 	{
 		ft_get_fd(prg, &j, envp);
-		// dprintf(2, "%d\n", prg->heredocs.index);
-		// dprintf(2, "%d\n", prg->return_value);
-		prg->heredocs.index += 1;
+		i = -1;
+		heredoc = 0;
+		while (prg->lst_cmd->cmd[++i])
+		{
+			if (check_heredoc(prg->lst_cmd->cmd[i], 0, &i) > -1)
+				heredoc = 1;
+		}
+		if (heredoc > 0)
+			prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
 	while (waitpid(-1, 0, 0) != -1)

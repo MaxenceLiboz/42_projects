@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/04 18:10:41 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 09:19:28 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
 t_bool		syntax_special_char(t_string *cmd, t_list **mem);
 void		init_table_heredoc(t_prg *prg, int *save);
+int			check_heredoc(char *str, int i, int *index);
 
 int			set_export(char **envp, t_head_env *head, t_list **mem);
 

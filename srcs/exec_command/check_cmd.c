@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/04 18:12:44 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 09:26:09 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_bool	here_doc(t_prg *prg, int *fd, int *index)
 		return (print_stderror(FAIL, 1, strerror(errno)));
 	if (prg->heredocs.table[*index].size > 65000)
 		return (print_stderror(FAIL, 1, "Heredoc bigger than 64K"));
+	// dprintf(2, "ALED (%d), (%s", *index, prg->heredocs.table[*index].str);
 	if (write(prg->fd.fd[1], prg->heredocs.table[*index].str,
 			prg->heredocs.table[*index].size - 1) == -1)
 		return (print_stderror(FAIL, 1, strerror(errno)));
