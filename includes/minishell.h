@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/07 12:22:13 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 15:54:05 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,9 +220,8 @@ int			set_export(char **envp, t_head_env *head, t_list **mem);
 int			exec_command(t_prg *prg);
 void		check_cmd(t_prg *prg, t_lst_cmd *cmd);
 char		**f_cmd(char **cmd, t_list **mem);
-int			ft_pipex(t_prg *prg);
+int			ft_pipex(t_prg *prg, char **envp);
 char		**trim_quotes_unneeded(char **cmd, t_list **mem);
-int			ft_exec_one(t_prg *prg);
 
 /**************** Utils *************/
 void		ft_double_dup(int fd1, int fd2, t_list **mem);
