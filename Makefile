@@ -13,7 +13,10 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/unset.c					\
 				builtins/export.c					\
 				builtins/echo.c						\
-				builtins/cd.c						\
+				builtins/cd/cd.c					\
+				builtins/cd/set_old_n_new_pwd.c		\
+				builtins/cd/set_new_path.c			\
+				builtins/cd/set_paths.c				\
 				builtins/pwd.c						\
 				builtins/exit.c						\
 				builtins/error.c					\

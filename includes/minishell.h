@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/05 16:48:16 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 12:22:13 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,15 @@ int			control_args(char *str);
 int			ft_env(t_lst_env *lst, char **command);
 int			ft_unset(t_head_env **head, char **command);
 int			ft_echo(char **str);
+
 int			ft_cd(char **str, t_head_env *head, t_list **mem, t_string *pwd);
+void		set_oldpwd_env(t_head_env *head, t_string *pwd, t_list **mem);
+void		set_new_pwd_env(t_head_env *head, t_string *pwd, t_list **mem);
+t_bool		set_new_path(char *str, t_string *path, t_list **mem);
+t_bool		set_home_env(t_string *path, t_lst_env *env, t_list **mem);
+t_bool		set_oldpwd(t_string *path, t_lst_env *env, t_list **mem);
+t_bool		set_home_getenv(char *str, t_string *path, t_list **mem);
+
 int			ft_pwd(t_string pwd);
 int			print_export(t_head_env *head);
 void		ft_exit(char **str, t_list **mem);
