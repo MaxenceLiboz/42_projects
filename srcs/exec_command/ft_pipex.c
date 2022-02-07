@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/07 12:49:02 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 15:51:58 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,61 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 	}
 }
 
-int	ft_pipex(t_prg *prg)
+/*
+	check if the command is a bultin
+*/
+static t_bool	is_builtin(t_prg *prg)
+{
+	char	**tmp;
+
+	tmp = f_cmd(prg->lst_cmd->cmd, &prg->mem);
+	if (ft_strncmp(tmp[0], "echo", 5) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "cd", 3) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "pwd", 4) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "export", 7) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "unset", 6) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "env", 4) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "tarchimb", 9) == 0 || ft_strncmp(tmp[0],
+			"mliboz", 7) == 0)
+		return (TRUE);
+	else if (ft_strncmp(tmp[0], "exit", 5) == 0)
+		return (TRUE);
+	return (FALSE);
+}
+
+/*
+	If there is only 1 cmd and it is a built in, exec it outside fork
+*/
+static int	ft_one_builtin(t_prg *prg)
+{
+	if (prg->fd.pipe_nb == 1 && is_builtin(prg))
+	{
+		check_cmd(prg, prg->lst_cmd);
+		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
+			return (prg->return_value);
+		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
+		prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
+		if (prg->return_value != 2)
+			return (prg->return_value);
+	}
+	return (-1);
+}
+
+int	ft_pipex(t_prg *prg, char **envp)
 {
 	int		j;
 	int		heredoc;
 	int		i;
-	char	**envp;
 
 	j = 1;
-	envp = lst_env_to_array(prg->env.env, &prg->mem);
-	prg->fd.pipe_nb = lst_cmd_size(prg->lst_cmd);
+	if (ft_one_builtin(prg) != -1)
+		return (prg->return_value);
 	while (++j <= prg->fd.pipe_nb + 1)
 	{
 		ft_get_fd(prg, &j, envp);
@@ -84,7 +129,5 @@ int	ft_pipex(t_prg *prg)
 			prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
-	while (waitpid(-1, 0, 0) != -1)
-		;
 	return (0);
 }

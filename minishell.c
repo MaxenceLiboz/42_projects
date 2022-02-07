@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 13:55:35 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 14:42:08 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	init_string(&prg.pwd, getcwd(NULL, 0), TRUE, &prg.mem);
 	while (i--)
 	{
-		// dprintf(2, "%s\n", prg.pwd.str);
 		get_signal();
 		prg.prompt = create_prompt(prg.pwd, &prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);

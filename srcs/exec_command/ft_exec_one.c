@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:37:01 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 12:26:46 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 15:25:42 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int	ft_exec_process(t_prg *prg, char **envp)
 		init_string(&cmd, "", TRUE, &prg->mem);
 		i = -1;
 		if (!prg->paths)
-			exit(print_stderror(2, 2, prg->lst_cmd->cmd[0],
-				": No such file or directory"));
+			exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+					": No such file or directory"));
 		while (prg->paths[++i])
 		{
 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
@@ -38,7 +38,7 @@ static int	ft_exec_process(t_prg *prg, char **envp)
 		cmd = sub_string(prg->lst_cmd->cmd[0], 1, cmd.size, &prg->mem);
 		cmd = join_string(getcwd(0, 0), cmd.str, &prg->mem);
 		execve(cmd.str, prg->lst_cmd->cmd, envp);
-		exit(print_stderror(2, 2, prg->lst_cmd->cmd[0],
+		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 				": command not found"));
 	}
 	return (0);
@@ -47,9 +47,8 @@ static int	ft_exec_process(t_prg *prg, char **envp)
 int	ft_exec_one(t_prg *prg)
 {
 	char	**envp;
+	int		status;
 
-	prg->fd.fd_in = prg->fd.stdin_save;
-	prg->fd.fd_out = prg->fd.stdout_save;
 	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	check_cmd(prg, prg->lst_cmd);
 	if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
@@ -59,10 +58,18 @@ int	ft_exec_one(t_prg *prg)
 	if (prg->return_value != 2)
 		return (prg->return_value);
 	prg->return_value = ft_exec_process(prg, envp);
-	waitpid(-1, &prg->return_value, 0);
-	if (prg->return_value == 256)
-		return (1);
-	else
-		return (127);
+	while (waitpid(-1, &status, 0) != -1)
+		;
+	if (WIFEXITED(status))
+	{
+        // printf("exited, status=%d\n", WEXITSTATUS(status));
+		prg->return_value = WEXITSTATUS(status);
+	}
 	return (prg->return_value);
 }
+
+	// waitpid(-1, &prg->return_value, 0);
+	// if (prg->return_value == 256)
+	// 	return (1);
+	// else
+	// 	return (127);

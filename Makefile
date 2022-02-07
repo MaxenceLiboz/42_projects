@@ -29,7 +29,6 @@ SRCS		=	command_parsing/create_prompt.c		\
 				exec_command/exec_command.c			\
 				exec_command/check_cmd.c			\
 				exec_command/f_command.c			\
-				exec_command/ft_exec_one.c			\
 				exec_command/ft_pipex.c				\
 				exec_command/trim_quotes_uneeded.c	\
 				exec_command/utils.c				\

@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/05 11:22:42 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 15:53:09 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,18 @@ static void	init_prg(t_prg *prg)
 
 int	exec_command(t_prg *prg)
 {
+	char	**envp;
+	int		status;
+
 	init_prg(prg);
-	if (lst_cmd_size(prg->lst_cmd) == 1)
-		prg->return_value = ft_exec_one(prg);
-	else
-		ft_pipex(prg);
+	envp = lst_env_to_array(prg->env.env, &prg->mem);
+	prg->fd.pipe_nb = lst_cmd_size(prg->lst_cmd);
+	prg->return_value = ft_pipex(prg, envp);
+	while (waitpid(-1, &status, 0) != -1)
+		;
+	if (WIFEXITED(status))
+		prg->return_value = WEXITSTATUS(status);
+	printf("exited, status=%d\n", prg->return_value);
 	ft_double_dup(prg->fd.stdin_save, prg->fd.stdout_save, &prg->mem);
 	close(prg->fd.stdin_save);
 	close(prg->fd.stdout_save);
