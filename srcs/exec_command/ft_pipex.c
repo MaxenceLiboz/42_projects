@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 11:17:54 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 12:49:02 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 	t_string	cmd;
 
 	i = -1;
+	if (!prg->paths)
+		exit(print_stderror(2, 2, prg->lst_cmd->cmd[0],
+				": No such file or directory"));
 	while (prg->paths[++i])
 	{
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
