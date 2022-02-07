@@ -13,7 +13,10 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/unset.c					\
 				builtins/export.c					\
 				builtins/echo.c						\
-				builtins/cd.c						\
+				builtins/cd/cd.c					\
+				builtins/cd/set_old_n_new_pwd.c		\
+				builtins/cd/set_new_path.c			\
+				builtins/cd/set_paths.c				\
 				builtins/pwd.c						\
 				builtins/exit.c						\
 				builtins/error.c					\
@@ -26,6 +29,10 @@ SRCS		=	command_parsing/create_prompt.c		\
 				exec_command/exec_command.c			\
 				exec_command/check_cmd.c			\
 				exec_command/f_command.c			\
+				exec_command/ft_exec_one.c			\
+				exec_command/ft_pipex.c				\
+				exec_command/trim_quotes_uneeded.c	\
+				exec_command/utils.c				\
 				args/args_functions.c				\
 				t_heredoc/heredoc_functions.c		\
 				t_heredoc/init_table_heredoc.c		\

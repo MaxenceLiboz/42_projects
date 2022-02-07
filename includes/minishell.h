@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/05 09:19:28 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/07 12:22:13 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef int	t_bool;
 
 void		*ft_malloc(t_list **mem, size_t size);
 void		ft_error_free(t_list **mem, char *msg);
+int			ft_error_exit(t_list **mem, int size, char *s1, ...);
 
 /**************** String  ****************/
 typedef struct s_string
@@ -62,7 +63,7 @@ void		dup_string(t_string *string, char *src, int index, t_list **mem);
 void		replace_string(t_string *string, int *indexs, char *replace_with,
 				t_list **mem);
 t_string	sub_string(char *src, size_t start, size_t size, t_list **mem);
-void		erase_string(t_string *string, char *to_replace, size_t start,
+void		erase_string(t_string *string, char *to_erase, size_t start,
 				t_list **mem);
 void		add_string(t_string *string, char *to_add, size_t index,
 				t_list **mem);
@@ -169,6 +170,7 @@ typedef struct s_prg
 	t_fd		fd;
 	int			return_value;
 	t_heredoc	heredocs;
+	t_string	pwd;
 }	t_prg;
 
 /**************** set_env ***********************/
@@ -188,13 +190,21 @@ int			control_args(char *str);
 int			ft_env(t_lst_env *lst, char **command);
 int			ft_unset(t_head_env **head, char **command);
 int			ft_echo(char **str);
-int			ft_cd(char **str, t_head_env *head, t_list **mem);
-int			ft_pwd(char **str);
+
+int			ft_cd(char **str, t_head_env *head, t_list **mem, t_string *pwd);
+void		set_oldpwd_env(t_head_env *head, t_string *pwd, t_list **mem);
+void		set_new_pwd_env(t_head_env *head, t_string *pwd, t_list **mem);
+t_bool		set_new_path(char *str, t_string *path, t_list **mem);
+t_bool		set_home_env(t_string *path, t_lst_env *env, t_list **mem);
+t_bool		set_oldpwd(t_string *path, t_lst_env *env, t_list **mem);
+t_bool		set_home_getenv(char *str, t_string *path, t_list **mem);
+
+int			ft_pwd(t_string pwd);
 int			print_export(t_head_env *head);
 void		ft_exit(char **str, t_list **mem);
 
 /**************** Parsing ******************/
-t_string	create_prompt(t_list **mem);
+t_string	create_prompt(t_string pwd, t_list **mem);
 t_lst_cmd	*create_command(t_prg *prg);
 void		split_wog(t_prg *prg, char c);
 int			count_split_wog(const char *str, char charset);
@@ -208,13 +218,23 @@ int			set_export(char **envp, t_head_env *head, t_list **mem);
 
 /**************** Exec_command *************/
 int			exec_command(t_prg *prg);
-int			check_cmd(t_prg *prg, t_lst_cmd *cmd);
+void		check_cmd(t_prg *prg, t_lst_cmd *cmd);
 char		**f_cmd(char **cmd, t_list **mem);
-void		double_dup(int fd1, int fd2, t_list **mem);
+int			ft_pipex(t_prg *prg);
+char		**trim_quotes_unneeded(char **cmd, t_list **mem);
+int			ft_exec_one(t_prg *prg);
+
+/**************** Utils *************/
+void		ft_double_dup(int fd1, int fd2, t_list **mem);
+void		ft_pipe(int *fd, t_list **mem);
+void		ft_write(int fd, char *str, size_t size, t_list **mem);
+void		ft_close(int fd, t_list **mem);
+void		ft_open(char *file, char *options, int *fd, t_prg *prg);
 
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);
 void		find_arg_and_replace(t_prg *prg, t_string *arg, int start,
 				t_string *str);
 t_bool		is_arg(char *arg, int *start);
+
 #endif

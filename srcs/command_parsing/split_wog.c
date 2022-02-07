@@ -31,54 +31,6 @@ static void	get_copy_size(const char *src, char c, int *i, int *end)
 	}
 }
 
-// static void	ft_copy2(t_command *command, int *i, int end, int dsti)
-// {
-// 	int		dquotes;
-// 	int		squotes;
-// 	int		y;
-
-// 	dquotes = 1;
-// 	squotes = 1;
-// 	y = 0;
-// 	while (*i < end)
-// 	{
-// 		while (command->command.str[*i] == '"' && squotes == 1)
-// 		{
-// 			*i += 1;
-// 			dquotes *= -1;
-// 		}
-// 		while (command->command.str[*i] == '\'' && dquotes == 1)
-// 		{
-// 			*i += 1;
-// 			squotes *= -1;
-// 		}
-// 		if (*i >= end)
-// 			break ;
-// 		command->array[dsti].str[y++] = command->command.str[*i];
-// 		*i += 1;
-// 	}
-// 	command->array[dsti].str[y] = 0;
-// 	*i = end;
-// }
-
-// static void	ft_copy2(t_command *command, int *i, int end, int dsti)
-// {
-// 	int		dquotes;
-// 	int		squotes;
-// 	int		y;
-
-// 	dquotes = 1;
-// 	squotes = 1;
-// 	y = 0;
-// 	while (*i < end)
-// 	{
-// 		command->array[dsti].str[y++] = command->command.str[*i];
-// 		*i += 1;
-// 	}
-// 	command->array[dsti].str[y] = 0;
-// 	*i = end;
-// }
-
 static void	ft_copy(t_prg *prg, char c, int *i, int dsti)
 {
 	int			end;
@@ -89,7 +41,6 @@ static void	ft_copy(t_prg *prg, char c, int *i, int dsti)
 	prg->cmd.array[dsti] = sub_string(prg->cmd.command.str,
 			*i, size, &prg->mem);
 	*i = end;
-	// init_string(&prg->cmd.command, prg->cmd.command.str, FALSE, &prg->mem);
 }
 
 void	split_wog(t_prg *prg, char c)

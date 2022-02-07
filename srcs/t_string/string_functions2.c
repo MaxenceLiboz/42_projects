@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/02 08:25:57 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/05 16:47:52 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_string	sub_string(char *src, size_t start, size_t size, t_list **mem)
 	return (string);
 }
 
-void	erase_string(t_string *string, char *to_replace, size_t start,
+void	erase_string(t_string *string, char *to_erase, size_t start,
 	t_list **mem)
 {
 	t_string	temp;
 
-	init_string(&temp, &string->str[start + ft_strlen(to_replace)], TRUE, mem);
+	init_string(&temp, &string->str[start + ft_strlen(to_erase)], TRUE, mem);
 	dup_string(string, temp.str, start, mem);
 }
 
