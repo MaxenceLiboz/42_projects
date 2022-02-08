@@ -62,7 +62,7 @@ RM			=	rm -rf
 
 MKDIR		=	mkdir -p
 
-all:		libft ${EXEC}
+all:		libft ${NAME}
 
 ${OBJS_DIR}/%.o: 	${SRCS_DIR}/%.c	${INCLUDES} $(OBJDIRS)
 			${MKDIR} $(@D) $(DMPDIR)$(@D)
@@ -74,8 +74,8 @@ $(LIB):		${OBJS} ${INCLUDES}
 libft:		${INCLUDES}
 			make -C libft
 
-${EXEC}:	${EXEC}.c ${LIBS}
-			$(CC) ${CFLAGS} ${LIBINCLUDES} ${EXEC}.c ${EXECINCLUDES} -lncurses -Ireadline/include -Lreadline/lib ${LIBS} -o ${EXEC}
+${NAME}:	${NAME}.c ${LIBS}
+			$(CC) ${CFLAGS} ${LIBINCLUDES} ${NAME}.c ${EXECINCLUDES} -lncurses -Ireadline/include -Lreadline/lib ${LIBS} -o ${NAME}
 
 clean:
 			${RM} ${OBJS} $(OBJS_DIR)
@@ -83,7 +83,7 @@ clean:
 
 fclean:		clean
 			make fclean -C libft
-			${RM} ${LIB} ${EXEC} ${LIBS} ${EXEC}.dSYM
+			${RM} ${LIB} ${NAME} ${LIBS} ${NAME}.dSYM
 
 re:			fclean all
 
