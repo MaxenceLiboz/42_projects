@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/07 14:42:08 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/08 14:14:38 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	get_signal(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
+	char	*pwd;
 	int		i = 20;
 
 	(void)argc;
@@ -47,7 +48,9 @@ int	main(int argc, char **argv, char **envp)
 	set_export(envp, &prg.env, &prg.mem);
 	set_term_env();
 	print_title();
-	init_string(&prg.pwd, getcwd(NULL, 0), TRUE, &prg.mem);
+	pwd = getcwd(NULL, 0);
+	init_string(&prg.pwd, pwd, TRUE, &prg.mem);
+	free(pwd);
 	while (i--)
 	{
 		get_signal();
