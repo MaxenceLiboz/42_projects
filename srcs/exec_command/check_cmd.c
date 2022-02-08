@@ -6,37 +6,48 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:57:38 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/07 14:18:07 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/08 10:23:40 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+// void	here_doc(t_prg *prg, int *fd, int *index)
+// {
+// 	int		pid;
+
+// 	(void)fd;
+// 	ft_pipe(prg->fd.fd, &prg->mem);
+// 	pid = fork();
+// 	if (pid < 0)
+// 		ft_error_exit(&prg->mem, 2, "fork: ", strerror(errno));
+// 	if (pid == 0)
+// 	{
+// 		dup2(prg->fd.fd[0], prg->fd.fd_in);
+// 		ft_close(prg->fd.fd[0], &prg->mem);
+// 		// if (prg->heredocs.table[*index].size > 65000)
+// 		// 	ft_error_exit(&prg->mem, 1, "heredoc bigger than 64K");
+// 		ft_write(prg->fd.fd[1], prg->heredocs.table[*index].str,
+// 			prg->heredocs.table[*index].size - 1, &prg->mem);
+// 		ft_close(prg->fd.fd[1], &prg->mem);
+// 	}
+// 	else
+// 	{
+// 		close(prg->fd.fd[1]);
+// 		*fd = prg->fd.fd[0];
+// 		close(prg->fd.fd[1]);
+// 	}
+// }
+
 void	here_doc(t_prg *prg, int *fd, int *index)
 {
-	int		pid;
-
-	(void)fd;
 	ft_pipe(prg->fd.fd, &prg->mem);
-	pid = fork();
-	if (pid < 0)
-		ft_error_exit(&prg->mem, 2, "fork: ", strerror(errno));
-	if (pid == 0)
-	{
-		dup2(prg->fd.fd[0], prg->fd.fd_in);
-		ft_close(prg->fd.fd[0], &prg->mem);
-		// if (prg->heredocs.table[*index].size > 65000)
-		// 	ft_error_exit(&prg->mem, 1, "heredoc bigger than 64K");
-		ft_write(prg->fd.fd[1], prg->heredocs.table[*index].str,
-			prg->heredocs.table[*index].size - 1, &prg->mem);
-		ft_close(prg->fd.fd[1], &prg->mem);
-	}
-	else
-	{
-		close(prg->fd.fd[1]);
-		*fd = prg->fd.fd[0];
-		close(prg->fd.fd[1]);
-	}
+	if (prg->heredocs.table[*index].size > 65000)
+		ft_error_exit(&prg->mem, 1, "heredoc bigger than 64K");
+	ft_write(prg->fd.fd[1], prg->heredocs.table[*index].str,
+		prg->heredocs.table[*index].size - 1, &prg->mem);
+	ft_close(prg->fd.fd[1], &prg->mem);
+	*fd = prg->fd.fd[0];
 }
 
 /*
