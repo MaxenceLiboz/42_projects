@@ -56,7 +56,7 @@ LIBS		=	libft.a								\
 
 LIB			=	libminishell.a						
 
-EXEC		=	minishell
+NAME		=	minishell
 
 RM			=	rm -rf	
 
