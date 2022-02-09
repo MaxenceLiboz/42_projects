@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/31 15:32:41 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/09 11:25:36 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	ft_exit(char **str, t_list **mem)
 {
 	int		nb;
 
+	if (!str)
+	{
+		printf("exit");
+		exit(0);
+	}
 	printf("exit\n");
 	if (!str[1])
 	{
