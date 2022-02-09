@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/09 13:03:58 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:58:04 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,26 @@ static void	handler(int signum)
 	}
 }
 
-void	get_signal(void)
+void	get_signal(t_list **mem)
 {
 	struct sigaction	sa;
 
 	sa.sa_handler = handler;
 	sa.sa_flags = 0;
 	signal(SIGQUIT, SIG_IGN);
-	sigaction(SIGINT, &sa, NULL);
+	if (sigaction(SIGINT, &sa, NULL) == ERR)
+		ft_error_exit(mem, 2, "sigaction: ", strerror(errno));
+}
+
+static void	init_pwd(t_string *pwd, t_list **mem)
+{
+	char	*getpwd;
+
+	getpwd = getcwd(NULL, 0);
+	if (getpwd == NULL)
+		ft_error_exit(mem, 1, "getcwd: error initializing pwd");
+	init_string(pwd, getpwd, TRUE, mem);
+	free(getpwd);
 }
 
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
@@ -40,21 +52,18 @@ void	get_signal(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_prg	prg;
-	char	*pwd;
-	int		i = 20;
+	int		i = 5;
 
 	(void)argc;
 	(void)argv;
 	prg.mem = 0;
 	set_export(envp, &prg.env, &prg.mem);
-	set_term_env();
+	set_term_env(&prg.mem);
 	print_title();
-	pwd = getcwd(NULL, 0);
-	init_string(&prg.pwd, pwd, TRUE, &prg.mem);
-	free(pwd);
+	init_pwd(&prg.pwd, &prg.mem);
 	while (i--)
 	{
-		get_signal();
+		get_signal(&prg.mem);
 		prg.prompt = create_prompt(prg.pwd, &prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
 		if (!prg.cmd.command.str)
@@ -71,5 +80,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		reinit_command(&prg.cmd);
 	}
+	rl_clear_history();
 	return (ft_lstclear(&prg.mem, free));
 }

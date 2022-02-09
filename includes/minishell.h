@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/07 15:54:05 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 17:48:51 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int			lst_cmd_size(t_lst_cmd *lst);
 
 /**************** custom ****************/
 
-void		print_title(void);
+int			print_title(void);
 int			biography(char *command);
 
 /**************** fd ********/
@@ -174,8 +174,8 @@ typedef struct s_prg
 }	t_prg;
 
 /**************** set_env ***********************/
-void		set_term_env(void);
-void		get_signal(void);
+void		set_term_env(t_list **mem);
+void		get_signal(t_list **mem);
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
@@ -198,7 +198,6 @@ t_bool		set_new_path(char *str, t_string *path, t_list **mem);
 t_bool		set_home_env(t_string *path, t_lst_env *env, t_list **mem);
 t_bool		set_oldpwd(t_string *path, t_lst_env *env, t_list **mem);
 t_bool		set_home_getenv(char *str, t_string *path, t_list **mem);
-
 int			ft_pwd(t_string pwd);
 int			print_export(t_head_env *head);
 void		ft_exit(char **str, t_list **mem);
@@ -233,7 +232,6 @@ void		ft_open(char *file, char *options, int *fd, t_prg *prg);
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);
 void		find_arg_and_replace(t_prg *prg, t_string *arg, int start,
-				t_string *str);
+				t_string *str);t_bool		is_arg(char *arg, int *start);
 t_bool		is_arg(char *arg, int *start);
-
 #endif
