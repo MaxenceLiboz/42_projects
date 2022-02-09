@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/09 11:11:04 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:08:35 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,36 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 	return (0);
 }
 
+/*
+	Set out minishell path in the PATH variable
+*/
+static int	export_value_path(char *envp, t_lst_env *new_export,
+			t_lst_env *new_env, t_list **mem)
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	path = NULL;
+	while (envp[i] != '=' && envp[i])
+		i++;
+	if (!ft_strncmp(new_export->name_var.str, "PATH", 6))
+	{
+		path = getcwd(0, 0);
+		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
+				mem);
+		add_string(&new_export->var, ":", new_export->var.size - 1, mem);
+		add_string(&new_export->var, path, new_export->var.size - 1, mem);
+		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
+				mem);
+		add_string(&new_env->var, ":", new_env->var.size - 1, mem);
+		add_string(&new_env->var, path, new_env->var.size - 1, mem);
+		free(path);
+		return (1);
+	}
+	return (0);
+}
+
 static int	head_env_init(char *envp, t_lst_env *new_export,
 			t_lst_env *new_env, t_list **mem)
 {
@@ -81,8 +111,9 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 	new_export->name_var = sub_string(envp, 0, i, mem);
 	new_env->name_var = sub_string(envp, 0, i, mem);
 	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7)
-		// && !export_value_shell(envp, new_export, new_env, mem)
-		&& !export_value_shlvl(envp, new_export, new_env, mem))
+		&& !export_value_shell(envp, new_export, new_env, mem)
+		&& !export_value_shlvl(envp, new_export, new_env, mem)
+		&& !export_value_path(envp, new_export, new_env, mem))
 	{
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
