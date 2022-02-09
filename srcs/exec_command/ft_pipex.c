@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/08 10:52:34 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 11:03:49 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 	t_string	cmd;
 
 	i = -1;
+	execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
 	if (!prg->paths)
 		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 				": No such file or directory"));
@@ -26,9 +27,6 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
 		execve(cmd.str, prg->lst_cmd->cmd, envp);
 	}
-	cmd = sub_string(prg->lst_cmd->cmd[0], 1, cmd.size, &prg->mem);
-	cmd = join_string(getcwd(0, 0), cmd.str, &prg->mem);
-	execve(cmd.str, prg->lst_cmd->cmd, envp);
 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 			": command not found"));
 }
