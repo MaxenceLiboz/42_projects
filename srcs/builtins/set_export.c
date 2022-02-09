@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/09 13:08:35 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 13:16:51 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 	new_export->name_var = sub_string(envp, 0, i, mem);
 	new_env->name_var = sub_string(envp, 0, i, mem);
 	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7)
-		&& !export_value_shell(envp, new_export, new_env, mem)
+		// && !export_value_shell(envp, new_export, new_env, mem)
 		&& !export_value_shlvl(envp, new_export, new_env, mem)
 		&& !export_value_path(envp, new_export, new_env, mem))
 	{
