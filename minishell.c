@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/08 14:14:38 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 13:03:58 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	get_signal(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = handler;
-	sigaction(SIGINT, &sa, NULL);
+	sa.sa_flags = 0;
 	signal(SIGQUIT, SIG_IGN);
+	sigaction(SIGINT, &sa, NULL);
 }
 
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
@@ -57,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		prg.prompt = create_prompt(prg.pwd, &prg.mem);
 		prg.cmd.command.str = readline(prg.prompt.str);
 		if (!prg.cmd.command.str)
-			exit(0);
+			ft_exit(NULL, &prg.mem);
 		if (*prg.cmd.command.str)
 			add_history(prg.cmd.command.str);
 		init_string(&prg.cmd.command, prg.cmd.command.str, FALSE, &prg.mem);
