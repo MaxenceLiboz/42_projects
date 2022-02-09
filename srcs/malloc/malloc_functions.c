@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/05 11:03:20 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 14:56:46 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	*ft_malloc(t_list **mem, size_t size)
 
 void	ft_error_free(t_list **mem, char *msg)
 {
-	ft_lstclear(mem, free);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
+	ft_lstclear(mem, free);
 	exit(-1);
 }
 

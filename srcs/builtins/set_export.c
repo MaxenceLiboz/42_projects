@@ -6,38 +6,11 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/09 13:16:51 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 14:10:04 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-//In this function, need to set var.type to ENV if the name_var contain '='
-//As well, the substr function isn't working if the = is not found
-
-// static int	export_value_shell(char *envp, t_lst_env *new_export,
-// 			t_lst_env *new_env, t_list **mem)
-// {
-// 	int		i;
-// 	char	*path;
-
-// 	i = 0;
-// 	path = NULL;
-// 	while (envp[i] != '=' && envp[i])
-// 		i++;
-// 	if (!ft_strncmp(new_export->name_var.str, "SHELL", 6))
-// 	{
-// 		path = getcwd(0, 0);
-// 		if (!path)
-// 			ft_error_free(mem, "Malloc error\n");
-// 		new_export->var = sub_string(path, 0, ft_strlen(path) + 1,
-// 				mem);
-// 		new_env->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
-// 		free(path);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
 
 static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 			t_lst_env *new_env, t_list **mem)
@@ -56,10 +29,12 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
 		shlvl += ft_atoi(new_export->var.str);
+		if (shlvl == 1 && ft_strncmp(new_export->var.str, "0", 2) != 0)
+			ft_error_exit(mem, 1, "atoi: overflow");
 		char_shlvl = shlvl + '0';
 		path = ft_strdup(&char_shlvl);
-		if (!path)
-			ft_error_free(mem, "Malloc error\n");
+		if (path == NULL)
+			ft_error_exit(mem, 1, "strdup: shlvl: malloc error\n");
 		new_export->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
 		new_env->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
 		free(path);
@@ -84,6 +59,8 @@ static int	export_value_path(char *envp, t_lst_env *new_export,
 	if (!ft_strncmp(new_export->name_var.str, "PATH", 6))
 	{
 		path = getcwd(0, 0);
+		if (path == NULL)
+			ft_error_exit(mem, 1, "getcwd: error initializing path value");
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
 		add_string(&new_export->var, ":", new_export->var.size - 1, mem);
@@ -111,7 +88,6 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 	new_export->name_var = sub_string(envp, 0, i, mem);
 	new_env->name_var = sub_string(envp, 0, i, mem);
 	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7)
-		// && !export_value_shell(envp, new_export, new_env, mem)
 		&& !export_value_shlvl(envp, new_export, new_env, mem)
 		&& !export_value_path(envp, new_export, new_env, mem))
 	{

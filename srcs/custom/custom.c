@@ -6,20 +6,23 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 21:49:02 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/01 12:55:51 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/09 14:12:56 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	print_title(void)
+int	print_title(void)
 {
 	int		fd;
 	char	*dest;
 
-	fd = open("srcs/custom/title.txt", O_RDONLY);
+	if (access("srcs/custom/title.txt", F_OK | R_OK) == 0)
+		fd = open("srcs/custom/title.txt", O_RDONLY);
+	else
+		return (print_stderror(FAIL, 2, "error: access: ", strerror(errno)));
 	if (fd < 0)
-		return ;
+		return (print_stderror(FAIL, 2, "error: open: ", strerror(errno)));
 	dest = get_next_line(fd);
 	while (dest)
 	{
@@ -29,11 +32,11 @@ void	print_title(void)
 	}
 	printf("\t\t\t\t\t\t\t\t\t \e[0;37m by tarchimb and mliboz\n");
 	if (close(fd) == -1)
-		print_stderror(0, 1, strerror(errno));
-	return ;
+		return (print_stderror(FAIL, 2, "error: close: ", strerror(errno)));
+	return (SUCCESS);
 }
 
-void	print_biography(char *user)
+static int	print_biography(char *user)
 {
 	int		fd;
 	char	*dest;
@@ -41,9 +44,9 @@ void	print_biography(char *user)
 	if (access(user, F_OK | R_OK) == 0)
 		fd = open(user, O_RDONLY);
 	else
-		return ;
+		return (print_stderror(FAIL, 2, "error: access: ", strerror(errno)));
 	if (fd < 0)
-		return ;
+		return (print_stderror(FAIL, 2, "error: open: ", strerror(errno)));
 	dest = get_next_line(fd);
 	while (dest)
 	{
@@ -51,8 +54,9 @@ void	print_biography(char *user)
 		free(dest);
 		dest = get_next_line(fd);
 	}
-	close(fd);
-	return ;
+	if (close(fd) == -1)
+		return (print_stderror(FAIL, 2, "error: close: ", strerror(errno)));
+	return (SUCCESS);
 }
 
 int	biography(char *command)
