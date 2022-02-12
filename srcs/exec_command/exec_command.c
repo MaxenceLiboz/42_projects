@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/08 13:38:13 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/12 11:19:52 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	exec_command(t_prg *prg)
 		;
 	if (WIFEXITED(status))
 		prg->return_value = WEXITSTATUS(status);
-	// printf("exited, status=%d\n", prg->return_value);
 	ft_double_dup(prg->fd.stdin_save, prg->fd.stdout_save, &prg->mem);
 	close(prg->fd.stdin_save);
 	close(prg->fd.stdout_save);

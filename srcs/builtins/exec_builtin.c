@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 13:51:19 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/12 10:48:32 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 			, "mliboz", 7) == 0)
 		return_value = biography(command[0]);
 	else if (ft_strncmp(command[0], "exit", 5) == 0)
-		ft_exit(command, &prg->mem);
+		ft_exit(command, prg);
 	return (return_value);
 }
