@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:35 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/26 11:52:36 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/12 10:31:52 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_env(t_lst_env *lst, char **command)
 		return (print_stderror(0, 1, "use the command whitout arguments"));
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->name_var.str, tmp->var.str);
+		if (*tmp->var.str)
+			printf("%s=%s\n", tmp->name_var.str, tmp->var.str);
 		tmp = tmp->next;
 	}
 	return (0);

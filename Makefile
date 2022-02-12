@@ -22,7 +22,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/error.c					\
 				builtins/env.c						\
 				custom/custom.c						\
-				signal/set_term.c					\
+				init_term/init_term.c				\
+				init_term/signal.c					\
 				builtins/exec_builtin.c				\
 				t_lst_cmd/lst_cmd_functions.c		\
 				malloc/malloc_functions.c			\
