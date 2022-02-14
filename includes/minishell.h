@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/14 10:18:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:54:39 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,21 +163,22 @@ typedef struct s_fd
 /**************** t_prg ***********************/
 typedef struct s_prg
 {
-	t_head_env	env;
-	t_string	prompt;
-	t_command	cmd;
-	t_lst_cmd	*lst_cmd;
-	t_list		*mem;
-	char		**paths;
-	t_fd		fd;
-	int			return_value;
-	t_heredoc	heredocs;
-	t_string	pwd;
+	t_head_env		env;
+	t_string		prompt;
+	t_command		cmd;
+	t_lst_cmd		*lst_cmd;
+	t_list			*mem;
+	char			**paths;
+	t_fd			fd;
+	int				return_value;
+	t_heredoc		heredocs;
+	t_string		pwd;
+	struct termios	old;
 }	t_prg;
 
 /**************** set_env ***********************/
 void		set_signal(void);
-int			initialization(char **envp, t_prg *prg, struct termios *old);
+int			initialization(char **envp, t_prg *prg);
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);

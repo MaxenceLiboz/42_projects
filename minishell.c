@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/14 10:31:05 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:57:24 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ void	handler_main(int signum)
 //need to set PWD at each loop, unless PWD is unset
 int	main(int argc, char **argv, char **envp)
 {
-	struct termios	old;
 	t_prg			prg;
 
 	prg.mem = 0;
 	if (argc > 1 || argv[1])
 		return (print_stderror(2, 2, argv[1], ": invalid option"));
-	initialization(envp, &prg, &old);
+	initialization(envp, &prg);
 	while (1)
 	{
 		set_signal();
@@ -44,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		prg.cmd.command.str = readline(prg.prompt.str);
 		if (!prg.cmd.command.str)
 		{
-			tcsetattr(0, TCSANOW, &old);
+			tcsetattr(0, TCSANOW, &prg.old);
 			ft_exit(NULL, &prg);
 		}
 		if (*prg.cmd.command.str)
@@ -59,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		reinit_command(&prg.cmd);
 	}
-	tcsetattr(0, TCSANOW, &old);
+	tcsetattr(0, TCSANOW, &prg.old);
 	rl_clear_history();
 	return (ft_lstclear(&prg.mem, free));
 }

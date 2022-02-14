@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:31:57 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/12 10:53:46 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:56:23 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static void	set_term_env(t_list **mem, struct termios *old)
 	tputs(tmp, 10, putchar);
 }
 
-int	initialization(char **envp, t_prg *prg, struct termios *old)
+int	initialization(char **envp, t_prg *prg)
 {
 	set_export(envp, &prg->env, &prg->mem);
-	set_term_env(&prg->mem, old);
+	set_term_env(&prg->mem, &prg->old);
 	print_title();
 	init_pwd(&prg->pwd, &prg->mem);
 	return (0);
