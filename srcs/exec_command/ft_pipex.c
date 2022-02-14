@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/12 12:17:23 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:18:46 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			exit(FAIL);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
-		prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
-		if (prg->return_value != 2)
-			exit(prg->return_value);
+		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
+			exit(g_returnvalue);
 		ft_exec_process(prg, envp);
 	}
 }
@@ -95,16 +94,15 @@ static int	ft_one_builtin(t_prg *prg)
 	{
 		check_cmd(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
-			return (prg->return_value);
+			return (g_returnvalue);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
-		prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
-		if (prg->return_value != 2)
-			return (prg->return_value);
+		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
+			return (2);
 	}
 	return (-1);
 }
 
-int	ft_pipex(t_prg *prg, char **envp)
+void	ft_pipex(t_prg *prg, char **envp)
 {
 	int		j;
 	int		heredoc;
@@ -113,14 +111,11 @@ int	ft_pipex(t_prg *prg, char **envp)
 	j = 1;
 	if (ft_strncmp(prg->lst_cmd->cmd[0], "minishell", 9) != 0
 		&& ft_strncmp(prg->lst_cmd->cmd[0], "./minishell", 11) != 0)
-	{
-		signal(SIGINT, (void (*)(int))handler_forked);
-		handler_forked(-1, &prg->return_value);
-	}
+		signal(SIGINT, (void (*)(int))handler_forked); //add a function to check last charachters == minishell
 	else
 		signal(SIGINT, SIG_IGN);
 	if (ft_one_builtin(prg) != -1)
-		return (prg->return_value);
+		return ;
 	while (++j <= prg->fd.pipe_nb + 1)
 	{
 		ft_get_fd(prg, &j, envp);
@@ -135,5 +130,5 @@ int	ft_pipex(t_prg *prg, char **envp)
 			prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
-	return (prg->return_value);
+	return ;
 }

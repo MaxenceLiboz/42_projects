@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/12 13:04:27 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:18:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define FAIL 1
 
 typedef int	t_bool;
+int			g_returnvalue;
 
 /**************** Malloc  ****************/
 
@@ -220,7 +221,7 @@ int			set_export(char **envp, t_head_env *head, t_list **mem);
 int			exec_command(t_prg *prg);
 void		check_cmd(t_prg *prg, t_lst_cmd *cmd);
 char		**f_cmd(char **cmd, t_list **mem);
-int			ft_pipex(t_prg *prg, char **envp);
+void		ft_pipex(t_prg *prg, char **envp);
 char		**trim_quotes_unneeded(char **cmd, t_list **mem);
 
 /**************** Utils *************/
@@ -236,7 +237,7 @@ void		find_arg_and_replace(t_prg *prg, t_string *arg, int start,
 				t_string *str);
 t_bool		is_arg(char *arg, int *start);
 
-void		handler_forked(int signum, int *return_value);
+void		handler_forked(int signum);
 void		handler_main(int signum);
 
 #endif

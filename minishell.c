@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/12 13:04:56 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:31:05 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	handler_main(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_returnvalue = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -34,12 +35,8 @@ int	main(int argc, char **argv, char **envp)
 
 	prg.mem = 0;
 	if (argc > 1 || argv[1])
-	{
-		ft_putstr_fd("Too many arguments\n", 2);
-		return (0);
-	}
+		return (print_stderror(2, 2, argv[1], ": invalid option"));
 	initialization(envp, &prg, &old);
-	prg.return_value = 0;
 	while (1)
 	{
 		set_signal();

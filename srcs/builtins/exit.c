@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/12 11:51:09 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:09:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	ft_exit(char **str, t_prg *prg)
 	{
 		printf("exit\n");
 		ft_lstclear(&prg->mem, free);
-		exit(prg->return_value);
+		exit(g_returnvalue);
 	}
 	printf("exit\n");
 	if (!str[1])
 	{
 		ft_lstclear(&prg->mem, free);
-		exit(prg->return_value);
+		exit(g_returnvalue);
 	}
 	if (!isnum(str[1]) || !is_atoll(ft_atoll(str[1]), str[1]))
 		print_exit(str[1], ": numeric argument required", 255, &prg->mem);

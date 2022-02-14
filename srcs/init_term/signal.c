@@ -6,18 +6,19 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:40:10 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/12 13:04:04 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:16:26 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	handler_forked(int signum, int *return_value)
+void	handler_forked(int signum)
 {
 	if (signum == SIGINT)
+	{
 		write(1, "^C\n", 3);
-	if (signum == -1)
-		*return_value = 130;
+		g_returnvalue = 130;
+	}
 }
 
 void	set_signal(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/09 17:47:17 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/12 15:14:40 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	find_arg_and_replace(t_prg *prg, t_string *arg, int start,
 	end = start + 1;
 	if (str->str[start + 1] == '?')
 	{
-		init_string(arg, ft_itoa(prg->return_value), TRUE, &prg->mem);
+		init_string(arg, ft_itoa(g_returnvalue), TRUE, &prg->mem);
 		indexs[0] = start;
 		indexs[1] = arg->size;
 		replace_string(str, indexs, arg->str, &prg->mem);

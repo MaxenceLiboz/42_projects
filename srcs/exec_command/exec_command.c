@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/12 11:19:52 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 10:25:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static char	**get_path(t_lst_env *export, t_list **mem)
 static void	init_prg(t_prg *prg)
 {
 	errno = 0;
-	prg->return_value = 0;
 	prg->fd.stdin_save = dup(STDIN_FILENO);
 	if (prg->fd.stdin_save == -1)
 		ft_error_free(&prg->mem, "error: STDIN_FILENO save failed");
@@ -58,13 +57,13 @@ int	exec_command(t_prg *prg)
 	init_prg(prg);
 	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	prg->fd.pipe_nb = lst_cmd_size(prg->lst_cmd);
-	prg->return_value = ft_pipex(prg, envp);
+	ft_pipex(prg, envp);
 	while (waitpid(-1, &status, 0) != -1)
 		;
 	if (WIFEXITED(status))
-		prg->return_value = WEXITSTATUS(status);
+		g_returnvalue = WEXITSTATUS(status);
 	ft_double_dup(prg->fd.stdin_save, prg->fd.stdout_save, &prg->mem);
 	close(prg->fd.stdin_save);
 	close(prg->fd.stdout_save);
-	return (prg->return_value);
+	return (g_returnvalue);
 }
