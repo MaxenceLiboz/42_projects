@@ -3,29 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/14 10:18:46 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/14 11:28:02 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+// static void	ft_exec_process(t_prg *prg, char **envp)
+// {
+// 	int			i;
+// 	t_string	cmd;
+
+// 	i = -1;
+// 	if (access(prg->lst_cmd->cmd[0], X_OK) == 0)
+// 		execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
+// 	else
+// 	{
+// 		if (!prg->paths)
+// 			exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+// 					": No such file or directory"));
+// 		while (prg->paths[++i])
+// 		{
+// 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
+// 			if (access(prg->lst_cmd->cmd[0], X_OK) == 0)
+// 				execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
+// 			else
+// 				exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+// 						": Permission denied"));
+// 		}
+// 	}
+// 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+// 			": command not found"));
+// }
+
 static void	ft_exec_process(t_prg *prg, char **envp)
 {
 	int			i;
 	t_string	cmd;
+	struct stat	file;
 
 	i = -1;
+	stat(prg->lst_cmd->cmd[0], &file);
+	if (S_ISDIR(file.st_mode) == TRUE)
+		exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+				": is a dir"));
 	execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
+	if (errno == EACCES)
+		exit(print_stderror(126, 3,
+				prg->lst_cmd->cmd[0], ": ", strerror(errno)));
 	if (!prg->paths)
 		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 				": No such file or directory"));
 	while (prg->paths[++i])
 	{
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
+		stat(cmd.str, &file);
+		if (S_ISDIR(file.st_mode) == TRUE)
+			exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+					": is a dir"));
 		execve(cmd.str, prg->lst_cmd->cmd, envp);
+		if (errno == EACCES)
+			exit(print_stderror(126, 3,
+					prg->lst_cmd->cmd[0], ": ", strerror(errno)));
 	}
 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 			": command not found"));
