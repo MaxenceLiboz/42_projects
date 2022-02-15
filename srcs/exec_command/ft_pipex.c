@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/15 14:05:22 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/15 15:32:06 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 {
 	pipe(prg->fd.fd);
 	prg->fd.pid = fork();
+	if (prg->fd.pid == -1)
+		exit(print_stderror(-1, 2, "fork: ", strerror(errno)));
 	if (prg->fd.pid != 0)
 	{
 		close(prg->fd.fd[1]);
