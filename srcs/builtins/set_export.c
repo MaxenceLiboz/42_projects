@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/14 14:41:07 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 14:24:16 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,11 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
 		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1, mem);
+	}
+	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7) == 0)
+	{
+		new_export->var.str = NULL;
+		new_env->var.str = NULL;
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_functions2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:19:41 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/26 13:28:55 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/15 14:25:35 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ void	lst_env_sort(t_lst_env **env)
 		next = head->next;
 		while (next)
 		{
-			if (ft_strncmp(head->name_var.str, next->name_var.str,
-					head->name_var.size) > 0)
-				lst_env_swap(&head, &next);
+			if (head->name_var.str && next->name_var.str)
+				if (ft_strncmp(head->name_var.str, next->name_var.str,
+						head->name_var.size) > 0)
+					lst_env_swap(&head, &next);
 			next = next->next;
 		}
 		head = head->next;
