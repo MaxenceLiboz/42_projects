@@ -6,57 +6,33 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/15 15:38:04 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:08:46 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// static void	ft_exec_process(t_prg *prg, char **envp)
-// {
-// 	int			i;
-// 	t_string	cmd;
+/*
+	Try execve
+	Catch executable rights and store in variable
+*/
+void	ft_execve(char *cmd, char **args, char **envp, int *eacces)
+{
+	execve(cmd, args, envp);
+	if (errno == EACCES)
+		*eacces = TRUE;
+}
 
-// 	i = -1;
-// 	if (access(prg->lst_cmd->cmd[0], X_OK) == 0)
-// 		execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
-// 	else
-// 	{
-// 		if (!prg->paths)
-// 			exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
-// 					": No such file or directory"));
-// 		while (prg->paths[++i])
-// 		{
-// 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
-// 			if (access(prg->lst_cmd->cmd[0], X_OK) == 0)
-// 				execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
-// 			else
-// 				exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
-// 						": Permission denied"));
-// 		}
-// 	}
-// 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
-// 			": command not found"));
-// }
-
-static void	ft_exec_process(t_prg *prg, char **envp)
+/*
+	Try execve for all the path in $PATH variable
+*/
+void	ft_exec_path(t_prg *prg, char **envp, int *eacces)
 {
 	int			i;
 	t_string	cmd;
 	struct stat	file;
 
 	i = -1;
-	stat(prg->lst_cmd->cmd[0], &file);
-	if (S_ISDIR(file.st_mode) == TRUE)
-		exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
-				": is a dir"));
-	execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
-	if (errno == EACCES)
-		exit(print_stderror(126, 3,
-				prg->lst_cmd->cmd[0], ": ", strerror(errno)));
-	if (!prg->paths)
-		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
-				": No such file or directory"));
 	while (prg->paths[++i])
 	{
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
@@ -64,11 +40,28 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 		if (S_ISDIR(file.st_mode) == TRUE)
 			exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
 					": is a dir"));
-		execve(cmd.str, prg->lst_cmd->cmd, envp);
-		if (errno == EACCES)
-			exit(print_stderror(126, 3,
-					prg->lst_cmd->cmd[0], ": ", strerror(errno)));
+		ft_execve(cmd.str, prg->lst_cmd->cmd, envp, eacces);
 	}
+}
+
+static void	ft_exec_process(t_prg *prg, char **envp)
+{
+	struct stat	file;
+	int			eacces;
+
+	eacces = FALSE;
+	stat(prg->lst_cmd->cmd[0], &file);
+	if (S_ISDIR(file.st_mode) == TRUE)
+		exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+				": is a dir"));
+	ft_execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp, &eacces);
+	if (!prg->paths)
+		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+				": No such file or directory"));
+	ft_exec_path(prg, envp, &eacces);
+	if (eacces == TRUE)
+		exit(print_stderror(126, 3,
+				prg->lst_cmd->cmd[0], ": ", strerror(errno)));
 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 			": command not found"));
 }
@@ -77,6 +70,8 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 {
 	pipe(prg->fd.fd);
 	prg->fd.pid = fork();
+	if (prg->fd.pid == -1)
+		exit(print_stderror(-1, 2, "fork: ", strerror(errno)));
 	if (prg->fd.pid != 0)
 	{
 		close(prg->fd.fd[1]);
