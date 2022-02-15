@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/14 10:54:39 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 11:23:22 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,8 +234,6 @@ void		ft_open(char *file, char *options, int *fd, t_prg *prg);
 
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);
-void		find_arg_and_replace(t_prg *prg, t_string *arg, int start,
-				t_string *str);
 t_bool		is_arg(char *arg, int *start);
 
 void		handler_forked(int signum);

@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:40:10 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/15 11:21:39 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/15 11:23:05 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	handler_forked(int signum)
 {
-	char	*tmp;
-
 	if (signum == SIGINT)
 	{
 		write(1, "^C\n", 3);
