@@ -3,29 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/09 11:03:49 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/14 11:28:02 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+// static void	ft_exec_process(t_prg *prg, char **envp)
+// {
+// 	int			i;
+// 	t_string	cmd;
+
+// 	i = -1;
+// 	if (access(prg->lst_cmd->cmd[0], X_OK) == 0)
+// 		execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
+// 	else
+// 	{
+// 		if (!prg->paths)
+// 			exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+// 					": No such file or directory"));
+// 		while (prg->paths[++i])
+// 		{
+// 			cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
+// 			if (access(prg->lst_cmd->cmd[0], X_OK) == 0)
+// 				execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
+// 			else
+// 				exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+// 						": Permission denied"));
+// 		}
+// 	}
+// 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+// 			": command not found"));
+// }
+
 static void	ft_exec_process(t_prg *prg, char **envp)
 {
 	int			i;
 	t_string	cmd;
+	struct stat	file;
 
 	i = -1;
+	stat(prg->lst_cmd->cmd[0], &file);
+	if (S_ISDIR(file.st_mode) == TRUE)
+		exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+				": is a dir"));
 	execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp);
+	if (errno == EACCES)
+		exit(print_stderror(126, 3,
+				prg->lst_cmd->cmd[0], ": ", strerror(errno)));
 	if (!prg->paths)
 		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 				": No such file or directory"));
 	while (prg->paths[++i])
 	{
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
+		stat(cmd.str, &file);
+		if (S_ISDIR(file.st_mode) == TRUE)
+			exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
+					": is a dir"));
 		execve(cmd.str, prg->lst_cmd->cmd, envp);
+		if (errno == EACCES)
+			exit(print_stderror(126, 3,
+					prg->lst_cmd->cmd[0], ": ", strerror(errno)));
 	}
 	exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 			": command not found"));
@@ -51,9 +93,8 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			exit(FAIL);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
-		prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
-		if (prg->return_value != 2)
-			exit(prg->return_value);
+		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
+			exit(g_returnvalue);
 		ft_exec_process(prg, envp);
 	}
 }
@@ -95,24 +136,28 @@ static int	ft_one_builtin(t_prg *prg)
 	{
 		check_cmd(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
-			return (prg->return_value);
+			return (g_returnvalue);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
-		prg->return_value = exec_builtin(prg->lst_cmd->cmd, &prg->env, prg);
-		if (prg->return_value != 2)
-			return (prg->return_value);
+		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
+			return (2);
 	}
 	return (-1);
 }
 
-int	ft_pipex(t_prg *prg, char **envp)
+void	ft_pipex(t_prg *prg, char **envp)
 {
 	int		j;
 	int		heredoc;
 	int		i;
 
 	j = 1;
+	if (ft_strncmp(prg->lst_cmd->cmd[0], "minishell", 9) != 0
+		&& ft_strncmp(prg->lst_cmd->cmd[0], "./minishell", 11) != 0)
+		signal(SIGINT, (void (*)(int))handler_forked); //add a function to check last charachters == minishell
+	else
+		signal(SIGINT, SIG_IGN);
 	if (ft_one_builtin(prg) != -1)
-		return (prg->return_value);
+		return ;
 	while (++j <= prg->fd.pipe_nb + 1)
 	{
 		ft_get_fd(prg, &j, envp);
@@ -127,5 +172,5 @@ int	ft_pipex(t_prg *prg, char **envp)
 			prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
-	return (0);
+	return ;
 }

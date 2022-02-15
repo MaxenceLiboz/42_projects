@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/09 14:10:04 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/14 14:41:07 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 {
 	int		i;
 	int		shlvl;
-	char	char_shlvl;
 	char	*path;
 
 	i = 0;
@@ -29,12 +28,21 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
 		shlvl += ft_atoi(new_export->var.str);
-		if (shlvl == 1 && ft_strncmp(new_export->var.str, "0", 2) != 0)
-			ft_error_exit(mem, 1, "atoi: overflow");
-		char_shlvl = shlvl + '0';
-		path = ft_strdup(&char_shlvl);
+		if (shlvl <= -1)
+			shlvl = 0;
+		path = ft_itoa(shlvl);
 		if (path == NULL)
-			ft_error_exit(mem, 1, "strdup: shlvl: malloc error\n");
+			return (1);
+		if (shlvl > 1000)
+		{
+			print_stderror(2, 3, "warning: shell level (",
+				path, ") too high, resetting to 1");
+			shlvl = 1;
+		}
+		free(path);
+		path = ft_itoa(shlvl);
+		if (path == NULL)
+			return (1);
 		new_export->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
 		new_env->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
 		free(path);

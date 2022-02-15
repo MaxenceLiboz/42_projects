@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/09 17:48:51 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/14 10:54:39 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define FAIL 1
 
 typedef int	t_bool;
+int			g_returnvalue;
 
 /**************** Malloc  ****************/
 
@@ -134,6 +135,7 @@ typedef struct s_lst_cmd
 	char				**cmd;
 	struct s_lst_cmd	*next;
 }	t_lst_cmd;
+
 t_lst_cmd	*lst_cmd_new(char **cmd, t_list **mem);
 void		lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item);
 int			lst_cmd_clear(t_lst_cmd **lst);
@@ -161,21 +163,22 @@ typedef struct s_fd
 /**************** t_prg ***********************/
 typedef struct s_prg
 {
-	t_head_env	env;
-	t_string	prompt;
-	t_command	cmd;
-	t_lst_cmd	*lst_cmd;
-	t_list		*mem;
-	char		**paths;
-	t_fd		fd;
-	int			return_value;
-	t_heredoc	heredocs;
-	t_string	pwd;
+	t_head_env		env;
+	t_string		prompt;
+	t_command		cmd;
+	t_lst_cmd		*lst_cmd;
+	t_list			*mem;
+	char			**paths;
+	t_fd			fd;
+	int				return_value;
+	t_heredoc		heredocs;
+	t_string		pwd;
+	struct termios	old;
 }	t_prg;
 
 /**************** set_env ***********************/
-void		set_term_env(t_list **mem);
-void		get_signal(t_list **mem);
+void		set_signal(void);
+int			initialization(char **envp, t_prg *prg);
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
@@ -200,7 +203,7 @@ t_bool		set_oldpwd(t_string *path, t_lst_env *env, t_list **mem);
 t_bool		set_home_getenv(char *str, t_string *path, t_list **mem);
 int			ft_pwd(t_string pwd);
 int			print_export(t_head_env *head);
-void		ft_exit(char **str, t_list **mem);
+void		ft_exit(char **str, t_prg *prg);
 
 /**************** Parsing ******************/
 t_string	create_prompt(t_string pwd, t_list **mem);
@@ -219,7 +222,7 @@ int			set_export(char **envp, t_head_env *head, t_list **mem);
 int			exec_command(t_prg *prg);
 void		check_cmd(t_prg *prg, t_lst_cmd *cmd);
 char		**f_cmd(char **cmd, t_list **mem);
-int			ft_pipex(t_prg *prg, char **envp);
+void		ft_pipex(t_prg *prg, char **envp);
 char		**trim_quotes_unneeded(char **cmd, t_list **mem);
 
 /**************** Utils *************/
@@ -232,6 +235,10 @@ void		ft_open(char *file, char *options, int *fd, t_prg *prg);
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);
 void		find_arg_and_replace(t_prg *prg, t_string *arg, int start,
-				t_string *str);t_bool		is_arg(char *arg, int *start);
+				t_string *str);
 t_bool		is_arg(char *arg, int *start);
+
+void		handler_forked(int signum);
+void		handler_main(int signum);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 13:51:19 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/14 10:16:06 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 {
-	int	return_value;
-
-	return_value = 2;
 	if (ft_strncmp(command[0], "echo", 5) == 0)
-		return_value = ft_echo(command);
+		g_returnvalue = ft_echo(command);
 	else if (ft_strncmp(command[0], "cd", 3) == 0)
-		return_value = ft_cd(command, head, &prg->mem, &prg->pwd);
+		g_returnvalue = ft_cd(command, head, &prg->mem, &prg->pwd);
 	else if (ft_strncmp(command[0], "pwd", 4) == 0)
-		return_value = ft_pwd(prg->pwd);
+		g_returnvalue = ft_pwd(prg->pwd);
 	else if (ft_strncmp(command[0], "export", 7) == 0)
-		return_value = ft_export(head, command, &prg->mem);
+		g_returnvalue = ft_export(head, command, &prg->mem);
 	else if (ft_strncmp(command[0], "unset", 6) == 0)
-		return_value = ft_unset(&head, command);
+		g_returnvalue = ft_unset(&head, command);
 	else if (ft_strncmp(command[0], "env", 4) == 0)
-		return_value = ft_env(head->env, command);
+		g_returnvalue = ft_env(head->env, command);
 	else if (ft_strncmp(command[0], "tarchimb", 9) == 0 || ft_strncmp(command[0]
 			, "mliboz", 7) == 0)
-		return_value = biography(command[0]);
+		g_returnvalue = biography(command[0]);
 	else if (ft_strncmp(command[0], "exit", 5) == 0)
-		ft_exit(command, &prg->mem);
-	return (return_value);
+		ft_exit(command, prg);
+	else
+		return (2);
+	return (g_returnvalue);
 }
