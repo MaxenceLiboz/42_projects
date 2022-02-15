@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/14 10:54:39 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:51:57 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,5 +240,6 @@ t_bool		is_arg(char *arg, int *start);
 
 void		handler_forked(int signum);
 void		handler_main(int signum);
+void		handler_forked_sigquit(int signum);
 
 #endif

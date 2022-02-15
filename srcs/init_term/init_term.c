@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:31:57 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/14 14:44:03 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 10:33:16 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ static void	set_term_env(t_list **mem, struct termios *old)
 	inittermios(old);
 	tgetent(NULL, getenv("TERM"));
 	tmp = tgetstr("cl", NULL);
-	tputs(tmp, 0, putchar);
 	// if (tmp == NULL)
 	// 	ft_error_exit(mem, 1, "tgetstr: error");
+	tputs(tmp, 10, putchar);
 }
 
 int	initialization(char **envp, t_prg *prg)
 {
+	set_export(envp, &prg->env, &prg->mem);
 	set_term_env(&prg->mem, &prg->old);
 	print_title();
-	set_export(envp, &prg->env, &prg->mem);
 	init_pwd(&prg->pwd, &prg->mem);
 	return (0);
 }
