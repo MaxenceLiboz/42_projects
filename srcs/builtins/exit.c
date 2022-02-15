@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/14 12:56:26 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 10:43:34 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ static int	isnum(char *str)
 	int	i;
 
 	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '\0')
+		return (0);
 	if (str[i] == '-')
 		i++;
 	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if ((str[i] < '0' || str[i] > '9') && str[i] != ' ')
 			return (0);
 		i++;
 	}
@@ -39,14 +43,14 @@ void	ft_exit(char **str, t_prg *prg)
 {
 	int		nb;
 
+	if (prg->fd.pid != 0)
+		ft_putstr_fd("exit\n", 2);
 	if (!str)
 	{
-		printf("exit\n");
 		tcsetattr(0, TCSANOW, &prg->old);
 		ft_lstclear(&prg->mem, free);
 		exit(g_returnvalue);
 	}
-	printf("exit\n");
 	if (!str[1])
 	{
 		ft_lstclear(&prg->mem, free);
