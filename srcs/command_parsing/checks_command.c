@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/04 16:19:31 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/10 10:43:26 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ t_bool	check_pipes(t_command cmd)
 
 static void	add_space_after_special_char(t_string *cmd, int i, t_list **mem)
 {
-	if (cmd->str[i + 1] != ' '
+	if (cmd->str[i] != '|' && cmd->str[i + 1] != ' '
 		&& cmd->str[i + 1] != '>' && cmd->str[i + 1] != '<')
 		add_string(cmd, " ", i + 1, mem);
-	if (i != 0 && cmd->str[i - 1] != ' '
+	if (cmd->str[i] != '|' && i != 0 && cmd->str[i - 1] != ' '
 		&& cmd->str[i - 1] != '>' && cmd->str[i - 1] != '<')
 		add_string(cmd, " ", i, mem);
 	if (cmd->str[i] == '|' && cmd->str[i + 1] != ' ' && cmd->str[i + 1] != '|')

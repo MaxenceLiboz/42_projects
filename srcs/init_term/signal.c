@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:40:10 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/12 15:16:26 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 11:21:39 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	handler_forked(int signum)
 {
+	char	*tmp;
+
 	if (signum == SIGINT)
 	{
 		write(1, "^C\n", 3);

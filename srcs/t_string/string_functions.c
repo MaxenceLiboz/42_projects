@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/01/27 13:13:07 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/10 09:35:48 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ void	dup_string(t_string *string, char *src, int index, t_list **mem)
 	string->size = ft_strlen(string->str) + 1;
 }
 
+/*
+	Replace a part of the string by something else
+	1:	String is the string that will have something replaced
+	2:	Indexs table is indexs[0] => Where to start the replacement
+						indexs[1] => How long is the str to replace
+	3:	Replace with the char * variable, replace_with
+*/
 void	replace_string(t_string *string, int *indexs, char *replace_with,
 			t_list **mem)
 {
