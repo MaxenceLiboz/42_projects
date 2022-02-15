@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/15 13:46:32 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/15 14:05:22 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 	if (prg->fd.pid != 0)
 	{
 		close(prg->fd.fd[1]);
-		dup2(prg->fd.fd[0], STDIN_FILENO);
 		close(prg->fd.fd[0]);
 	}
 	else
@@ -146,7 +145,10 @@ void	ft_pipex(t_prg *prg, char **envp)
 	j = 1;
 	if (ft_strncmp(prg->lst_cmd->cmd[0], "minishell", 9) != 0
 		&& ft_strncmp(prg->lst_cmd->cmd[0], "./minishell", 11) != 0)
-		signal(SIGINT, (void (*)(int))handler_forked); //add a function to check last charachters == minishell
+		{
+			signal(SIGQUIT, (void (*)(int))handler_forked_sigquit); //add a function to check last charachters == minishell
+			signal(SIGINT, (void (*)(int))handler_forked); //add a function to check last charachters == minishell
+		}
 	else
 		signal(SIGINT, SIG_IGN);
 	if (ft_one_builtin(prg) != -1)
@@ -165,5 +167,7 @@ void	ft_pipex(t_prg *prg, char **envp)
 			prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
+	close(prg->fd.fd[0]);
+	close(prg->fd.fd[1]);
 	return ;
 }

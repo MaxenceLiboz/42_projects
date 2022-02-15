@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:58:59 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/01/28 08:36:43 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/15 09:28:23 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	check_arg(char **str, int *i, int *n)
 		if (str[*i][j] == '\0')
 			*n = 1;
 		*i += 1;
+		j = 1;
 	}
 }
 
