@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/15 15:32:06 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 08:56:03 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,21 @@ static int	ft_one_builtin(t_prg *prg)
 	return (-1);
 }
 
+/*
+	Put the right signal depending if we go on a child or open another instance of minishell
+*/
+void	set_signals(char *cmd)
+{
+	if (ft_strncmp(cmd, "minishell", 9) != 0
+		&& ft_strncmp(cmd, "./minishell", 11) != 0)
+	{
+		signal(SIGQUIT, (void (*)(int))handler_forked_sigquit); //add a function to check last charachters == minishell
+		signal(SIGINT, (void (*)(int))handler_forked); //add a function to check last charachters == minishell
+	}
+	else
+		signal(SIGINT, SIG_IGN);
+}
+
 void	ft_pipex(t_prg *prg, char **envp)
 {
 	int		j;
@@ -145,14 +160,7 @@ void	ft_pipex(t_prg *prg, char **envp)
 	int		i;
 
 	j = 1;
-	if (ft_strncmp(prg->lst_cmd->cmd[0], "minishell", 9) != 0
-		&& ft_strncmp(prg->lst_cmd->cmd[0], "./minishell", 11) != 0)
-		{
-			signal(SIGQUIT, (void (*)(int))handler_forked_sigquit); //add a function to check last charachters == minishell
-			signal(SIGINT, (void (*)(int))handler_forked); //add a function to check last charachters == minishell
-		}
-	else
-		signal(SIGINT, SIG_IGN);
+	set_signals(prg->lst_cmd->cmd[0]);
 	if (ft_one_builtin(prg) != -1)
 		return ;
 	while (++j <= prg->fd.pipe_nb + 1)
