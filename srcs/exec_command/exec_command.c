@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/14 10:25:06 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:38:11 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,30 @@ static char	**get_path(t_lst_env *export, t_list **mem)
 	return (dst);
 }
 
+static void	init_env__(t_prg *prg)
+{
+	t_lst_env	*export;
+	t_lst_env	*env;
+	int			i;
+
+	i = 0;
+	while (prg->cmd.command.str[i])
+		i++;
+	i--;
+	while (i && prg->cmd.command.str[i] != ' ')
+		i--;
+	export = prg->env.export;
+	env = prg->env.env;
+	while (env && ft_strncmp(env->name_var.str, "_", 2) != 0)
+		env = env->next;
+	while (export && ft_strncmp(export->name_var.str, "_", 2) != 0)
+		export = export->next;
+	export->var = sub_string(prg->cmd.command.str, i,
+			ft_strlen(prg->cmd.command.str), &prg->mem);
+	env->var = sub_string(prg->cmd.command.str, i,
+			ft_strlen(prg->cmd.command.str) - i + 1, &prg->mem);
+}
+
 static void	init_prg(t_prg *prg)
 {
 	errno = 0;
@@ -55,6 +79,7 @@ int	exec_command(t_prg *prg)
 	int		status;
 
 	init_prg(prg);
+	init_env__(prg);
 	envp = lst_env_to_array(prg->env.env, &prg->mem);
 	prg->fd.pipe_nb = lst_cmd_size(prg->lst_cmd);
 	ft_pipex(prg, envp);

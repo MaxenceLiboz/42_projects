@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/15 09:57:14 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/15 14:22:39 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1 || argv[1])
 		return (print_stderror(2, 2, argv[1], ": invalid option"));
 	initialization(envp, &prg);
-	while (1)
+	// dprintf(2, "(%s)", lst_env_find_name_var(prg.env.env, "OLDPWD").str);
+	while (2)
 	{
 		set_signal();
 		prg.prompt = create_prompt(prg.pwd, &prg.mem);
