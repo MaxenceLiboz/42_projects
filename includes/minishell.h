@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 10:30:20 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:33:36 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,5 +241,12 @@ t_bool		is_arg(char *arg, int *start);
 void		handler_forked(int signum);
 void		handler_main(int signum);
 void		handler_forked_sigquit(int signum);
+
+/************* PIPEX Utils **********/
+void		ft_execve(char *cmd, char **args, char **envp, int *eacces);
+void		ft_exec_path(t_prg *prg, char **envp, int *eacces);
+t_bool		is_path(char *cmd);
+t_bool		is_builtin(t_prg *prg);
+void		set_signals(char *cmd);
 
 #endif
