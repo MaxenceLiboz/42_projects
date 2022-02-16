@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/15 11:23:14 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 10:10:31 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_string	get_full_arg(t_string *str, int start, t_list **mem)
 	t_string	dst;
 
 	end = start + 1;
+	if (end - 1 == start && str->str[end] == '?')
+		return (dst = sub_string(str->str, start, end + 1 - start, mem));
 	while (ft_isalnum(str->str[end]))
 		end++;
 	return (dst = sub_string(str->str, start, end - start, mem));
@@ -42,19 +44,31 @@ t_string	get_arg(t_string arg, t_list **mem)
 	return (dst = sub_string(arg.str, start, end - start, mem));
 }
 
+/*
+	get_full_arg;
+	get_arg;
+	arg = ? => replace full_arg by exit_status;
+	arg find => replace full_arg by envp
+	arg not find => erase full_arg
+	arg starting by number => erase $ and first digit
+*/
 void	find_arg_and_replace(t_prg *prg, int start, t_string *str)
 {
 	t_string	full_arg;
 	t_string	arg;
 	int			indexs[2];
+	t_string	exit_status;
 
+	init_string(&exit_status, ft_itoa(g_returnvalue), TRUE, &prg->mem);
 	full_arg = get_full_arg(str, start, &prg->mem);
 	arg = get_arg(full_arg, &prg->mem);
 	indexs[0] = start;
 	indexs[1] = full_arg.size - 1;
 	dup_string(&arg, lst_env_find_name_var(prg->env.export, arg.str).str,
 		0, &prg->mem);
-	if (ft_isdigit(full_arg.str[1]) == TRUE)
+	if (full_arg.str[1] == '?')
+		replace_string(str, indexs, exit_status.str, &prg->mem);
+	else if (ft_isdigit(full_arg.str[1]) == TRUE)
 		erase_string(str, "$n", start, &prg->mem);
 	else if (arg.str)
 		replace_string(str, indexs, arg.str, &prg->mem);
