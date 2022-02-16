@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/15 14:24:16 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:43:50 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ static int	export_value_path(char *envp, t_lst_env *new_export,
 			ft_error_exit(mem, 1, "getcwd: error initializing path value");
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
-		add_string(&new_export->var, ":", new_export->var.size - 1, mem);
-		add_string(&new_export->var, path, new_export->var.size - 1, mem);
+		new_export->var = join_string(":", new_export->var.str, mem);
+		new_export->var = join_string(path, new_export->var.str, mem);
 		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				mem);
-		add_string(&new_env->var, ":", new_env->var.size - 1, mem);
-		add_string(&new_env->var, path, new_env->var.size - 1, mem);
+		new_env->var = join_string(":", new_env->var.str, mem);
+		new_env->var = join_string(path, new_env->var.str, mem);
 		free(path);
 		return (1);
 	}

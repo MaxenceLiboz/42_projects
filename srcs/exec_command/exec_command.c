@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/15 15:38:11 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:07:00 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,75 @@ static char	**get_path(t_lst_env *export, t_list **mem)
 	return (dst);
 }
 
+static int	get_builtin_path(t_lst_env *export, t_lst_env *env, t_list **mem)
+{
+	char	*path;
+
+	path = getenv("_");
+	if (!path)
+		return (print_stderror(FALSE, 1, "can't get env variable, break"));
+	path = sub_string(path, 0, ft_strlen(path) - 11, mem).str;
+	export->var = join_string("srcs/builtins/",
+			export->var.str, mem);
+	export->var = join_string(path,
+			export->var.str, mem);
+	env->var = join_string("srcs/builtins/",
+			env->var.str, mem);
+	env->var = join_string(path,
+			env->var.str, mem);
+	return (TRUE);
+}
+
+int	try_path(t_prg *prg, t_lst_env *export, t_lst_env *env)
+{
+	int			i;
+	t_string	cmd;
+
+	i = -1;
+	if (is_builtin(prg) == TRUE)
+	{
+		if (get_builtin_path(export, env, &prg->mem) == TRUE)
+			return (TRUE);
+		return (FALSE);
+	}
+	while (prg->paths[++i])
+	{
+		cmd = join_string(prg->paths[i], export->var.str, &prg->mem);
+		if (access(cmd.str, X_OK) == 0)
+		{
+			export->var.str = cmd.str;
+			env->var.str = cmd.str;
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
 static void	init_env__(t_prg *prg)
 {
+	int			i;
 	t_lst_env	*export;
 	t_lst_env	*env;
-	int			i;
 
 	i = 0;
-	while (prg->cmd.command.str[i])
-		i++;
-	i--;
-	while (i && prg->cmd.command.str[i] != ' ')
-		i--;
 	export = prg->env.export;
 	env = prg->env.env;
 	while (env && ft_strncmp(env->name_var.str, "_", 2) != 0)
 		env = env->next;
 	while (export && ft_strncmp(export->name_var.str, "_", 2) != 0)
 		export = export->next;
+	while (prg->cmd.command.str[i])
+		i++;
+	while (--i && prg->cmd.command.str[i] != ' ')
+		;
+	if (prg->cmd.command.str[i] == ' ')
+		i++;
 	export->var = sub_string(prg->cmd.command.str, i,
 			ft_strlen(prg->cmd.command.str), &prg->mem);
 	env->var = sub_string(prg->cmd.command.str, i,
 			ft_strlen(prg->cmd.command.str) - i + 1, &prg->mem);
+	if (try_path(prg, export, env) == TRUE)
+		return ;
 }
 
 static void	init_prg(t_prg *prg)
