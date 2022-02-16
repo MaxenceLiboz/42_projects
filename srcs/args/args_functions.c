@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 10:10:31 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 11:45:56 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,18 @@ void	change_arg_command(t_prg *prg, t_string *str)
 
 	index = 0;
 	dquotes = -1;
-	index++;
+	// index++;
 	while (str->str[index])
 	{
 		if (str->str[index] == '\"')
 			dquotes *= -1;
 		if (str->str[index] == '\'' && dquotes < 1)
 		{
-			while (str->str[++index] != '\'')
-				;
 			index++;
+			while (str->str[index] && str->str[index] != '\'')
+				index++;
+			if (str->str[index])
+				index++;
 		}
 		if (is_arg(str->str, &index) == TRUE)
 			find_arg_and_replace(prg, index, str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 09:48:59 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 12:16:57 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,26 @@ static int	ft_one_builtin(t_prg *prg)
 	return (-1);
 }
 
+int	check_heredoc_pipex(char *str, int i)
+{
+	int		pipe;
+
+	pipe = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"')
+			while (str[i] && str[++i] != '\"')
+				;
+		if (str[i] == '\'')
+			while (str[i] && str[++i] != '\'')
+				;
+		if (ft_strncmp(&str[i], "<<", 2) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 void	ft_pipex(t_prg *prg, char **envp)
 {
 	int		j;
@@ -95,7 +115,7 @@ void	ft_pipex(t_prg *prg, char **envp)
 		heredoc = 0;
 		while (prg->lst_cmd->cmd[++i])
 		{
-			if (check_heredoc(prg->lst_cmd->cmd[i], 0, &i) > -1)
+			if (check_heredoc_pipex(prg->lst_cmd->cmd[i], 0) > -1)
 				heredoc = 1;
 		}
 		if (heredoc > 0)

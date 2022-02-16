@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/10 09:35:48 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 12:03:44 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	dup_string(t_string *string, char *src, int index, t_list **mem)
 		init_string(string, src, TRUE, mem);
 		return ;
 	}
-	while (string->max_size < ((string->size) + ft_strlen(src)))
+	while (string->max_size < ((string->size) + ft_strlen(src) + 1))
 		realloc_string(string, mem);
 	while (src[i])
 		string->str[index++] = src[i++];

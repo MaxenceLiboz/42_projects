@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_quotes_uneeded.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:36:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 12:21:01 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 11:53:44 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ static int	get_size_to_dup(const char *src)
 	quotes = 0;
 	while (src[i])
 	{
-		if (src[i] == '\'')
+		if (src[i] == '\"')
 		{
 			quotes += 2;
-			while (src[i] && src[++i] != '\'')
+			while (src[++i] && src[i] != '\"')
 				;
 		}
 		if (src[i] == '\'')
 		{
 			quotes += 2;
-			while (src[i] && src[++i] != '\'')
+			while (src[++i] && src[i] != '\'')
 				;
 		}
 		i++;

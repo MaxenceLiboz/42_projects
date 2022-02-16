@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/10 10:43:26 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 11:57:33 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,10 @@ t_bool	syntax_special_char(t_string *cmd, t_list **mem)
 	while (cmd->str[++i])
 	{
 		if (cmd->str[i] == '\"')
-			while (cmd->str[i] && cmd->str[++i] != '\"')
+			while (cmd->str[++i] && cmd->str[i] != '\"')
 				;
 		if (cmd->str[i] == '\'')
-			while (cmd->str[i] && cmd->str[++i] != '\'')
+			while (cmd->str[++i] && cmd->str[i] != '\'')
 				;
 		if ((cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|'))
 			add_space_after_special_char(cmd, i, mem);
