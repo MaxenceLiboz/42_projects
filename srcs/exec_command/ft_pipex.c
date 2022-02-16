@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 12:16:57 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:40:56 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 	if (prg->fd.pid != 0)
 	{
 		close(prg->fd.fd[1]);
+		dup2(prg->fd.fd[0], STDIN_FILENO);
 		close(prg->fd.fd[0]);
 	}
 	else
