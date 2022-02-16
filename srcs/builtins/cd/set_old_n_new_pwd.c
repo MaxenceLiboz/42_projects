@@ -6,14 +6,14 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:35:28 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/07 11:38:47 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 10:29:09 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*
-	set the old pwd in our envp lists
+	set the OLDPWD in our envp lists
 */
 void	set_oldpwd_env(t_head_env *head, t_string *pwd, t_list **mem)
 {
@@ -41,6 +41,9 @@ void	set_oldpwd_env(t_head_env *head, t_string *pwd, t_list **mem)
 	}
 }
 
+/*
+	set the PWD in our envp lists	
+*/
 void	set_new_pwd_env(t_head_env *head, t_string *pwd, t_list **mem)
 {
 	t_lst_env	*env;

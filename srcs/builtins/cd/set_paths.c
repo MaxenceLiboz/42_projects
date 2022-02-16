@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:19:45 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/07 12:21:31 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 10:30:53 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_bool	set_home_env(t_string *path, t_lst_env *env, t_list **mem)
 }
 
 /*
-	Set the path to OLDPWD and return
+	When cd -:
+		Set the path to OLDPWD and return
 */
 t_bool	set_oldpwd(t_string *path, t_lst_env *env, t_list **mem)
 {
@@ -35,8 +36,8 @@ t_bool	set_oldpwd(t_string *path, t_lst_env *env, t_list **mem)
 }
 
 /*
-	Set the path to HOME with getenv
-	Call set_new_path to get clean path
+	When cd ~:
+		Set the path to HOME with getenv
 */
 t_bool	set_home_getenv(char *str, t_string *path, t_list **mem)
 {

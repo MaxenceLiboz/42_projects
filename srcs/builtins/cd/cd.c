@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/07 12:46:10 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 10:32:16 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,20 @@ static int	trim_db_slash(t_string *path, t_list **mem)
 	return (0);
 }
 
+/*
+	Repoducing cd command in bash
+	No arguments
+	Set the PWD and OLDPWD envp variables
+*/
 int	ft_cd(char **str, t_head_env *head, t_list **mem, t_string *pwd)
 {
 	t_string	path;
-	// struct stat	sb;
 
 	init_string(&path, pwd->str, TRUE, mem);
 	add_string(&path, "/", path.size - 1, mem);
 	if (get_new_path(str, head->env, &path, mem) == FAIL)
 		return (FAIL);
 	set_oldpwd_env(head, pwd, mem);
-	// stat(path.str, &sb);
 	trim_db_slash(&path, mem);
 	if (chdir(path.str) != 0)
 		return (print_stderror(1, 4, "cd: ", str[1], ": ", strerror(errno)));
