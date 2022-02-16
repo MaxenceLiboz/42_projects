@@ -9,9 +9,10 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_string/split_string.c				\
 				t_lst_env/lst_env_functions.c		\
 				t_lst_env/lst_env_functions2.c		\
-				builtins/set_export.c				\
 				builtins/unset.c					\
-				builtins/export.c					\
+				builtins/set_export.c				\
+				builtins/export/export.c			\
+				builtins/export/export_utils.c		\
 				builtins/echo.c						\
 				builtins/cd/cd.c					\
 				builtins/cd/set_old_n_new_pwd.c		\

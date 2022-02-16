@@ -1,18 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/15 10:08:39 by tarchimb         ###   ########.fr       */
+/*   Created: 2022/02/16 10:37:17 by mliboz            #+#    #+#             */
+/*   Updated: 2022/02/16 11:34:46 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	ft_strchr_len(const char *s, int c)
+/*
+	Print exported value with the name var and var if they have one
+*/
+int	print_export(t_head_env *head)
+{
+	t_lst_env	*export;
+	t_lst_env	*env;
+
+	export = head->export;
+	env = head->env;
+	while (export)
+	{
+		printf("declare -x %s", export->name_var.str);
+		if (lst_env_find_name_var(env, export->name_var.str).str == 0)
+			printf("\n");
+		else if (export->var.str && *export->var.str)
+			printf("=\"%s\"\n", export->var.str);
+		else
+			printf("=\"\"\n");
+		export = export->next;
+	}
+	return (0);
+}
+
+/*
+	Get the index of the variable c
+*/
+int	ft_strchr_len(const char *s, int c)
 {
 	int		i;
 
@@ -28,27 +55,33 @@ static int	ft_strchr_len(const char *s, int c)
 	return (i);
 }
 
-int	control_args(char *str)
+/*
+	Check if the arg isalnum and does't start with a number
+*/
+t_bool	control_args(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (!str)
-		return (1);
+		return (FAIL);
 	if (ft_isalnum(str[i]) == 0 || (str[i] >= '0' && str[i] <= '9'))
-		return (1);
+		return (FAIL);
 	i++;
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0)
-			return (1);
+			return (FAIL);
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }
 
-//change sorting to avoid to iterate on all the lst again
-static void	add_elem_to_lst(char *arg, t_head_env *head, t_list **mem)
+/*
+	Add the argument to our export list and sort it
+	If argument isn't null add it to the env list
+*/
+void	add_elem_to_lst(char *arg, t_head_env *head, t_list **mem)
 {
 	t_lst_env	*new_export;
 	t_lst_env	*new_env;
@@ -68,10 +101,15 @@ static void	add_elem_to_lst(char *arg, t_head_env *head, t_list **mem)
 	}
 	lst_env_add_front(&head->export, new_export);
 	lst_env_sort(&head->export);
-	return ;
 }
 
-static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
+/*
+	Replace the old var with the new var in export list
+	Check if name_var exist in env list
+		- If not create and add the new element to the list
+		- Else replace the old var with the new var in the list
+*/
+void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
 		t_list **mem)
 {
 	t_lst_env	*export;
@@ -97,31 +135,4 @@ static void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
 	}
 	env->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
 	export->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
-}
-
-int	ft_export(t_head_env *head, char **command, t_list **mem)
-{
-	char	*var_name;
-	int		i;
-
-	i = 0;
-	if (!command[i + 1])
-		return (print_export(head));
-	while (command[++i])
-	{
-		var_name = sub_string(command[i], 0, ft_strchr_len(command[i], '='),
-				mem).str;
-		if (control_args(var_name) == 0)
-		{
-			if (lst_env_find_name_var(head->export, var_name).str == 0)
-				add_elem_to_lst(command[i], head, mem);
-			else
-				if (ft_strchr(command[i], '=') != 0)
-					replace_elem_of_lst(head, command[i], var_name, mem);
-		}
-		else
-			print_stderror(1, 3, "export: `", command[i],
-				"': not a valid identifier");
-	}
-	return (0);
 }

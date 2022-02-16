@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 11:33:36 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:36:06 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,5 +248,13 @@ void		ft_exec_path(t_prg *prg, char **envp, int *eacces);
 t_bool		is_path(char *cmd);
 t_bool		is_builtin(t_prg *prg);
 void		set_signals(char *cmd);
+
+/************ EXPORT Utils **********/
+int			print_export(t_head_env *head);
+int			ft_strchr_len(const char *s, int c);
+t_bool		control_args(char *str);
+void		add_elem_to_lst(char *arg, t_head_env *head, t_list **mem);
+void		replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
+				t_list **mem);
 
 #endif

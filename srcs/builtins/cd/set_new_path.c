@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:20:48 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/07 12:21:23 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 10:28:47 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 #define NEXT_PATH 2
 
 /*
-	Check given path to do what necessary
+	Parse the path / by / and return what you need to do:
+	- COPY_PATH
+	- TRIM_LAST_DIR
+	- NEXT_PATH
 */
 static int	get_to_do_new_path(char *str, int start, int *end, t_list **mem)
 {
@@ -42,7 +45,7 @@ static int	get_to_do_new_path(char *str, int start, int *end, t_list **mem)
 }
 
 /*
-	Trim last directory of path
+	Trim path until next / starting from the end
 */
 static void	trim_last_dir(t_string *path, t_list **mem)
 {
@@ -57,8 +60,10 @@ static void	trim_last_dir(t_string *path, t_list **mem)
 }
 
 /*
-	Cat the pwd and the path.
-	Parse it to trim ./ .. ../ etc.
+	Create the new path:
+	- COPY_PATH => copy until the next / into dest;
+	- TRIM_LAST_DIR => call trim_last_dir();
+	- else => pass to the next part of the path
 */
 t_bool	set_new_path(char *str, t_string *path, t_list **mem)
 {

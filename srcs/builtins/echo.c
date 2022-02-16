@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:58:59 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/15 09:28:23 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:32:11 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Check if we have -e argument
+*/
 static void	check_arg(char **str, int *i, int *n)
 {
 	int	k;
@@ -34,6 +37,10 @@ static void	check_arg(char **str, int *i, int *n)
 	}
 }
 
+/*
+	Reporducing echo command in bash
+	One argument available => -e
+*/
 int	ft_echo(char **str)
 {
 	int		n;
