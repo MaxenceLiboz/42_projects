@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 16:48:44 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:54:20 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	*ft_malloc(t_list **mem, size_t size)
 	if (!new_item)
 		ft_error_free(mem, "Malloc error occured");
 	ft_lstadd_front(mem, ft_lstnew(new_item));
-	dprintf(2, "(%d)", i++);
 	return (new_item);
 }
 

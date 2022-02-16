@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 16:58:58 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:53:28 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,15 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_prg			prg;
 	char			*line;
-	// int i = 5;
 
 	prg.mem = 0;
 	if (argc > 1 || argv[1])
 		return (print_stderror(2, 2, argv[1], ": invalid option"));
 	initialization(envp, &prg);
-	// dprintf(2, "(%s)", lst_env_find_name_var(prg.env.env, "OLDPWD").str);
 	while (1)
 	{
 		set_signal();
 		prg.prompt = create_prompt(prg.pwd, &prg.mem);
-		// init_string(&prg.cmd.command, readline(prg.prompt.str), TRUE, &prg.mem);
 		line = readline(prg.prompt.str);
 		if (!line)
 		{
@@ -54,7 +51,6 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		if (*prg.cmd.command.str)
 			add_history(prg.cmd.command.str);
-		ft_lstadd_front(&prg.mem, ft_lstnew(prg.cmd.command.str));
 		if (*prg.cmd.command.str)
 		{
 			prg.lst_cmd = create_command(&prg);
