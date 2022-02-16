@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 08:57:25 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 09:46:13 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,25 @@ void	ft_exec_path(t_prg *prg, char **envp, int *eacces)
 	{
 		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
 		stat(cmd.str, &file);
-		if (S_ISDIR(file.st_mode) == TRUE)
-			exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
-					": is a dir"));
 		ft_execve(cmd.str, prg->lst_cmd->cmd, envp, eacces);
 	}
+}
+
+/*
+	Check if the command is a path
+*/
+t_bool	is_path(char *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '/')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
 }
 
 static void	ft_exec_process(t_prg *prg, char **envp)
@@ -55,7 +69,7 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 		exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
 				": is a dir"));
 	ft_execve(prg->lst_cmd->cmd[0], prg->lst_cmd->cmd, envp, &eacces);
-	if (!prg->paths)
+	if (!prg->paths || is_path(prg->lst_cmd->cmd[0]) == TRUE)
 		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
 				": No such file or directory"));
 	ft_exec_path(prg, envp, &eacces);
