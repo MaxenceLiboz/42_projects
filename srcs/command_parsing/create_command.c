@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/09 15:42:15 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 16:15:30 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_lst_cmd	*create_command(t_prg *prg)
 
 	save = 0;
 	lst = 0;
-	prg->cmd.command.size = 0;
 	status = FAIL;
 	init_heredoc(&prg->heredocs);
 	while (status == FAIL)

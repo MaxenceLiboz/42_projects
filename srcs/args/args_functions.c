@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 11:45:56 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:20:54 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	change_arg_command(t_prg *prg, t_string *str)
 
 	index = 0;
 	dquotes = -1;
-	// index++;
 	while (str->str[index])
 	{
 		if (str->str[index] == '\"')
@@ -117,6 +116,7 @@ void	change_arg_command(t_prg *prg, t_string *str)
 		if (dquotes < 1 && str->str[index] == '$' && str->str[index + 1]
 			&& (str->str[index + 1] == '\'' || str->str[index + 1] == '\"'))
 			erase_string(str, "$", index, &prg->mem);
-		index++;
+		else
+			index++;
 	}
 }

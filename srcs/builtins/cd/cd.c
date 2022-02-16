@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:05 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 10:32:16 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 14:49:02 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	trim_db_slash(t_string *path, t_list **mem)
 	int	i;
 
 	i = 0;
-	while (path->str[i])
+	while (path->str[i++])
 	{
 		if (path->str[i] == '/')
 		{
@@ -50,7 +50,6 @@ static int	trim_db_slash(t_string *path, t_list **mem)
 			while (path->str[i] && path->str[i] == '/')
 				erase_string(path, "/", i, mem);
 		}
-		i++;
 	}
 	if (path->size > 2 && path->str[path->size - 2] == '/')
 		erase_string(path, "/", path->size - 2, mem);

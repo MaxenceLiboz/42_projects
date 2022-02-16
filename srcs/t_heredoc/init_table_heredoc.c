@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_table_heredoc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 10:57:54 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/09 15:42:05 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 15:55:52 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ static char	*get_delimiter(char *str, t_list **mem)
 			y++;
 		delimiter.str[i++] = str[y++];
 	}
+	delimiter.str[i] = '\0';
 	return (delimiter.str);
 }
 
@@ -148,9 +149,10 @@ static t_string	get_heredoc(t_prg *prg, int expand, int i)
 	while (1)
 	{
 		line = readline(prompt.str);
-		init_string(&temp, line, TRUE, &prg->mem);
 		if (!line)
 			break ;
+		init_string(&temp, line, TRUE, &prg->mem);
+		free(line);
 		if (ft_strncmp(delimiter, temp.str, ft_strlen(delimiter) + 1) == 0)
 			break ;
 		if (expand == TRUE)

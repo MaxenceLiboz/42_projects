@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 14:40:56 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:48:23 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 	int			eacces;
 
 	eacces = FALSE;
+	if (!prg->lst_cmd->cmd[0] || !*prg->lst_cmd->cmd[0])
+		exit(print_stderror(127, 2, prg->lst_cmd->cmd[0],
+				": command not found"));
 	stat(prg->lst_cmd->cmd[0], &file);
 	if (S_ISDIR(file.st_mode) == TRUE)
 		exit(print_stderror(126, 2, prg->lst_cmd->cmd[0],
