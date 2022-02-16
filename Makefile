@@ -10,7 +10,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_lst_env/lst_env_functions.c		\
 				t_lst_env/lst_env_functions2.c		\
 				builtins/unset.c					\
-				builtins/set_export.c				\
+				init_term/set_export.c				\
 				builtins/export/export.c			\
 				builtins/export/export_utils.c		\
 				builtins/echo.c						\
@@ -48,7 +48,7 @@ INCLUDES	=	./includes/minishell.h				\
 				./libft/includes/libft.h			\
 
 CC			= 	gcc
-CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror -g -fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 
