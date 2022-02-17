@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 11:43:51 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,25 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 */
 static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 {
-	pipe(prg->fd.fd);
+	ft_pipe(prg->fd.fd, prg);
 	prg->fd.pid = fork();
 	if (prg->fd.pid == -1)
-		exit(print_stderror(-1, 2, "fork: ", strerror(errno)));
+		ft_error_exit(prg, 2, "fork: ", strerror(errno));
 	if (prg->fd.pid != 0)
 	{
-		close(prg->fd.fd[1]);
-		dup2(prg->fd.fd[0], STDIN_FILENO);
-		close(prg->fd.fd[0]);
+		ft_close(prg->fd.fd[1], prg);
+		ft_dup2(prg->fd.fd[0], STDIN_FILENO, prg);
+		ft_close(prg->fd.fd[0], prg);
 	}
 	else
 	{
-		close(prg->fd.fd[0]);
+		ft_close(prg->fd.fd[0], prg);
 		if (*j != prg->fd.pipe_nb + 1)
-			dup2(prg->fd.fd[1], STDOUT_FILENO);
-		close(prg->fd.fd[1]);
+			ft_dup2(prg->fd.fd[1], STDOUT_FILENO, prg);
+		ft_close(prg->fd.fd[1], prg);
 		get_redirections(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
-			exit(FAIL);
+			exit(0);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, prg);
 		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
 			exit(g_returnvalue);
@@ -142,7 +142,4 @@ void	ft_pipex(t_prg *prg, char **envp)
 			prg->heredocs.index += 1;
 		prg->lst_cmd = prg->lst_cmd->next;
 	}
-	close(prg->fd.fd[0]);
-	close(prg->fd.fd[1]);
-	return ;
 }

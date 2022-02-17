@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 10:24:19 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:31:02 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 {
 	int		i;
 	int		shlvl;
-	char	*path;
+	char	*shlvl_v;
 
 	i = 0;
 	shlvl = 1;
@@ -27,25 +27,10 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 	{
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
 				prg);
-		shlvl += ft_atoi(new_export->var.str);
-		if (shlvl <= -1)
-			shlvl = 0;
-		path = ft_itoa(shlvl);
-		if (path == NULL)
-			return (1);
-		if (shlvl > 1000)
-		{
-			print_stderror(2, 3, "warning: shell level (",
-				path, ") too high, resetting to 1");
-			shlvl = 1;
-		}
-		free(path);
-		path = ft_itoa(shlvl);
-		if (path == NULL)
-			return (1);
-		new_export->var = sub_string(path, 0, ft_strlen(path) + 1, prg);
-		new_env->var = sub_string(path, 0, ft_strlen(path) + 1, prg);
-		free(path);
+		shlvl_v = set_value_shlvl(shlvl, new_export->var);
+		new_export->var = sub_string(shlvl_v, 0, ft_strlen(shlvl_v) + 1, prg);
+		new_env->var = sub_string(shlvl_v, 0, ft_strlen(shlvl_v) + 1, prg);
+		free(shlvl_v);
 		return (1);
 	}
 	return (0);

@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   set_export_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 09:35:58 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 11:35:15 by tarchimb         ###   ########.fr       */
+/*   Created: 2022/02/17 12:09:36 by tarchimb          #+#    #+#             */
+/*   Updated: 2022/02/17 12:30:38 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <minishell.h>
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*set_value_shlvl(int shlvl, t_string shlvl_var)
 {
-	int		size;
-	int		i;
 	char	*dst;
 
-	i = -1;
-	if (!s2 && !s1)
-		return (0);
-	if (!s1)
-		return (s2);
-	if (!s2)
-		return (s1);
-	size = ft_strlen(s1) + ft_strlen(s2);
-	dst = malloc((size + 1) * sizeof(char));
-	if (!dst)
-		return (0);
-	while (s1[++i])
-		dst[i] = s1[i];
-	i = -1;
-	while (s2[++i])
-		dst[i + ft_strlen(s1)] = s2[i];
-	dst[i + ft_strlen(s1)] = '\0';
-	free(s1);
+	dst = NULL;
+	shlvl += ft_atoi(shlvl_var.str);
+	if (shlvl <= -1)
+		shlvl = 0;
+	dst = ft_itoa(shlvl);
+	if (dst == NULL)
+		return (NULL);
+	if (shlvl > 1000)
+	{
+		print_stderror(2, 3, "warning: shell level (",
+			dst, ") too high, resetting to 1");
+		shlvl = 1;
+	}
+	free(dst);
+	dst = ft_itoa(shlvl);
+	if (dst == NULL)
+		return (NULL);
 	return (dst);
 }

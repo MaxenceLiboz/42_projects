@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 10:18:23 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:29:14 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@
 # include <term.h>
 # include <termcap.h>
 # include <signal.h>
-
-#define TEST_PS(expectation, ft) printf("Expected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m", expectation); ft; printf("\e[0m\n");
-#define TEST_S(expectation, str) ft_strncmp(expectation, str, ft_strlen(expectation) + 1) == 0 ? printf("\e[0;32mOK\e[0m\n") : printf("\e[0;31mFALSE\e[0m\nExpected:\t\e[0;34m%s\e[0m\nGot:\t\t\e[0;34m%s\e[0m\n\n", expectation, str);
-#define TEST_I(expectation, int) expectation == int ? printf("\e[0;32mOK\e[0m\n") : printf("\e[0;31mFALSE\e[0m\nExpected:\t\e[0;34m%d\e[0m\nGot:\t\t\e[0;34m%d\e[0m\n\n", expectation, int);
 
 # define BLUE "\001\033[0;34m\002"
 # define END_COLOR "\001\033[0m\002"
@@ -170,6 +166,7 @@ void		init_heredoc(t_heredoc *heredocs);
 t_heredoc	realloc_heredoc(t_heredoc heredocs, t_prg *prg);
 void		add_heredoc(t_heredoc *heredocs, t_string new, int index,
 				t_prg *prg);
+t_string	get_heredoc(t_prg *prg, int expand, int i);
 
 /**************** custom ****************/
 int			print_title(void);
@@ -185,6 +182,8 @@ int			ft_lstclear_all(t_list **lst, struct termios *old);
 /**************** set_env ***********************/
 void		set_signal(void);
 int			initialization(char **envp, t_prg *prg);
+int			set_export(char **envp, t_head_env *head, t_prg *prg);
+char		*set_value_shlvl(int shlvl, t_string shlvl_var);
 
 /**************** OPTIONAL ****************/
 void		ft_free(char **str);
@@ -222,8 +221,6 @@ t_bool		syntax_special_char(t_string *cmd, t_prg *prg);
 void		init_table_heredoc(t_prg *prg, int *save);
 int			check_heredoc(char *str, int i, int *index);
 
-int			set_export(char **envp, t_head_env *head, t_prg *prg);
-
 /**************** Exec_command *************/
 int			exec_command(t_prg *prg);
 void		get_redirections(t_prg *prg, t_lst_cmd *cmd);
@@ -235,10 +232,10 @@ t_bool		is_builtin(t_prg *prg);
 /**************** Utils *************/
 void		ft_double_dup(int fd1, int fd2, t_prg *prg);
 void		ft_pipe(int *fd, t_prg *prg);
-void		ft_write(int fd, char *str, size_t size, t_prg *prg);
 void		ft_close(int fd, t_prg *prg);
 void		ft_open(char *file, char *options, int *fd, t_prg *prg);
-char		*ft_strdup_and_trim(const char *src, int j, t_prg *prg);
+char		*ft_strdup_and_trim(char *src, int j, t_prg *prg);
+void		ft_dup2(int fd1, int fd2, t_prg *prg);
 
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);

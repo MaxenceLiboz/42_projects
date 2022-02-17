@@ -11,7 +11,6 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_lst_env/lst_env_functions.c		\
 				t_lst_env/lst_env_functions2.c		\
 				builtins/unset.c					\
-				init_term/set_export.c				\
 				builtins/export/export.c			\
 				builtins/export/export_utils.c		\
 				builtins/echo.c						\
@@ -25,6 +24,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				error_handling/error.c				\
 				custom/custom.c						\
 				init_term/init_term.c				\
+				init_term/set_export_utils.c		\
+				init_term/set_export.c				\
 				init_term/signal.c					\
 				builtins/exec_builtin.c				\
 				t_lst_cmd/lst_cmd_functions.c		\
@@ -35,10 +36,11 @@ SRCS		=	command_parsing/create_prompt.c		\
 				exec_command/ft_pipex.c				\
 				exec_command/ft_pipex_utils.c		\
 				exec_command/trim_quotes_uneeded.c	\
-				exec_command/utils.c				\
+				error_handling/utils.c				\
 				args/args_functions.c				\
 				t_heredoc/heredoc_functions.c		\
 				t_heredoc/init_table_heredoc.c		\
+				t_heredoc/init_table_heredoc_utils.c\
 				
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 

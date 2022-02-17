@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 10:27:19 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 11:30:42 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_command(t_prg *prg)
 	if (WIFEXITED(status))
 		g_returnvalue = WEXITSTATUS(status);
 	ft_double_dup(prg->fd.stdin_save, prg->fd.stdout_save, prg);
-	close(prg->fd.stdin_save);
-	close(prg->fd.stdout_save);
+	ft_close(prg->fd.stdin_save, prg);
+	ft_close(prg->fd.stdout_save, prg);
 	return (g_returnvalue);
 }

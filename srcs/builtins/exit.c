@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 10:25:12 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:33:14 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_exit(char **str, t_prg *prg)
 
 	if (prg->fd.pid != 0)
 		ft_putstr_fd("exit\n", 2);
-	if (!str || str[1])
+	if (!str || !str[1])
 		exit_prg(prg, g_returnvalue);
 	if (!isnum(str[1]) || !is_atoll(ft_atoll(str[1]), str[1]))
 		print_exit(str[1], ": numeric argument required", 255, prg);

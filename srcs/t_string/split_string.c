@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:44:10 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:07 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:26:10 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_string	ft_copy(char *src, char c, int *i, t_prg *prg)
 	while (src[end] != c && src[end])
 		end++;
 	size = end - *i;
-	dst = sub_string(src, *i, size,prg);
+	dst = sub_string(src, *i, size, prg);
 	*i = end;
 	return (dst);
 }

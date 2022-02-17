@@ -6,16 +6,25 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:36:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:01:49 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+static void	pass_quotes(char *src, int *i, int *quotes, char c)
+{
+	*i += 1;
+	while (src[*i] && src[*i] != c)
+		*i += 1;
+	*i += 1;
+	*quotes += 2;
+}
+
 /*
 	Get the good size for the ft_strdup_and_trim();
 */
-static int	get_size_to_dup(const char *src)
+static int	get_size_to_dup(char *src)
 {
 	int		i;
 	int		quotes;
@@ -27,19 +36,9 @@ static int	get_size_to_dup(const char *src)
 	while (src[i])
 	{
 		if (src[i] == '\"')
-		{
-			quotes += 2;
-			while (src[++i] && src[i] != '\"')
-				;
-			i++;
-		}
+			pass_quotes(src, &i, &quotes, '\"');
 		else if (src[i] == '\'')
-		{
-			quotes += 2;
-			while (src[++i] && src[i] != '\'')
-				;
-			i++;
-		}
+			pass_quotes(src, &i, &quotes, '\'');
 		else
 			i++;
 	}
@@ -49,7 +48,7 @@ static int	get_size_to_dup(const char *src)
 /*
 	Dup a string and trim the quotes
 */
-char	*ft_strdup_and_trim(const char *src, int j, t_prg *prg)
+char	*ft_strdup_and_trim(char *src, int j, t_prg *prg)
 {
 	int		i;
 	char	*dest;
@@ -61,19 +60,14 @@ char	*ft_strdup_and_trim(const char *src, int j, t_prg *prg)
 	while (src[i])
 	{
 		if (src[i] == '\'')
-		{
 			while (src[++i] && src[i] != '\'')
 				dest[j++] = src[i];
-			i++;
-		}
 		else if (src[i] == '\"')
-		{
 			while (src[++i] && src[i] != '\"')
 				dest[j++] = src[i];
-			i++;
-		}
 		else
-			dest[j++] = src[i++];
+			dest[j++] = src[i];
+		i++;
 	}
 	dest[j] = '\0';
 	return (dest);

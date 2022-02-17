@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:48:10 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:21:50 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ t_bool	is_builtin(t_prg *prg)
 void	set_signals(char *cmd)
 {
 	if (ft_strnstr(cmd, "minishell", ft_strlen(cmd)) == 0)
+	{
 		signal(SIGINT, (void (*)(int))handler_forked);
+		signal(SIGQUIT, (void (*)(int))handler_forked);
+	}
 	else
 		signal(SIGINT, SIG_IGN);
 }

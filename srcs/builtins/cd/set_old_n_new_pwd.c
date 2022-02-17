@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:35:28 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:46:42 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	set_new_pwd_env(t_head_env *head, t_string *pwd, t_prg *prg)
 	if (lst_env_find_name_var(head->export, "PWD").max_size != 0)
 	{
 		while (ft_strncmp(env->name_var.str, "PWD", 4) != 0 && env->next)
-		env = env->next;
+			env = env->next;
 		if (!env->next)
 			lst_env_add_front(&head->env, lst_env_new("PWD",
 					sub_string(pwd->str, 0, pwd->size - 1, prg).str, prg));

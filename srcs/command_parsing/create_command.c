@@ -6,24 +6,14 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:20:15 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:00:44 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*
-	While the command is not ended (pipe at the end)
-	Parse it and check everything
-*/
-static t_bool	parse_command(t_prg *prg)
+static t_bool	launch_parsing(t_prg *prg, t_bool status, char *line, int save)
 {
-	t_bool	status;
-	int		save;
-	char	*line;
-
-	save = 0;
-	status = FAIL;
 	while (status == FAIL)
 	{
 		if (check_quotes(prg->cmd.command) == FAIL
@@ -44,6 +34,22 @@ static t_bool	parse_command(t_prg *prg)
 		free(line);
 	}
 	return (SUCCESS);
+}
+
+/*
+	While the command is not ended (pipe at the end)
+	Parse it and check everything
+*/
+static t_bool	parse_command(t_prg *prg)
+{
+	t_bool	status;
+	int		save;
+	char	*line;
+
+	save = 0;
+	status = FAIL;
+	line = NULL;
+	return (launch_parsing(prg, status, line, save));
 }
 
 /*

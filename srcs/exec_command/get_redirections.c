@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 08:38:49 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:04:13 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	here_doc(t_prg *prg, int *fd, int *index)
 	ft_pipe(prg->fd.fd, prg);
 	if (prg->heredocs.table[*index].size > 65000)
 		ft_error_exit(prg, 1, "heredoc bigger than 64K");
-	ft_write(prg->fd.fd[1], prg->heredocs.table[*index].str,
-		prg->heredocs.table[*index].size - 1, prg);
+	write(prg->fd.fd[1], prg->heredocs.table[*index].str,
+		prg->heredocs.table[*index].size - 1);
 	ft_close(prg->fd.fd[1], prg);
 	*fd = prg->fd.fd[0];
 }

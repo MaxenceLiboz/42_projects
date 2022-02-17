@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:39:26 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:04:19 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	ft_pipe(int *fd, t_prg *prg)
 		ft_error_exit(prg, 2, "pipe: ", strerror(errno));
 }
 
-void	ft_write(int fd, char *str, size_t size, t_prg *prg)
-{
-	if (write(fd, str, size) == -1)
-		ft_error_exit(prg, 2, "write: ", strerror(errno));
-}
-
 void	ft_close(int fd, t_prg *prg)
 {
 	if (close(fd) == -1)
 		ft_error_exit(prg, 2, "close: ", strerror(errno));
+}
+
+void	ft_dup2(int fd1, int fd2, t_prg *prg)
+{
+	if (dup2(fd1, fd2) == -1)
+		ft_error_exit(prg, 2, "dup2: ", strerror(errno));
 }
 
 void	ft_open(char *file, char *options, int *fd, t_prg *prg)
