@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 18:00:35 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 09:36:03 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_bool	parse_command(t_prg *prg)
 {
 	t_bool	status;
 	int		save;
+	char	*line;
 
 	save = 0;
 	status = FAIL;
@@ -36,9 +37,11 @@ static t_bool	parse_command(t_prg *prg)
 		if (status == SUCCESS)
 			break ;
 		if (status == -1)
-			return (FAIL);
-		add_string(&prg->cmd.command, readline("pipe > "),
+			return (NULL);
+		line = readline("pipe > ");
+		add_string(&prg->cmd.command, line,
 			prg->cmd.command.size, &prg->mem);
+		free(line);
 	}
 	return (SUCCESS);
 }
