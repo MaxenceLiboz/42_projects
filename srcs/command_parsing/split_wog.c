@@ -12,6 +12,9 @@
 
 #include <minishell.h>
 
+/*
+	Get the size of the command that is going to by coppied.
+*/
 static void	get_copy_size(const char *src, char c, int *i, int *end)
 {
 	static int	dquotes = 1;
@@ -31,6 +34,9 @@ static void	get_copy_size(const char *src, char c, int *i, int *end)
 	}
 }
 
+/*
+	Copy the command that has been splitted
+*/
 static void	ft_copy(t_prg *prg, char c, int *i, int dsti)
 {
 	int			end;
@@ -43,6 +49,9 @@ static void	ft_copy(t_prg *prg, char c, int *i, int dsti)
 	*i = end;
 }
 
+/*
+	Split the command with " " but not inside quotes
+*/
 void	split_wog(t_prg *prg, char c)
 {
 	int		words;

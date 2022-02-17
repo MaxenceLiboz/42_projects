@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_split_wog.c                                      :+:      :+:    :+:   */
+/*   count_split_wog.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 10:46:26 by mliboz            #+#    #+#             */
-/*   Updated: 2022/01/07 10:46:34 by mliboz           ###   ########.fr       */
+/*   Created: 2022/02/16 17:54:28 by mliboz            #+#    #+#             */
+/*   Updated: 2022/02/16 17:55:50 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Count the malloc size for the split_wog function
+*/
 int	count_split_wog(const char *str, char charset)
 {
 	int		i;
@@ -20,14 +23,14 @@ int	count_split_wog(const char *str, char charset)
 	int		squotes;
 
 	count = 0;
-	i = 0;
+	i = -1;
 	dquotes = 1;
 	squotes = 1;
-	while (str[i] && str[i] == charset)
-		i++;
+	while (str[++i] && str[i] == charset)
+		;
 	if (str[i] != 0)
 		count++;
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] == '"')
 			dquotes *= -1;
@@ -37,7 +40,6 @@ int	count_split_wog(const char *str, char charset)
 			&& (str[i + 1] != charset && str[i + 1] != 0)
 			&& dquotes > 0 && squotes > 0)
 			count++;
-		i++;
 	}
 	return (count);
 }

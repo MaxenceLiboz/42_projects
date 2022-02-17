@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:48:10 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 09:54:30 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 08:37:04 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_bool	is_builtin(t_prg *prg)
 {
 	char	**tmp;
 
-	tmp = f_cmd(prg->lst_cmd->cmd, &prg->mem);
+	tmp = create_final_command(prg->lst_cmd->cmd, &prg->mem);
 	if (ft_strncmp(tmp[0], "echo", 5) == 0)
 		return (TRUE);
 	else if (ft_strncmp(tmp[0], "cd", 3) == 0)

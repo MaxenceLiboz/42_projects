@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:22:35 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/14 10:16:06 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 17:21:00 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Check if the command is a built in execut it and put the right g_returnvalue
+*/
 int	exec_builtin(char **command, t_head_env *head, t_prg *prg)
 {
 	if (ft_strncmp(command[0], "echo", 5) == 0)

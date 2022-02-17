@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 16:36:18 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 17:41:08 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Check if the argument is numerical
+*/
 static int	isnum(char *str)
 {
 	int	i;
@@ -32,33 +35,46 @@ static int	isnum(char *str)
 	return (1);
 }
 
-static void	print_exit(char *arg, char *msg, int r, t_list **mem)
+/*
+	use print_stderror();
+	use ft_lst_clear();
+	exit with variable r
+*/
+static void	print_exit(char *arg, char *msg, int exit_value, t_prg *prg)
 {
+	tcsetattr(0, TCSANOW, &prg->old);
 	print_stderror(0, 3, "exit: ", arg, msg);
-	ft_lstclear(mem, free);
-	exit(r);
+	ft_lstclear(&prg->mem, free);
+	exit(exit_value);
 }
 
+/*
+	Clear list
+	Set terminal termios to old
+	Exit with exit_status
+*/
+static void	exit_prg(t_prg *prg, int exit_status)
+{
+	tcsetattr(0, TCSANOW, &prg->old);
+	ft_lstclear(&prg->mem, free);
+	exit(exit_status);
+}
+
+/*
+	Reproducing exit command in bash
+	The first argument become the exit status
+	The garbage collector is freed
+*/
 void	ft_exit(char **str, t_prg *prg)
 {
 	int		nb;
 
 	if (prg->fd.pid != 0)
 		ft_putstr_fd("exit\n", 2);
-	if (!str)
-	{
-		tcsetattr(0, TCSANOW, &prg->old);
-		ft_lstclear(&prg->mem, free);
-		exit(g_returnvalue);
-	}
-	if (!str[1])
-	{
-		ft_lstclear(&prg->mem, free);
-		tcsetattr(0, TCSANOW, &prg->old);
-		exit(g_returnvalue);
-	}
+	if (!str || str[1])
+		exit_prg(prg, g_returnvalue);
 	if (!isnum(str[1]) || !is_atoll(ft_atoll(str[1]), str[1]))
-		print_exit(str[1], ": numeric argument required", 255, &prg->mem);
+		print_exit(str[1], ": numeric argument required", 255, prg);
 	if (str[2])
 	{
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
@@ -66,7 +82,5 @@ void	ft_exit(char **str, t_prg *prg)
 		return ;
 	}
 	nb = ft_atoll(str[1]);
-	ft_lstclear(&prg->mem, free);
-	tcsetattr(0, TCSANOW, &prg->old);
-	exit(nb);
+	exit_prg(prg, nb);
 }
