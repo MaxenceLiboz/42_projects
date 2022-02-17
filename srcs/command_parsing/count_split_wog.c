@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_split_wog.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 17:54:28 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 17:55:50 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 13:41:27 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,17 @@ int	count_split_wog(const char *str, char charset)
 		;
 	if (str[i] != 0)
 		count++;
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == '"')
 			dquotes *= -1;
 		if (str[i] == '\'')
 			squotes *= -1;
-		if (str[i] == charset
+		if (str[i] == charset && str[i + 1]
 			&& (str[i + 1] != charset && str[i + 1] != 0)
 			&& dquotes > 0 && squotes > 0)
 			count++;
+		i++;
 	}
 	return (count);
 }
