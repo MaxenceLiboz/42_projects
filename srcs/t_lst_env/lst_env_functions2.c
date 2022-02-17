@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_functions2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:19:41 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:32:07 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ t_string	lst_env_find_name_var(t_lst_env *env, char *str)
 	return (null);
 }
 
+/*
+	Convert lst_env to char **
+*/
 char	**lst_env_to_array(t_lst_env *env, t_prg *prg)
 {
 	char		**envp;

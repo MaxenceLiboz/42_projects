@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:57:33 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:18 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:30:47 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Create a new instance of a node lst_env
+*/
 t_lst_env	*lst_env_new(char *name_var, char *var, t_prg *prg)
 {
 	t_lst_env	*lst;
@@ -23,6 +26,9 @@ t_lst_env	*lst_env_new(char *name_var, char *var, t_prg *prg)
 	return (lst);
 }
 
+/*
+	Add a node at the back of the list
+*/
 void	lst_env_add_back(t_lst_env **lst, t_lst_env *new)
 {
 	t_lst_env	*last;
@@ -43,6 +49,9 @@ void	lst_env_add_back(t_lst_env **lst, t_lst_env *new)
 	}
 }
 
+/*
+	Add a node in front of the list
+*/
 void	lst_env_add_front(t_lst_env **lst, t_lst_env *new)
 {
 	if (!new)
@@ -51,6 +60,9 @@ void	lst_env_add_front(t_lst_env **lst, t_lst_env *new)
 	*lst = new;
 }
 
+/*
+	Remove a node form the list
+*/
 void	lst_env_delone(t_lst_env *prev, t_lst_env *to_del, t_lst_env **head)
 {
 	if (!to_del)

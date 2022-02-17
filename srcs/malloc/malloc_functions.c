@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 10:26:07 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:24:16 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Malloc an element and add it to the garbage collector
+*/
 void	*ft_malloc(t_prg *prg, size_t size)
 {
 	void	*new_item;
@@ -26,7 +29,6 @@ void	*ft_malloc(t_prg *prg, size_t size)
 /*
 	Print a message in STDOUT_FILENO, free garbage collector and exit -1
 */
-
 int	ft_error_exit(t_prg *prg, int size, char *s1, ...)
 {
 	va_list	arg;

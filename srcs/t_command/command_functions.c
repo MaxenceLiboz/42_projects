@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   command_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:37:42 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:21:25 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:27:30 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Init our command structure
+*/
 void	init_command(t_command *array_string, int size, int to_malloc,
 			t_prg *prg)
 {
@@ -23,6 +26,9 @@ void	init_command(t_command *array_string, int size, int to_malloc,
 	array_string->array = ft_malloc(prg, sizeof(t_string) * size);
 }
 
+/*
+	Reinit the command structure variables
+*/
 void	reinit_command(t_command *cmd)
 {
 	cmd->max_size = 0;
@@ -30,6 +36,9 @@ void	reinit_command(t_command *cmd)
 	cmd->size = 0;
 }
 
+/*
+	Convert the t_command in char **cmd
+*/
 char	**get_cmd(t_command *cmd, t_prg *prg)
 {
 	int		end;
@@ -55,6 +64,9 @@ char	**get_cmd(t_command *cmd, t_prg *prg)
 	return (dst);
 }
 
+/*
+	Get the number of pipes in the command
+*/
 int	pipes_size_cmd(t_command cmd)
 {
 	int		i;

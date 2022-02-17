@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   split_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:44:10 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 12:26:10 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:43:20 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Count the number of words to split
+*/
 static int	ft_count_words(const char *str, char charset)
 {
 	int		i;
@@ -50,6 +53,9 @@ static t_string	ft_copy(char *src, char c, int *i, t_prg *prg)
 	return (dst);
 }
 
+/*
+	Split a string in a string *
+*/
 t_string	*split_string(char *s, char c, t_prg *prg)
 {
 	t_string	*dst;

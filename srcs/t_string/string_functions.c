@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 10:21:52 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:44:38 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Init the string structure
+*/
 void	init_string(t_string *string, char *src, t_bool to_malloc, t_prg *prg)
 {
 	int		size;
@@ -28,13 +31,9 @@ void	init_string(t_string *string, char *src, t_bool to_malloc, t_prg *prg)
 	dup_string(string, src, 0, prg);
 }
 
-void	reinit_string(t_string *string)
-{
-	string->str = 0;
-	string->max_size = 0;
-	string->size = 0;
-}
-
+/*
+	Realloc double of the size of the string
+*/
 void	realloc_string(t_string *string, t_prg *prg)
 {
 	t_string	dst;
@@ -46,6 +45,9 @@ void	realloc_string(t_string *string, t_prg *prg)
 	dup_string(string, dst.str, 0, prg);
 }
 
+/*
+	Dup a string and check if it as enought malloc space
+*/
 void	dup_string(t_string *string, char *src, int index, t_prg *prg)
 {
 	int		i;

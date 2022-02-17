@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lst_cmd_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:51:33 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:31:11 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Create a new node of lst_cmd
+*/
 t_lst_cmd	*lst_cmd_new(char **cmd, t_prg *prg)
 {
 	t_lst_cmd	*lst;
@@ -22,6 +25,9 @@ t_lst_cmd	*lst_cmd_new(char **cmd, t_prg *prg)
 	return (lst);
 }
 
+/*
+	Add a new node to the end of the list
+*/
 void	lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item)
 {
 	t_lst_cmd	*last;
@@ -40,6 +46,9 @@ void	lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item)
 	}
 }
 
+/*
+	Initialize the command structure
+*/
 t_lst_cmd	*lst_cmd_init(t_command *cmd, t_prg *prg)
 {
 	int			i;
@@ -55,31 +64,6 @@ t_lst_cmd	*lst_cmd_init(t_command *cmd, t_prg *prg)
 		i--;
 	}
 	return (lst);
-}
-
-void	lst_cmd_put(t_lst_cmd	*lst)
-{
-	t_lst_cmd	*head;
-	int			i;
-
-	if (!lst)
-		return ;
-	i = 0;
-	head = lst;
-	while (head)
-	{
-		i = 0;
-		while (head->cmd[i])
-		{
-			if (head->cmd[i + 1])
-				printf("%s, ", head->cmd[i]);
-			else
-				printf("%s", head->cmd[i]);
-			i++;
-		}
-		printf("\n");
-		head = head->next;
-	}
 }
 
 int	lst_cmd_size(t_lst_cmd *lst)

@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:22:47 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:46:29 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Use ft_substr and convert it to a string
+*/
 t_string	sub_string(char *src, size_t start, size_t size, t_prg *prg)
 {
 	t_string	string;
@@ -25,6 +28,9 @@ t_string	sub_string(char *src, size_t start, size_t size, t_prg *prg)
 	return (string);
 }
 
+/*
+	Erase a char * from a string
+*/
 void	erase_string(t_string *string, char *to_erase, size_t start,
 	t_prg *prg)
 {
@@ -34,6 +40,9 @@ void	erase_string(t_string *string, char *to_erase, size_t start,
 	dup_string(string, temp.str, start, prg);
 }
 
+/*
+	Add something anywhere to a string
+*/
 void	add_string(t_string *string, char *to_add, size_t index, t_prg *prg)
 {
 	t_string	before;
@@ -48,6 +57,9 @@ void	add_string(t_string *string, char *to_add, size_t index, t_prg *prg)
 	dup_string(string, after.str, string->size - 1, prg);
 }
 
+/*
+	Convert a string* to a char **
+*/
 char	**strings_to_array(t_string *strings, t_prg *prg)
 {
 	int		i;
@@ -67,6 +79,9 @@ char	**strings_to_array(t_string *strings, t_prg *prg)
 	return (dst);
 }
 
+/*
+	Join two string together
+*/
 t_string	join_string(char *s1, char *s2, t_prg *prg)
 {
 	t_string	string;

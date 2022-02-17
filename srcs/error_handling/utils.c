@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:39:26 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 12:04:19 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:23:17 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/*
+	Protect all the functions that can return ERR and set errno
+*/
 
 void	ft_double_dup(int fd1, int fd2, t_prg *prg)
 {

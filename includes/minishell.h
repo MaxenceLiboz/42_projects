@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 12:29:14 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:43:55 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ typedef struct s_prg
 /**************** STRINGS *****************/
 void		init_string(t_string *string, char *src, t_bool to_malloc,
 				t_prg *prg);
-void		reinit_string(t_string *string);
 void		realloc_string(t_string *string, t_prg *prg);
 void		cat_string(t_string *string, t_string cat);
 void		dup_string(t_string *string, char *src, int index, t_prg *prg);
@@ -150,7 +149,6 @@ char		**lst_env_to_array(t_lst_env *env, t_prg *prg);
 t_lst_cmd	*lst_cmd_new(char **cmd, t_prg *prg);
 void		lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item);
 int			lst_cmd_clear(t_lst_cmd **lst);
-void		lst_cmd_put(t_lst_cmd	*lst);
 t_lst_cmd	*lst_cmd_init(t_command *cmd, t_prg *prg);
 int			lst_cmd_size(t_lst_cmd *lst);
 
@@ -224,7 +222,7 @@ int			check_heredoc(char *str, int i, int *index);
 /**************** Exec_command *************/
 int			exec_command(t_prg *prg);
 void		get_redirections(t_prg *prg, t_lst_cmd *cmd);
-char		**create_final_command(char **cmd, t_prg *prg);
+char		**get_cmd(char **cmd, t_prg *prg);
 void		ft_pipex(t_prg *prg, char **envp);
 char		**trim_quotes_unneeded(char **cmd, t_prg *prg);
 t_bool		is_builtin(t_prg *prg);
