@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 11:36:06 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 09:22:07 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,8 @@ int			set_export(char **envp, t_head_env *head, t_list **mem);
 
 /**************** Exec_command *************/
 int			exec_command(t_prg *prg);
-void		check_cmd(t_prg *prg, t_lst_cmd *cmd);
-char		**f_cmd(char **cmd, t_list **mem);
+void		get_redirections(t_prg *prg, t_lst_cmd *cmd);
+char		**create_final_command(char **cmd, t_list **mem);
 void		ft_pipex(t_prg *prg, char **envp);
 char		**trim_quotes_unneeded(char **cmd, t_list **mem);
 t_bool		is_builtin(t_prg *prg);
@@ -233,6 +233,7 @@ void		ft_pipe(int *fd, t_list **mem);
 void		ft_write(int fd, char *str, size_t size, t_list **mem);
 void		ft_close(int fd, t_list **mem);
 void		ft_open(char *file, char *options, int *fd, t_prg *prg);
+char		*ft_strdup_and_trim(const char *src, int j, t_list **mem);
 
 /**************** ARGS *************/
 void		change_arg_command(t_prg *prg, t_string *str);
@@ -256,5 +257,7 @@ t_bool		control_args(char *str);
 void		add_elem_to_lst(char *arg, t_head_env *head, t_list **mem);
 void		replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
 				t_list **mem);
+void		init_env__(t_prg *prg);
+int			try_path(t_prg *prg, t_lst_env *export, t_lst_env *env);
 
 #endif

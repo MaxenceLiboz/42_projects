@@ -3,35 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 16:15:30 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:00:35 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*
-	1: Check if heredoc
+	While the command is not ended (pipe at the end)
+	Parse it and check everything
 */
-
-t_lst_cmd	*create_command(t_prg *prg)
+static t_bool	parse_command(t_prg *prg)
 {
-	t_lst_cmd	*lst;
-	t_bool		status;
-	int			save;
+	t_bool	status;
+	int		save;
 
 	save = 0;
-	lst = 0;
 	status = FAIL;
-	init_heredoc(&prg->heredocs);
 	while (status == FAIL)
 	{
 		if (check_quotes(prg->cmd.command) == FAIL
 			|| syntax_special_char(&prg->cmd.command, &prg->mem) == FAIL
 			|| count_split_wog(prg->cmd.command.str, ' ') == 0)
-			return (NULL);
+			return (FAIL);
 		init_table_heredoc(prg, &save);
 		change_arg_command(prg, &prg->cmd.command);
 		split_wog(prg, ' ');
@@ -39,10 +36,24 @@ t_lst_cmd	*create_command(t_prg *prg)
 		if (status == SUCCESS)
 			break ;
 		if (status == -1)
-			return (NULL);
+			return (FAIL);
 		add_string(&prg->cmd.command, readline("pipe > "),
 			prg->cmd.command.size, &prg->mem);
 	}
+	return (SUCCESS);
+}
+
+/*
+	Parse the recieved command in our structures
+*/
+t_lst_cmd	*create_command(t_prg *prg)
+{
+	t_lst_cmd	*lst;
+
+	lst = 0;
+	init_heredoc(&prg->heredocs);
+	if (parse_command(prg) == FAIL)
+		return (NULL);
 	prg->heredocs.index = 0;
 	lst = lst_cmd_init(&prg->cmd, &prg->mem);
 	return (lst);

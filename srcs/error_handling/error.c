@@ -6,20 +6,18 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 09:01:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/04 18:16:22 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 17:23:45 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	*error(char *str, int error)
-{
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n", 2);
-	return ((void *)(size_t)error);
-}
-
-// first arg is size of arg, set second one to 0, then add string
+/*
+	error: variable returned
+	size: number of char * wrote
+	s1: first char *
+	...: all the char * you want
+*/
 int	print_stderror(int error, int size, char *s1, ...)
 {
 	va_list	arg;

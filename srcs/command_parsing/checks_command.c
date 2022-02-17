@@ -3,67 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   checks_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 11:57:33 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/16 17:52:46 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_bool	check_quotes(t_string cmd)
-{
-	int		squotes;
-	int		dquotes;
-	int		i;
-
-	squotes = -1;
-	dquotes = -1;
-	i = 0;
-	while (cmd.str[i])
-	{
-		if (cmd.str[i] == '\"' && squotes < 0)
-			dquotes *= -1;
-		if (cmd.str[i] == '\'' && dquotes < 0)
-			squotes *= -1;
-		i++;
-	}
-	if (squotes > 0 && dquotes > 0)
-		return (print_stderror(FAIL, 1, "Missing: both: \', \""));
-	else if (squotes > 0)
-		return (print_stderror(FAIL, 1, "Missing: \'"));
-	else if (dquotes > 0)
-		return (print_stderror(FAIL, 1, "Missing: \""));
-	return (SUCCESS);
-}
-
-t_bool	check_pipes(t_command cmd)
-{
-	int		i;
-	int		pipes;
-
-	i = 0;
-	pipes = 0;
-	if (!cmd.command.str || cmd.size == 0)
-		return (FAIL);
-	if (ft_strncmp(cmd.array[0].str, "|", 2) == 0)
-		return (print_stderror(-1, 1,
-				"syntax error near unexpected token `|'"));
-	while (i < cmd.size)
-	{
-		if (ft_strncmp(cmd.array[i].str, "|", 2) == 0
-			&& i == cmd.size - 1)
-			return (FAIL);
-		if (ft_strncmp(cmd.array[i].str, "|", 2) == 0
-			&& i < cmd.size && ft_strncmp(cmd.array[i + 1].str, "|", 2) == 0)
-			return (print_stderror(-1, 1,
-					"syntax error near unexpected token `|'"));
-		i++;
-	}
-	return (SUCCESS);
-}
-
+/*
+	If we have a special char and no space after check the next char:
+		- If special add space between
+		- Else next
+*/
 static void	add_space_after_special_char(t_string *cmd, int i, t_list **mem)
 {
 	if (cmd->str[i] != '|' && cmd->str[i + 1] != ' '
@@ -79,6 +32,9 @@ static void	add_space_after_special_char(t_string *cmd, int i, t_list **mem)
 		add_string(cmd, " ", i, mem);
 }
 
+/*
+	Add a space after << or >>
+*/
 static void	add_space_after_db_chevrons(t_string *cmd, t_list **mem)
 {
 	int		i;
@@ -100,6 +56,9 @@ static void	add_space_after_db_chevrons(t_string *cmd, t_list **mem)
 	}
 }
 
+/*
+	Check if their is a delimiter
+*/
 static t_bool	is_delimiter_heredoc(t_string *cmd, int i)
 {
 	if (ft_strncmp(&cmd->str[i], "<<", 2) == 0
@@ -123,6 +82,9 @@ static t_bool	is_delimiter_heredoc(t_string *cmd, int i)
 	return (TRUE);
 }
 
+/*
+	Find special char < > || and add space if needed
+*/
 t_bool	syntax_special_char(t_string *cmd, t_list **mem)
 {
 	int		i;

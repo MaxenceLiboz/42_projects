@@ -3,6 +3,7 @@ SRCS		=	command_parsing/create_prompt.c		\
 				command_parsing/create_command.c	\
 				command_parsing/count_split_wog.c	\
 				command_parsing/checks_command.c	\
+				command_parsing/check_pipes_n_quotes.c	\
 				t_command/command_functions.c		\
 				t_string/string_functions.c			\
 				t_string/string_functions2.c		\
@@ -20,8 +21,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				builtins/cd/set_paths.c				\
 				builtins/pwd.c						\
 				builtins/exit.c						\
-				builtins/error.c					\
 				builtins/env.c						\
+				error_handling/error.c				\
 				custom/custom.c						\
 				init_term/init_term.c				\
 				init_term/signal.c					\
@@ -29,8 +30,8 @@ SRCS		=	command_parsing/create_prompt.c		\
 				t_lst_cmd/lst_cmd_functions.c		\
 				malloc/malloc_functions.c			\
 				exec_command/exec_command.c			\
-				exec_command/check_cmd.c			\
-				exec_command/f_command.c			\
+				exec_command/get_redirections.c		\
+				exec_command/create_final_command.c	\
 				exec_command/ft_pipex.c				\
 				exec_command/ft_pipex_utils.c		\
 				exec_command/trim_quotes_uneeded.c	\

@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 15:48:23 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:41:45 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Execute the command send with execve, check for different error case and
+	exit status
+*/
 static void	ft_exec_process(t_prg *prg, char **envp)
 {
 	struct stat	file;
@@ -37,6 +41,11 @@ static void	ft_exec_process(t_prg *prg, char **envp)
 			": command not found"));
 }
 
+/*
+	Get the right file redirection, infile outfile stdin stdout
+	Get the final command 
+	Send it to ft_exec_process();
+*/
 static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 {
 	pipe(prg->fd.fd);
@@ -55,7 +64,7 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 		if (*j != prg->fd.pipe_nb + 1)
 			dup2(prg->fd.fd[1], STDOUT_FILENO);
 		close(prg->fd.fd[1]);
-		check_cmd(prg, prg->lst_cmd);
+		get_redirections(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			exit(FAIL);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
@@ -66,13 +75,13 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 }
 
 /*
-	If there is only 1 cmd and it is a built in, exec it outside fork
+	If there is only 1 command and it is a built in, exec it outside fork
 */
 static int	ft_one_builtin(t_prg *prg)
 {
 	if (prg->fd.pipe_nb == 1 && is_builtin(prg))
 	{
-		check_cmd(prg, prg->lst_cmd);
+		get_redirections(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			return (g_returnvalue);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
@@ -82,6 +91,9 @@ static int	ft_one_builtin(t_prg *prg)
 	return (-1);
 }
 
+/*
+	Check if we have a heredoc in our command
+*/
 int	check_heredoc_pipex(char *str, int i)
 {
 	int		pipe;
@@ -102,6 +114,10 @@ int	check_heredoc_pipex(char *str, int i)
 	return (-1);
 }
 
+/*
+	Call ft_one_builtin();
+	For every piped command create a fork and execve this command
+*/
 void	ft_pipex(t_prg *prg, char **envp)
 {
 	int		j;

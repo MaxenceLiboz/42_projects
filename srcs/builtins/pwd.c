@@ -6,12 +6,15 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:14 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/05 13:25:10 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/16 17:25:15 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Reproducing pwd command in bash
+*/
 int	ft_pwd(t_string pwd)
 {
 	printf("%s\n", pwd.str);

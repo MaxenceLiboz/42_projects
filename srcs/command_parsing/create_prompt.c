@@ -5,14 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 13:35:52 by mliboz            #+#    #+#             */
-
-/*   Updated: 2022/02/15 14:39:54 by mliboz           ###   ########.fr       */
+/*   Created: 2022/02/16 18:01:09 by mliboz            #+#    #+#             */
+/*   Updated: 2022/02/16 18:01:30 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Create the prompt that is going to be display with readline
+*/
 t_string	create_prompt(t_string pwd, t_list **mem)
 {
 	t_string	dst;

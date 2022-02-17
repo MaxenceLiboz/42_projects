@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:39:26 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 12:06:32 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 09:32:24 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	ft_close(int fd, t_list **mem)
 
 void	ft_open(char *file, char *options, int *fd, t_prg *prg)
 {
+	file = ft_strdup_and_trim(file, 0, &prg->mem);
+	if (!file)
+		return ;
 	if (*fd > 0 && *fd != prg->fd.stdin_save && *fd != prg->fd.stdout_save)
 		ft_close(*fd, &prg->mem);
 	if (ft_strncmp(options, "CRA", 4) == 0)

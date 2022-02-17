@@ -6,13 +6,13 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 14:31:41 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/01 14:47:25 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 08:37:04 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	f_cmd_size(char **cmd)
+static int	create_final_command_size(char **cmd)
 {
 	int			i;
 	int			y;
@@ -32,7 +32,7 @@ static int	f_cmd_size(char **cmd)
 	return (y);
 }
 
-char	**f_cmd(char **cmd, t_list **mem)
+char	**create_final_command(char **cmd, t_list **mem)
 {
 	int			i;
 	int			y;
@@ -41,7 +41,7 @@ char	**f_cmd(char **cmd, t_list **mem)
 
 	i = 0;
 	y = 0;
-	size = sizeof(t_string) * (f_cmd_size(cmd) + 1);
+	size = sizeof(t_string) * (create_final_command_size(cmd) + 1);
 	strings = ft_malloc(mem, size);
 	while (cmd[i] != NULL)
 	{
