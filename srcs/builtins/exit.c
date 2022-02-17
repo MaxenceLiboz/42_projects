@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:59:48 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 17:41:08 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:25:12 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static int	isnum(char *str)
 */
 static void	print_exit(char *arg, char *msg, int exit_value, t_prg *prg)
 {
-	tcsetattr(0, TCSANOW, &prg->old);
 	print_stderror(0, 3, "exit: ", arg, msg);
-	ft_lstclear(&prg->mem, free);
+	ft_lstclear_all(&prg->mem, &prg->old);
 	exit(exit_value);
 }
 
@@ -55,8 +54,7 @@ static void	print_exit(char *arg, char *msg, int exit_value, t_prg *prg)
 */
 static void	exit_prg(t_prg *prg, int exit_status)
 {
-	tcsetattr(0, TCSANOW, &prg->old);
-	ft_lstclear(&prg->mem, free);
+	ft_lstclear_all(&prg->mem, &prg->old);
 	exit(exit_status);
 }
 

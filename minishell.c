@@ -6,12 +6,15 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:02:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 18:53:28 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:27:48 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+	Handle SIGINT for our main program
+*/
 void	handler_main(int signum)
 {
 	if (signum == SIGINT)
@@ -22,6 +25,29 @@ void	handler_main(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+/*
+	Clear garbage collector
+*/
+int	ft_lstclear_all(t_list **lst, struct termios *old)
+{
+	t_list	*save;
+
+	tcsetattr(0, TCSANOW, old);
+	rl_clear_history();
+	if (!*lst)
+		return (0);
+	while ((*lst)->next)
+	{
+		save = (*lst)->next;
+		if ((*lst)->content)
+			free((*lst)->content);
+		free(*lst);
+		*lst = save;
+	}
+	*lst = 0;
+	return (0);
 }
 
 // we exit program if we unset PWD, or TERM_SESSION_ID, that is a problem
@@ -40,14 +66,11 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		set_signal();
-		prg.prompt = create_prompt(prg.pwd, &prg.mem);
+		prg.prompt = create_prompt(prg.pwd, &prg);
 		line = readline(prg.prompt.str);
 		if (!line)
-		{
-			tcsetattr(0, TCSANOW, &prg.old);
 			ft_exit(NULL, &prg);
-		}
-		init_string(&prg.cmd.command, line, TRUE, &prg.mem);
+		init_string(&prg.cmd.command, line, TRUE, &prg);
 		free(line);
 		if (*prg.cmd.command.str)
 			add_history(prg.cmd.command.str);
@@ -59,7 +82,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		reinit_command(&prg.cmd);
 	}
-	tcsetattr(0, TCSANOW, &prg.old);
-	rl_clear_history();
-	return (ft_lstclear(&prg.mem, free));
+	return (ft_lstclear_all(&prg.mem, &prg.old));
 }

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lst_cmd_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:51:33 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/01 14:36:45 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_lst_cmd	*lst_cmd_new(char **cmd, t_list **mem)
+t_lst_cmd	*lst_cmd_new(char **cmd, t_prg *prg)
 {
 	t_lst_cmd	*lst;
 
-	lst = ft_malloc(mem, sizeof(t_lst_cmd) * 1);
+	lst = ft_malloc(prg, sizeof(t_lst_cmd) * 1);
 	lst->cmd = cmd;
 	lst->next = 0;
 	return (lst);
@@ -40,7 +40,7 @@ void	lst_cmd_add_back(t_lst_cmd **lst, t_lst_cmd *new_item)
 	}
 }
 
-t_lst_cmd	*lst_cmd_init(t_command *cmd, t_list **mem)
+t_lst_cmd	*lst_cmd_init(t_command *cmd, t_prg *prg)
 {
 	int			i;
 	t_lst_cmd	*new;
@@ -50,7 +50,7 @@ t_lst_cmd	*lst_cmd_init(t_command *cmd, t_list **mem)
 	lst = NULL;
 	while (i >= 0)
 	{
-		new = lst_cmd_new(get_cmd(cmd, mem), mem);
+		new = lst_cmd_new(get_cmd(cmd, prg), prg);
 		lst_cmd_add_back(&lst, new);
 		i--;
 	}

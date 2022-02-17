@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_quotes_uneeded.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:36:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 09:31:51 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static int	get_size_to_dup(const char *src)
 /*
 	Dup a string and trim the quotes
 */
-char	*ft_strdup_and_trim(const char *src, int j, t_list **mem)
+char	*ft_strdup_and_trim(const char *src, int j, t_prg *prg)
 {
 	int		i;
 	char	*dest;
 
 	if (!src)
 		return (NULL);
-	dest = ft_malloc(mem, sizeof(char) * (get_size_to_dup(src) + 1));
+	dest = ft_malloc(prg, sizeof(char) * (get_size_to_dup(src) + 1));
 	i = 0;
 	while (src[i])
 	{
@@ -82,7 +82,7 @@ char	*ft_strdup_and_trim(const char *src, int j, t_list **mem)
 /*
 	Trim the quotes to create the final command to send to execve or exec_builtins
 */
-char	**trim_quotes_unneeded(char **cmd, t_list **mem)
+char	**trim_quotes_unneeded(char **cmd, t_prg *prg)
 {
 	char	**dst;
 	int		i;
@@ -92,11 +92,11 @@ char	**trim_quotes_unneeded(char **cmd, t_list **mem)
 	j = 0;
 	while (cmd[i])
 		i++;
-	dst = ft_malloc(mem, sizeof(char *) * (i + 1));
+	dst = ft_malloc(prg, sizeof(char *) * (i + 1));
 	i = 0;
 	while (cmd[i])
 	{
-		dst[i] = ft_strdup_and_trim(cmd[i], j, mem);
+		dst[i] = ft_strdup_and_trim(cmd[i], j, prg);
 		i++;
 	}
 	dst[i] = 0;

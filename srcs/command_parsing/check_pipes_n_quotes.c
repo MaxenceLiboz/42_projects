@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_pipes_n_quotes.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 17:52:31 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 17:54:06 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 09:39:36 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_bool	check_pipes(t_command cmd)
 	i = 0;
 	pipes = 0;
 	if (!cmd.command.str || cmd.size == 0)
-		return (FAIL);
+		return (-1);
 	if (ft_strncmp(cmd.array[0].str, "|", 2) == 0)
 		return (print_stderror(-1, 1,
 				"syntax error near unexpected token `|'"));

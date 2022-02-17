@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 11:55:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/05 09:45:19 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ void	init_heredoc(t_heredoc *heredocs)
 /*
 	Realloc twice de size of the current heredoc table
 */
-t_heredoc	realloc_heredoc(t_heredoc heredocs, t_list **mem)
+t_heredoc	realloc_heredoc(t_heredoc heredocs, t_prg *prg)
 {
 	t_heredoc	dst;
 
 	init_heredoc(&dst);
 	if (heredocs.malloc_size == 0)
 	{
-		dst.table = ft_malloc(mem, sizeof(t_string) * 2);
+		dst.table = ft_malloc(prg, sizeof(t_string) * 2);
 		dst.malloc_size = 2;
 	}
 	else
 	{
-		dst.table = ft_malloc(mem, sizeof(t_string)
+		dst.table = ft_malloc(prg, sizeof(t_string)
 				* heredocs.malloc_size * 2);
 		dst.malloc_size *= 2;
 	}
@@ -54,10 +54,10 @@ t_heredoc	realloc_heredoc(t_heredoc heredocs, t_list **mem)
 	Add element to the end of the heredoc table
 	1: Check if malloc_size is enough and call realloc_heredoc();
 */
-void	add_heredoc(t_heredoc *heredocs, t_string new, int index, t_list **mem)
+void	add_heredoc(t_heredoc *heredocs, t_string new, int index, t_prg *prg)
 {
 	if (heredocs->malloc_size == heredocs->size && heredocs->size <= index)
-		*heredocs = realloc_heredoc(*heredocs, mem);
+		*heredocs = realloc_heredoc(*heredocs, prg);
 	heredocs->table[index] = new;
 	if (heredocs->size <= index)
 		heredocs->size += 1;

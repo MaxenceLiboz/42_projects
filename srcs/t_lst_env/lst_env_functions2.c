@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:19:41 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/15 14:25:35 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_string	lst_env_find_name_var(t_lst_env *env, char *str)
 	return (null);
 }
 
-char	**lst_env_to_array(t_lst_env *env, t_list **mem)
+char	**lst_env_to_array(t_lst_env *env, t_prg *prg)
 {
 	char		**envp;
 	t_string	*temp;
@@ -93,15 +93,15 @@ char	**lst_env_to_array(t_lst_env *env, t_list **mem)
 		return (envp);
 	i = 0;
 	head = env;
-	temp = ft_malloc(mem, sizeof(t_string) * (lst_env_size(env) + 1));
+	temp = ft_malloc(prg, sizeof(t_string) * (lst_env_size(env) + 1));
 	while (head)
 	{
-		init_string(&temp[i], head->name_var.str, TRUE, mem);
-		add_string(&temp[i], "=", temp[i].size - 1, mem);
-		add_string(&temp[i], head->var.str, temp[i].size - 1, mem);
+		init_string(&temp[i], head->name_var.str, TRUE, prg);
+		add_string(&temp[i], "=", temp[i].size - 1, prg);
+		add_string(&temp[i], head->var.str, temp[i].size - 1, prg);
 		head = head->next;
 		i++;
 	}
 	temp[i].str = 0;
-	return (envp = strings_to_array(temp, mem));
+	return (envp = strings_to_array(temp, prg));
 }

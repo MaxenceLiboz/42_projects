@@ -6,13 +6,13 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 12:03:44 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:21:52 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_string(t_string *string, char *src, t_bool to_malloc, t_list **mem)
+void	init_string(t_string *string, char *src, t_bool to_malloc, t_prg *prg)
 {
 	int		size;
 
@@ -24,8 +24,8 @@ void	init_string(t_string *string, char *src, t_bool to_malloc, t_list **mem)
 	string->max_size = size * 2;
 	if (to_malloc != TRUE)
 		return ;
-	string->str = ft_malloc(mem, sizeof(char) * (string->max_size));
-	dup_string(string, src, 0, mem);
+	string->str = ft_malloc(prg, sizeof(char) * (string->max_size));
+	dup_string(string, src, 0, prg);
 }
 
 void	reinit_string(t_string *string)
@@ -35,34 +35,34 @@ void	reinit_string(t_string *string)
 	string->size = 0;
 }
 
-void	realloc_string(t_string *string, t_list **mem)
+void	realloc_string(t_string *string, t_prg *prg)
 {
 	t_string	dst;
 
-	init_string(&dst, string->str, TRUE, mem);
+	init_string(&dst, string->str, TRUE, prg);
 	dst.max_size = string->max_size;
-	string->str = ft_malloc(mem, sizeof(char) * (dst.max_size * 2));
+	string->str = ft_malloc(prg, sizeof(char) * (dst.max_size * 2));
 	string->max_size = dst.max_size * 2;
-	dup_string(string, dst.str, 0, mem);
+	dup_string(string, dst.str, 0, prg);
 }
 
-void	dup_string(t_string *string, char *src, int index, t_list **mem)
+void	dup_string(t_string *string, char *src, int index, t_prg *prg)
 {
 	int		i;
 
 	i = 0;
 	if (!src)
 	{
-		init_string(string, "", TRUE, mem);
+		init_string(string, "", TRUE, prg);
 		return ;
 	}
 	if (!string->str)
 	{
-		init_string(string, src, TRUE, mem);
+		init_string(string, src, TRUE, prg);
 		return ;
 	}
 	while (string->max_size < ((string->size) + ft_strlen(src) + 1))
-		realloc_string(string, mem);
+		realloc_string(string, prg);
 	while (src[i])
 		string->str[index++] = src[i++];
 	string->str[index] = 0;
@@ -77,11 +77,11 @@ void	dup_string(t_string *string, char *src, int index, t_list **mem)
 	3:	Replace with the char * variable, replace_with
 */
 void	replace_string(t_string *string, int *indexs, char *replace_with,
-			t_list **mem)
+			t_prg *prg)
 {
 	t_string	save;
 
-	init_string(&save, &string->str[indexs[1] + indexs[0]], TRUE, mem);
-	dup_string(string, replace_with, indexs[0], mem);
-	dup_string(string, save.str, indexs[0] + ft_strlen(replace_with), mem);
+	init_string(&save, &string->str[indexs[1] + indexs[0]], TRUE, prg);
+	dup_string(string, replace_with, indexs[0], prg);
+	dup_string(string, save.str, indexs[0] + ft_strlen(replace_with), prg);
 }

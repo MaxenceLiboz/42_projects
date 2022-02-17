@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 08:41:45 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	ft_get_fd(t_prg *prg, int *j, char **envp)
 		get_redirections(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			exit(FAIL);
-		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
+		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, prg);
 		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
 			exit(g_returnvalue);
 		ft_exec_process(prg, envp);
@@ -84,7 +84,7 @@ static int	ft_one_builtin(t_prg *prg)
 		get_redirections(prg, prg->lst_cmd);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			return (g_returnvalue);
-		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, &prg->mem);
+		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, prg);
 		if (exec_builtin(prg->lst_cmd->cmd, &prg->env, prg) != 2)
 			return (2);
 	}

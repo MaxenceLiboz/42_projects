@@ -6,53 +6,64 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:31:57 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 17:00:32 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:25:21 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	inittermios(struct termios *old)
+/*
+	Init our terminal termios
+*/
+static void	inittermios(struct termios *old, t_prg *prg)
 {
 	struct termios	new;
 
-	tcgetattr(0, old);
+	if (tcgetattr(0, old) == ERR)
+		ft_error_exit(prg, 2, "exit: tcgetattr: ", strerror(errno));
 	new = *old;
 	new.c_lflag &= (ECHO | ISIG | ICANON);
-	tcsetattr(0, TCSANOW, &new);
+	if (tcsetattr(0, TCSANOW, &new) == ERR)
+		ft_error_exit(prg, 2, "exit: tcsetattr: ", strerror(errno));
 }
 
-static void	init_pwd(t_string *pwd, t_list **mem)
+static void	init_pwd(t_string *pwd, t_prg *prg)
 {
 	char	*getpwd;
 
 	getpwd = getcwd(NULL, 0);
 	if (getpwd == NULL)
-		ft_error_exit(mem, 1, "getcwd: error initializing pwd");
-	init_string(pwd, getpwd, TRUE, mem);
+		ft_error_exit(prg, 1, "exit: getcwd: error initializing pwd");
+	init_string(pwd, getpwd, TRUE, prg);
 	free(getpwd);
 }
 
-static void	set_term_env(t_list **mem, struct termios *old)
+/*
+	Use inittermios();
+	Set the environment for our minishell
+*/
+static void	set_term_env(t_prg *prg, struct termios *old)
 {
 	char	*tmp;
 
-	(void)mem;
-	// if (tgetent(NULL, getenv("TERM")) == ERR)
-	// 	ft_error_exit(mem, 1, "getent: error");
-	inittermios(old);
-	tgetent(NULL, getenv("TERM"));
+	inittermios(old, prg);
+	if (tgetent(NULL, getenv("TERM")) == ERR)
+		ft_error_exit(prg, 1, "exit: getent: error");
 	tmp = tgetstr("cl", NULL);
-	// if (tmp == NULL)
-	// 	ft_error_exit(mem, 1, "tgetstr: error");
-	tputs(tmp, 10, putchar);
+	if (tmp == NULL)
+		ft_error_exit(prg, 1, "exit: tgetstr: error");
+	if (tputs(tmp, 10, putchar) == ERR)
+		ft_error_exit(prg, 1, "exit: tputs: error");
 }
 
+/*
+	Initiate the terminal attributs, set env variables
+*/
 int	initialization(char **envp, t_prg *prg)
 {
-	set_export(envp, &prg->env, &prg->mem);
-	set_term_env(&prg->mem, &prg->old);
+	set_export(envp, &prg->env, prg);
+	set_term_env(prg, &prg->old);
 	print_title();
-	init_pwd(&prg->pwd, &prg->mem);
+	init_pwd(&prg->pwd, prg);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_new_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:20:48 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 10:28:47 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 	- TRIM_LAST_DIR
 	- NEXT_PATH
 */
-static int	get_to_do_new_path(char *str, int start, int *end, t_list **mem)
+static int	get_to_do_new_path(char *str, int start, int *end, t_prg *prg)
 {
 	int			start_cpy;
 	t_string	tmp;
@@ -35,7 +35,7 @@ static int	get_to_do_new_path(char *str, int start, int *end, t_list **mem)
 		start_cpy++;
 		*end += 1;
 	}
-	tmp = sub_string(str, start, *end - start, mem);
+	tmp = sub_string(str, start, *end - start, prg);
 	if (ft_strncmp(tmp.str, "..", 3) == 0)
 		return (TRIM_LAST_DIR);
 	else if (ft_strncmp(tmp.str, ".", 2) == 0)
@@ -47,7 +47,7 @@ static int	get_to_do_new_path(char *str, int start, int *end, t_list **mem)
 /*
 	Trim path until next / starting from the end
 */
-static void	trim_last_dir(t_string *path, t_list **mem)
+static void	trim_last_dir(t_string *path, t_prg *prg)
 {
 	int		i;
 
@@ -56,7 +56,7 @@ static void	trim_last_dir(t_string *path, t_list **mem)
 		i--;
 	while (path->str[i] && path->str[i] != '/')
 		i--;
-	*path = sub_string(path->str, 0, i, mem);
+	*path = sub_string(path->str, 0, i, prg);
 }
 
 /*
@@ -65,7 +65,7 @@ static void	trim_last_dir(t_string *path, t_list **mem)
 	- TRIM_LAST_DIR => call trim_last_dir();
 	- else => pass to the next part of the path
 */
-t_bool	set_new_path(char *str, t_string *path, t_list **mem)
+t_bool	set_new_path(char *str, t_string *path, t_prg *prg)
 {
 	int		start;
 	int		to_do;
@@ -76,12 +76,12 @@ t_bool	set_new_path(char *str, t_string *path, t_list **mem)
 	end = 0;
 	while (str[start])
 	{
-		to_do = get_to_do_new_path(str, start, &end, mem);
+		to_do = get_to_do_new_path(str, start, &end, prg);
 		if (to_do == COPY_PATH)
-			add_string(path, sub_string(str, start, end - start, mem).str,
-				path->size - 1, mem);
+			add_string(path, sub_string(str, start, end - start, prg).str,
+				path->size - 1, prg);
 		if (to_do == TRIM_LAST_DIR)
-			trim_last_dir(path, mem);
+			trim_last_dir(path, prg);
 		start = end;
 	}
 	return (SUCCESS);

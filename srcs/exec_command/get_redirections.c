@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redirections.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 08:38:49 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 08:38:52 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 */
 void	here_doc(t_prg *prg, int *fd, int *index)
 {
-	ft_pipe(prg->fd.fd, &prg->mem);
+	ft_pipe(prg->fd.fd, prg);
 	if (prg->heredocs.table[*index].size > 65000)
-		ft_error_exit(&prg->mem, 1, "heredoc bigger than 64K");
+		ft_error_exit(prg, 1, "heredoc bigger than 64K");
 	ft_write(prg->fd.fd[1], prg->heredocs.table[*index].str,
-		prg->heredocs.table[*index].size - 1, &prg->mem);
-	ft_close(prg->fd.fd[1], &prg->mem);
+		prg->heredocs.table[*index].size - 1, prg);
+	ft_close(prg->fd.fd[1], prg);
 	*fd = prg->fd.fd[0];
 }
 
@@ -48,6 +48,6 @@ void	get_redirections(t_prg *prg, t_lst_cmd *cmd)
 			ft_open(cmd->cmd[i + 1], "CRA", &prg->fd.fd_out, prg);
 		i++;
 	}
-	cmd->cmd = create_final_command(cmd->cmd, &prg->mem);
-	ft_double_dup(prg->fd.fd_in, prg->fd.fd_out, &prg->mem);
+	cmd->cmd = create_final_command(cmd->cmd, prg);
+	ft_double_dup(prg->fd.fd_in, prg->fd.fd_out, prg);
 }

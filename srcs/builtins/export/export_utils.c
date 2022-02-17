@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 10:37:17 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 11:34:46 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,22 @@ t_bool	control_args(char *str)
 	Add the argument to our export list and sort it
 	If argument isn't null add it to the env list
 */
-void	add_elem_to_lst(char *arg, t_head_env *head, t_list **mem)
+void	add_elem_to_lst(char *arg, t_head_env *head, t_prg *prg)
 {
 	t_lst_env	*new_export;
 	t_lst_env	*new_env;
 	int			c;
 
-	new_export = lst_env_new("", NULL, mem);
+	new_export = lst_env_new("", NULL, prg);
 	c = ft_strchr_len(arg, '=');
 	new_env = NULL;
-	new_export->name_var = sub_string(arg, 0, c, mem);
+	new_export->name_var = sub_string(arg, 0, c, prg);
 	if (ft_strchr(arg, '=') != 0)
 	{
-		new_env = lst_env_new("", NULL, mem);
-		new_env->name_var = sub_string(arg, 0, c, mem);
-		new_env->var = sub_string(arg, c + 1, ft_strlen(arg) - c, mem);
-		new_export->var = sub_string(arg, c + 1, ft_strlen(arg) - c, mem);
+		new_env = lst_env_new("", NULL, prg);
+		new_env->name_var = sub_string(arg, 0, c, prg);
+		new_env->var = sub_string(arg, c + 1, ft_strlen(arg) - c, prg);
+		new_export->var = sub_string(arg, c + 1, ft_strlen(arg) - c, prg);
 		lst_env_add_front(&head->env, new_env);
 	}
 	lst_env_add_front(&head->export, new_export);
@@ -110,7 +110,7 @@ void	add_elem_to_lst(char *arg, t_head_env *head, t_list **mem)
 		- Else replace the old var with the new var in the list
 */
 void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
-		t_list **mem)
+		t_prg *prg)
 {
 	t_lst_env	*export;
 	t_lst_env	*env;
@@ -127,12 +127,12 @@ void	replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
 		env = env->next;
 	if (!env)
 	{
-		env = lst_env_new("", NULL, mem);
+		env = lst_env_new("", NULL, prg);
 		env->name_var = sub_string(export->name_var.str, 0,
-				export->name_var.size, mem);
-		env->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
+				export->name_var.size, prg);
+		env->var = sub_string(var, c + 1, ft_strlen(var) - c, prg);
 		lst_env_add_front(&head->env, env);
 	}
-	env->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
-	export->var = sub_string(var, c + 1, ft_strlen(var) - c, mem);
+	env->var = sub_string(var, c + 1, ft_strlen(var) - c, prg);
+	export->var = sub_string(var, c + 1, ft_strlen(var) - c, prg);
 }

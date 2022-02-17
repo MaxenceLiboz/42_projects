@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 10:57:54 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 15:55:52 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_heredoc(char *str, int i, int *index)
 	2:	trim if needed
 	3:	return if expand or not
 */
-static t_bool	delimiter_syntax(t_string *string, int *i, t_list **mem)
+static t_bool	delimiter_syntax(t_string *string, int *i, t_prg *prg)
 {
 	int		i_cpy;
 
@@ -66,7 +66,7 @@ static t_bool	delimiter_syntax(t_string *string, int *i, t_list **mem)
 	i_cpy = *i;
 	if (string->str[*i] == '$' && (string->str[*i + 1] == '\"'
 			|| string->str[*i + 1] == '\''))
-		erase_string(string, "$", *i, mem);
+		erase_string(string, "$", *i, prg);
 	while (string->str[i_cpy] != ' ' && string->str[i_cpy])
 	{
 		if (string->str[i_cpy] == '\"' || string->str[i_cpy] == '\'')
@@ -109,7 +109,7 @@ static int	get_delimiter_size(char *str)
 /*
 	Get delimiter
 */
-static char	*get_delimiter(char *str, t_list **mem)
+static char	*get_delimiter(char *str, t_prg *prg)
 {
 	int			i;
 	int			y;
@@ -119,7 +119,7 @@ static char	*get_delimiter(char *str, t_list **mem)
 	i = 0;
 	y = 0;
 	size = get_delimiter_size(str);
-	delimiter.str = ft_malloc(mem, sizeof(char) * size + 1);
+	delimiter.str = ft_malloc(prg, sizeof(char) * size + 1);
 	while (i < size)
 	{
 		while (str[y] == '\'' || str[y] == '\"')
@@ -142,23 +142,23 @@ static t_string	get_heredoc(t_prg *prg, int expand, int i)
 	char		*line;
 
 	line = NULL;
-	init_string(&final_str, "", TRUE, &prg->mem);
-	init_string(&prompt, "here_doc \"\" > ", TRUE, &prg->mem);
-	delimiter = get_delimiter(&prg->cmd.command.str[i], &prg->mem);
-	add_string(&prompt, delimiter, 10, &prg->mem);
+	init_string(&final_str, "", TRUE, prg);
+	init_string(&prompt, "here_doc \"\" > ", TRUE, prg);
+	delimiter = get_delimiter(&prg->cmd.command.str[i], prg);
+	add_string(&prompt, delimiter, 10, prg);
 	while (1)
 	{
 		line = readline(prompt.str);
 		if (!line)
 			break ;
-		init_string(&temp, line, TRUE, &prg->mem);
+		init_string(&temp, line, TRUE, prg);
 		free(line);
 		if (ft_strncmp(delimiter, temp.str, ft_strlen(delimiter) + 1) == 0)
 			break ;
 		if (expand == TRUE)
 			change_arg_command(prg, &temp);
-		add_string(&final_str, temp.str, final_str.size - 1, &prg->mem);
-		add_string(&final_str, "\n", final_str.size - 1, &prg->mem);
+		add_string(&final_str, temp.str, final_str.size - 1, prg);
+		add_string(&final_str, "\n", final_str.size - 1, prg);
 	}
 	return (final_str);
 }
@@ -176,9 +176,9 @@ void	init_table_heredoc(t_prg *prg, int *save)
 	while (i != 1)
 	{
 		*save = i;
-		expand = delimiter_syntax(&prg->cmd.command, save, &prg->mem);
+		expand = delimiter_syntax(&prg->cmd.command, save, prg);
 		add_heredoc(&prg->heredocs,
-			get_heredoc(prg, expand, *save), prg->heredocs.index, &prg->mem);
+			get_heredoc(prg, expand, *save), prg->heredocs.index, prg);
 		i = check_heredoc(prg->cmd.command.str, *save, &prg->heredocs.index);
 		i += 2;
 	}

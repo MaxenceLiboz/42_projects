@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_command.c                                        :+:      :+:    :+:   */
+/*   create_final_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 14:31:41 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 08:37:04 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	create_final_command_size(char **cmd)
 	return (y);
 }
 
-char	**create_final_command(char **cmd, t_list **mem)
+char	**create_final_command(char **cmd, t_prg *prg)
 {
 	int			i;
 	int			y;
@@ -42,7 +42,7 @@ char	**create_final_command(char **cmd, t_list **mem)
 	i = 0;
 	y = 0;
 	size = sizeof(t_string) * (create_final_command_size(cmd) + 1);
-	strings = ft_malloc(mem, size);
+	strings = ft_malloc(prg, size);
 	while (cmd[i] != NULL)
 	{
 		if ((ft_strncmp(cmd[i], ">", 2) == 0 || ft_strncmp(cmd[i], "<", 2) == 0
@@ -50,8 +50,8 @@ char	**create_final_command(char **cmd, t_list **mem)
 				|| ft_strncmp(cmd[i], "<<", 2) == 0) && cmd[i + 1])
 			i += 2;
 		else
-			init_string(&strings[y++], cmd[i++], TRUE, mem);
+			init_string(&strings[y++], cmd[i++], TRUE, prg);
 	}
 	strings[y].str = 0;
-	return (strings_to_array(strings, mem));
+	return (strings_to_array(strings, prg));
 }

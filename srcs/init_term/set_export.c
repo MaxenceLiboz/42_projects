@@ -6,14 +6,14 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 09:22:24 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/16 10:43:50 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:24:19 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 static int	export_value_shlvl(char *envp, t_lst_env *new_export,
-			t_lst_env *new_env, t_list **mem)
+			t_lst_env *new_env, t_prg *prg)
 {
 	int		i;
 	int		shlvl;
@@ -26,7 +26,7 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 	if (ft_strncmp(new_export->name_var.str, "SHLVL", 6) == 0)
 	{
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
-				mem);
+				prg);
 		shlvl += ft_atoi(new_export->var.str);
 		if (shlvl <= -1)
 			shlvl = 0;
@@ -43,8 +43,8 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 		path = ft_itoa(shlvl);
 		if (path == NULL)
 			return (1);
-		new_export->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
-		new_env->var = sub_string(path, 0, ft_strlen(path) + 1, mem);
+		new_export->var = sub_string(path, 0, ft_strlen(path) + 1, prg);
+		new_env->var = sub_string(path, 0, ft_strlen(path) + 1, prg);
 		free(path);
 		return (1);
 	}
@@ -55,7 +55,7 @@ static int	export_value_shlvl(char *envp, t_lst_env *new_export,
 	Set out minishell path in the PATH variable
 */
 static int	export_value_path(char *envp, t_lst_env *new_export,
-			t_lst_env *new_env, t_list **mem)
+			t_lst_env *new_env, t_prg *prg)
 {
 	int		i;
 	char	*path;
@@ -68,15 +68,15 @@ static int	export_value_path(char *envp, t_lst_env *new_export,
 	{
 		path = getcwd(0, 0);
 		if (path == NULL)
-			ft_error_exit(mem, 1, "getcwd: error initializing path value");
+			ft_error_exit(prg, 1, "getcwd: error initializing path value");
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
-				mem);
-		new_export->var = join_string(":", new_export->var.str, mem);
-		new_export->var = join_string(path, new_export->var.str, mem);
+				prg);
+		new_export->var = join_string(":", new_export->var.str, prg);
+		new_export->var = join_string(path, new_export->var.str, prg);
 		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
-				mem);
-		new_env->var = join_string(":", new_env->var.str, mem);
-		new_env->var = join_string(path, new_env->var.str, mem);
+				prg);
+		new_env->var = join_string(":", new_env->var.str, prg);
+		new_env->var = join_string(path, new_env->var.str, prg);
 		free(path);
 		return (1);
 	}
@@ -84,7 +84,7 @@ static int	export_value_path(char *envp, t_lst_env *new_export,
 }
 
 static int	head_env_init(char *envp, t_lst_env *new_export,
-			t_lst_env *new_env, t_list **mem)
+			t_lst_env *new_env, t_prg *prg)
 {
 	int		i;
 	char	*path;
@@ -93,15 +93,15 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 	path = NULL;
 	while (envp[i] != '=' && envp[i])
 		i++;
-	new_export->name_var = sub_string(envp, 0, i, mem);
-	new_env->name_var = sub_string(envp, 0, i, mem);
+	new_export->name_var = sub_string(envp, 0, i, prg);
+	new_env->name_var = sub_string(envp, 0, i, prg);
 	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7)
-		&& !export_value_shlvl(envp, new_export, new_env, mem)
-		&& !export_value_path(envp, new_export, new_env, mem))
+		&& !export_value_shlvl(envp, new_export, new_env, prg)
+		&& !export_value_path(envp, new_export, new_env, prg))
 	{
 		new_export->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1,
-				mem);
-		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1, mem);
+				prg);
+		new_env->var = sub_string(envp, i + 1, (ft_strlen(envp) - i) + 1, prg);
 	}
 	if (ft_strncmp(new_export->name_var.str, "OLDPWD", 7) == 0)
 	{
@@ -114,24 +114,25 @@ static int	head_env_init(char *envp, t_lst_env *new_export,
 /*
 	if SHLVL var is not set at start, we will create it and set it to 1;
 */
-
-static void	create_shlvl(t_head_env *head, t_list **mem)
+static void	create_shlvl(t_head_env *head, t_prg *prg)
 {
 	t_lst_env	*new_export;
 	t_lst_env	*new_env;
 
-	new_export = lst_env_new(NULL, NULL, mem);
-	new_env = lst_env_new(NULL, NULL, mem);
+	new_export = lst_env_new(NULL, NULL, prg);
+	new_env = lst_env_new(NULL, NULL, prg);
 	lst_env_add_back(&head->export, new_export);
 	lst_env_add_back(&head->env, new_env);
-	new_export->name_var = sub_string("SHLVL", 0, 6, mem);
-	new_env->name_var = sub_string("SHLVL", 0, 6, mem);
-	export_value_shlvl("SHLVL", new_export, new_env, mem);
+	new_export->name_var = sub_string("SHLVL", 0, 6, prg);
+	new_env->name_var = sub_string("SHLVL", 0, 6, prg);
+	export_value_shlvl("SHLVL", new_export, new_env, prg);
 	return ;
 }
 
-//Should we do use add_back or add_front
-int	set_export(char **envp, t_head_env *head, t_list **mem)
+/*
+	Set envp into our env lists
+*/
+int	set_export(char **envp, t_head_env *head, t_prg *prg)
 {
 	t_lst_env	*new_export;
 	t_lst_env	*new_env;
@@ -142,16 +143,15 @@ int	set_export(char **envp, t_head_env *head, t_list **mem)
 	head->export = NULL;
 	while (envp[i])
 	{
-		new_export = lst_env_new(NULL, NULL, mem);
-		new_env = lst_env_new(NULL, NULL, mem);
+		new_export = lst_env_new(NULL, NULL, prg);
+		new_env = lst_env_new(NULL, NULL, prg);
 		lst_env_add_back(&head->export, new_export);
 		lst_env_add_back(&head->env, new_env);
-		if (!head_env_init(envp[i], new_export, new_env, mem))
-			return (0);
+		head_env_init(envp[i], new_export, new_env, prg);
 		i++;
 	}
 	if (!lst_env_find_name_var(head->env, "SHLVL").str)
-		create_shlvl(head, mem);
+		create_shlvl(head, prg);
 	lst_env_sort(&head->export);
 	return (1);
 }

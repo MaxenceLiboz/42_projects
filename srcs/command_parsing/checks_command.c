@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 09:35:33 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:21:00 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@
 		- If special add space between
 		- Else next
 */
-static void	add_space_after_special_char(t_string *cmd, int i, t_list **mem)
+static void	add_space_after_special_char(t_string *cmd, int i, t_prg *prg)
 {
 	if (cmd->str[i] != '|' && cmd->str[i + 1] != ' '
 		&& cmd->str[i + 1] != '>' && cmd->str[i + 1] != '<')
-		add_string(cmd, " ", i + 1, mem);
+		add_string(cmd, " ", i + 1, prg);
 	if (cmd->str[i] != '|' && i != 0 && cmd->str[i - 1] != ' '
 		&& cmd->str[i - 1] != '>' && cmd->str[i - 1] != '<')
-		add_string(cmd, " ", i, mem);
+		add_string(cmd, " ", i, prg);
 	if (cmd->str[i] == '|' && cmd->str[i + 1] != ' ' && cmd->str[i + 1] != '|')
-		add_string(cmd, " ", i + 1, mem);
+		add_string(cmd, " ", i + 1, prg);
 	if (i != 0 && cmd->str[i] == '|' && cmd->str[i - 1] != ' '
 		&& cmd->str[i - 1] != '|')
-		add_string(cmd, " ", i, mem);
+		add_string(cmd, " ", i, prg);
 }
 
 /*
 	Add a space after << or >>
 */
-static void	add_space_after_db_chevrons(t_string *cmd, t_list **mem)
+static void	add_space_after_db_chevrons(t_string *cmd, t_prg *prg)
 {
 	int		i;
 
@@ -52,7 +52,7 @@ static void	add_space_after_db_chevrons(t_string *cmd, t_list **mem)
 			|| ft_strncmp(&cmd->str[i], ">>", 2) == 0)
 			if (cmd->str[i + 2] == '<' || cmd->str[i + 2] == '>'
 				|| cmd->str[i + 2] == '|')
-				add_string(cmd, " ", i + 2, mem);
+				add_string(cmd, " ", i + 2, prg);
 	}
 }
 
@@ -85,14 +85,14 @@ static t_bool	is_delimiter_heredoc(t_string *cmd, int i)
 /*
 	Find special char < > || and add space if needed
 */
-t_bool	syntax_special_char(t_string *cmd, t_list **mem)
+t_bool	syntax_special_char(t_string *cmd, t_prg *prg)
 {
 	int		i;
 	int		chevrons;
 
 	i = -1;
 	chevrons = 0;
-	add_space_after_db_chevrons(cmd, mem);
+	add_space_after_db_chevrons(cmd, prg);
 	while (cmd->str[++i])
 	{
 		if (cmd->str[i] == '\"')
@@ -102,7 +102,7 @@ t_bool	syntax_special_char(t_string *cmd, t_list **mem)
 			while (cmd->str[++i] && cmd->str[i] != '\'')
 				;
 		if ((cmd->str[i] == '>' || cmd->str[i] == '<' || cmd->str[i] == '|'))
-			add_space_after_special_char(cmd, i, mem);
+			add_space_after_special_char(cmd, i, prg);
 		if (is_delimiter_heredoc(cmd, i) == FALSE)
 			return (print_stderror(FAIL, 1, "syntax error"));
 	}	

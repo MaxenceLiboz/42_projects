@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:44:10 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/05 11:20:40 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:07 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_count_words(const char *str, char charset)
 	return (count);
 }
 
-static t_string	ft_copy(char *src, char c, int *i, t_list **mem)
+static t_string	ft_copy(char *src, char c, int *i, t_prg *prg)
 {
 	int			end;
 	t_string	dst;
@@ -45,12 +45,12 @@ static t_string	ft_copy(char *src, char c, int *i, t_list **mem)
 	while (src[end] != c && src[end])
 		end++;
 	size = end - *i;
-	dst = sub_string(src, *i, size, mem);
+	dst = sub_string(src, *i, size,prg);
 	*i = end;
 	return (dst);
 }
 
-t_string	*split_string(char *s, char c, t_list **mem)
+t_string	*split_string(char *s, char c, t_prg *prg)
 {
 	t_string	*dst;
 	int			words;
@@ -62,10 +62,10 @@ t_string	*split_string(char *s, char c, t_list **mem)
 	i = 0;
 	dsti = 0;
 	words = ft_count_words(s, c);
-	dst = ft_malloc(mem, sizeof(t_string) * (words + 1));
+	dst = ft_malloc(prg, sizeof(t_string) * (words + 1));
 	while (words--)
 	{
-		dst[dsti] = ft_copy(s, c, &i, mem);
+		dst[dsti] = ft_copy(s, c, &i, prg);
 		dsti++;
 	}
 	dst[dsti].str = 0;

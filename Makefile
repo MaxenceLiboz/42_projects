@@ -49,7 +49,7 @@ INCLUDES	=	./includes/minishell.h				\
 				./libft/includes/libft.h			\
 
 CC			= 	gcc
-CFLAGS		= 	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
 
 LIBINCLUDES	=	-Iincludes -Ilibft/includes
 

@@ -45,7 +45,7 @@ static void	ft_copy(t_prg *prg, char c, int *i, int dsti)
 	get_copy_size(prg->cmd.command.str, c, i, &end);
 	size = end - *i;
 	prg->cmd.array[dsti] = sub_string(prg->cmd.command.str,
-			*i, size, &prg->mem);
+			*i, size, prg);
 	*i = end;
 }
 
@@ -61,7 +61,7 @@ void	split_wog(t_prg *prg, char c)
 	i = 0;
 	dsti = 0;
 	words = count_split_wog(prg->cmd.command.str, c);
-	init_command(&prg->cmd, words, TRUE, &prg->mem);
+	init_command(&prg->cmd, words, TRUE, prg);
 	while (words--)
 	{
 		ft_copy(prg, c, &i, dsti);

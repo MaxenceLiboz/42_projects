@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:48:10 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 08:37:04 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_exec_path(t_prg *prg, char **envp, int *eacces)
 	i = -1;
 	while (prg->paths[++i])
 	{
-		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], &prg->mem);
+		cmd = join_string(prg->paths[i], prg->lst_cmd->cmd[0], prg);
 		stat(cmd.str, &file);
 		ft_execve(cmd.str, prg->lst_cmd->cmd, envp, eacces);
 	}
@@ -65,7 +65,7 @@ t_bool	is_builtin(t_prg *prg)
 {
 	char	**tmp;
 
-	tmp = create_final_command(prg->lst_cmd->cmd, &prg->mem);
+	tmp = create_final_command(prg->lst_cmd->cmd, prg);
 	if (ft_strncmp(tmp[0], "echo", 5) == 0)
 		return (TRUE);
 	else if (ft_strncmp(tmp[0], "cd", 3) == 0)
@@ -93,10 +93,7 @@ t_bool	is_builtin(t_prg *prg)
 void	set_signals(char *cmd)
 {
 	if (ft_strnstr(cmd, "minishell", ft_strlen(cmd)) == 0)
-	{
-		signal(SIGQUIT, (void (*)(int))handler_forked_sigquit);
 		signal(SIGINT, (void (*)(int))handler_forked);
-	}
 	else
 		signal(SIGINT, SIG_IGN);
 }
