@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:41:12 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 11:57:33 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:27:37 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_bool	check_pipes(t_command cmd)
 	i = 0;
 	pipes = 0;
 	if (!cmd.command.str || cmd.size == 0)
-		return (FAIL);
+		return (-1);
 	if (ft_strncmp(cmd.array[0].str, "|", 2) == 0)
 		return (print_stderror(-1, 1,
 				"syntax error near unexpected token `|'"));

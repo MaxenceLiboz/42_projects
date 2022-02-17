@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/16 16:20:54 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:22:27 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_string	get_full_arg(t_string *str, int start, t_list **mem)
 		return (dst = sub_string(str->str, start, end + 1 - start, mem));
 	while (ft_isalnum(str->str[end]))
 		end++;
-	return (dst = sub_string(str->str, start, end - start, mem));
+	dst = sub_string(str->str, start, end - start, mem);
+	return (dst);
 }
 
 /*
@@ -58,8 +59,11 @@ void	find_arg_and_replace(t_prg *prg, int start, t_string *str)
 	t_string	arg;
 	int			indexs[2];
 	t_string	exit_status;
+	char		*value;
 
-	init_string(&exit_status, ft_itoa(g_returnvalue), TRUE, &prg->mem);
+	value = ft_itoa(g_returnvalue);
+	init_string(&exit_status, value, TRUE, &prg->mem);
+	free(value);
 	full_arg = get_full_arg(str, start, &prg->mem);
 	arg = get_arg(full_arg, &prg->mem);
 	indexs[0] = start;

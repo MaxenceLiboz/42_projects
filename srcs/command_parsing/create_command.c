@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/16 16:15:30 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:25:09 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_lst_cmd	*create_command(t_prg *prg)
 	t_lst_cmd	*lst;
 	t_bool		status;
 	int			save;
+	char		*line;
 
 	save = 0;
 	lst = 0;
@@ -40,8 +41,10 @@ t_lst_cmd	*create_command(t_prg *prg)
 			break ;
 		if (status == -1)
 			return (NULL);
-		add_string(&prg->cmd.command, readline("pipe > "),
+		line = readline("pipe > ");
+		add_string(&prg->cmd.command, line,
 			prg->cmd.command.size, &prg->mem);
+		free(line);
 	}
 	prg->heredocs.index = 0;
 	lst = lst_cmd_init(&prg->cmd, &prg->mem);
