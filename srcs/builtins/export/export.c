@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 10:24:24 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/18 21:49:53 by maxencelibo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	try_path(t_prg *prg, t_lst_env *export, t_lst_env *env)
 			return (TRUE);
 		return (FALSE);
 	}
+	if (prg->paths == NULL)
+		return (FALSE);
 	while (prg->paths[++i])
 	{
 		cmd = join_string(prg->paths[i], export->var.str, prg);
