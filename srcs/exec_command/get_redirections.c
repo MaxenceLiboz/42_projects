@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redirections.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 08:38:49 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 11:40:06 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:31:33 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	get_redirections(t_prg *prg, t_lst_cmd *cmd)
 			if (ft_open(cmd->cmd[i + 1], "ROK", &prg->fd.fd_in, prg) != SUCCESS)
 				return (FAIL);
 		if (ft_strncmp(cmd->cmd[i], "<<", 3) == 0)
-			if (here_doc(prg, &prg->fd.fd_in, &prg->heredocs.index) != SUCCESS)
+			if (ft_open(prg->heredocs.table[prg->heredocs.index].str,
+					"ROK", &prg->fd.fd_in, prg) != SUCCESS)
 				return (FAIL);
 		if (ft_strncmp(cmd->cmd[i], ">", 2) == 0)
 			if (ft_open(cmd->cmd[i + 1], "CRT",

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_term.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:31:57 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 10:45:30 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:53:12 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ static void	set_term_env(t_prg *prg, struct termios *old)
 	char	*tmp;
 
 	inittermios(old, prg);
-	if (tgetent(NULL, getenv("TERM")) == ERR)
-		ft_error_exit(prg, 1, "getent: error");
+	tgetent(NULL, getenv("TERM"));
+	// if (tgetent(NULL, getenv("TERM")) == ERR)
+	// 	ft_error_exit(prg, 1, "getent: error");
 	tmp = tgetstr("cl", NULL);
-	if (tmp == NULL)
-		ft_error_exit(prg, 1, "tgetstr: error");
-	if (tputs(tmp, 10, putchar) == ERR)
-		ft_error_exit(prg, 1, "tputs: error");
+	// if (tmp == NULL)
+	// 	ft_error_exit(prg, 1, "tgetstr: error");
+	tputs(tmp, 10, putchar);
+	// if (tputs(tmp, 10, putchar) == ERR)
+	// 	ft_error_exit(prg, 1, "tputs: error");
 }
 
 /*

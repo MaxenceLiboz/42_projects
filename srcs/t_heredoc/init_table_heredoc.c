@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_table_heredoc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 10:57:54 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 12:29:38 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:34:49 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	init_table_heredoc(t_prg *prg, int *save)
 		*save = i;
 		expand = delimiter_syntax(&prg->cmd.command, save, prg);
 		add_heredoc(&prg->heredocs,
-			get_heredoc(prg, expand, *save), prg->heredocs.index, prg);
+			get_heredoc(prg, expand, *save, prg->heredocs.index),
+			prg->heredocs.index, prg);
 		i = check_heredoc(prg->cmd.command.str, *save, &prg->heredocs.index);
 		i += 2;
 	}

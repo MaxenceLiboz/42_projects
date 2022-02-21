@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 11:55:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:50:52 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_heredoc	realloc_heredoc(t_heredoc heredocs, t_prg *prg)
 */
 void	add_heredoc(t_heredoc *heredocs, t_string new, int index, t_prg *prg)
 {
+	if (!new.str)
+		return ;
 	if (heredocs->malloc_size == heredocs->size && heredocs->size <= index)
 		*heredocs = realloc_heredoc(*heredocs, prg);
 	heredocs->table[index] = new;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 11:27:39 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:34:21 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void		init_heredoc(t_heredoc *heredocs);
 t_heredoc	realloc_heredoc(t_heredoc heredocs, t_prg *prg);
 void		add_heredoc(t_heredoc *heredocs, t_string new, int index,
 				t_prg *prg);
-t_string	get_heredoc(t_prg *prg, int expand, int i);
+t_string	get_heredoc(t_prg *prg, int expand, int i, int h_index);
 
 /**************** custom ****************/
 int			print_title(void);
