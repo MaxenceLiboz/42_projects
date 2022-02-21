@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:26:33 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 14:45:29 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:11:42 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,49 +82,6 @@ static char	*get_delimiter(char *str, t_prg *prg)
 	return (delimiter.str);
 }
 
-// static t_string	launch_heredoc(t_prg *prg, int expand,
-// 	t_string prompt, char *delimiter)
-// {
-// 	char		*line;
-// 	t_string	temp;
-// 	t_string	final_str;
-
-// 	line = NULL;
-// 	init_string(&final_str, "", TRUE, prg);
-// 	while (1)
-// 	{
-// 		if (*get_static_delimiter() == FALSE)
-// 			break ;
-// 		line = readline(prompt.str);
-// 		if (!line)
-// 			break ;
-// 		init_string(&temp, line, TRUE, prg);
-// 		free(line);
-// 		if (ft_strncmp(delimiter, temp.str, ft_strlen(delimiter) + 1) == 0)
-// 			break ;
-// 		if (expand == TRUE)
-// 			change_arg_command_heredoc(prg, &temp);
-// 		add_string(&final_str, temp.str, final_str.size - 1, prg);
-// 		add_string(&final_str, "\n", final_str.size - 1, prg);
-// 	}
-// 	*get_static_delimiter() = TRUE;
-// 	return (final_str);
-// }
-
-// /*
-// 	Add string to here_doc table
-// */
-// t_string	get_heredoc(t_prg *prg, int expand, int i)
-// {
-// 	char		*delimiter;
-// 	t_string	prompt;
-
-// 	init_string(&prompt, "here_doc \"\" > ", TRUE, prg);
-// 	delimiter = get_delimiter(&prg->cmd.command.str[i], prg);
-// 	add_string(&prompt, delimiter, 10, prg);
-// 	return (launch_heredoc(prg, expand, prompt, delimiter));
-// }
-
 /*
 	Check if filename already exist in heredoc
 */
@@ -176,6 +133,7 @@ static t_string	launch_heredoc(t_prg *prg, int expand, int fd, int i)
 	char		*delimiter;
 	t_string	prompt;
 
+	signal(SIGINT, (void (*)(int))handler_heredoc);
 	init_string(&prompt, "here_doc \"\" > ", TRUE, prg);
 	delimiter = get_delimiter(&prg->cmd.command.str[i], prg);
 	add_string(&prompt, delimiter, 10, prg);
@@ -204,7 +162,9 @@ t_string	get_heredoc(t_prg *prg, int expand, int i, int h_index)
 {
 	t_string	file;
 	int			fd;
+	int			status;
 
+	signal(SIGINT, SIG_IGN);
 	file.str = NULL;
 	fd = get_file_heredoc(&file, prg, h_index);
 	prg->fd.pid = fork();
@@ -214,8 +174,13 @@ t_string	get_heredoc(t_prg *prg, int expand, int i, int h_index)
 		launch_heredoc(prg, expand, fd, i);
 	else
 	{	
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		if (status == 1)
+			file.str = NULL;
 		ft_close(fd, prg);
+		return (file);
 	}
 	return (file);
 }

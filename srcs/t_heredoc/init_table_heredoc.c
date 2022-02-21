@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 10:57:54 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 13:34:49 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:09:36 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@
 */
 int	check_heredoc(char *str, int i, int *index)
 {
-	int		pipe;
+	static int	heredoc = FALSE;
 
-	pipe = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -40,13 +39,16 @@ int	check_heredoc(char *str, int i, int *index)
 		if (str[i] == '\'')
 			while (str[i] && str[++i] != '\'')
 				;
-		if (str[i] == '|' && pipe == 0)
+		if (str[i] == '|' && heredoc == TRUE)
 		{
 			*index += 1;
-			pipe++;
+			heredoc = FALSE;
 		}
 		if (ft_strncmp(&str[i], "<<", 2) == 0)
+		{
+			heredoc = TRUE;
 			return (i);
+		}
 		i++;
 	}
 	return (-1);
@@ -80,20 +82,23 @@ static t_bool	delimiter_syntax(t_string *string, int *i, t_prg *prg)
 	1: Call check_heredoc();
 	2: Call	delimiter_syntax();
 */
-void	init_table_heredoc(t_prg *prg, int *save)
+t_bool	init_table_heredoc(t_prg *prg, int *save)
 {
 	int			i;
 	int			expand;
+	t_string	tmp;
 
 	i = check_heredoc(prg->cmd.command.str, *save, &prg->heredocs.index) + 2;
 	while (i != 1)
 	{
 		*save = i;
 		expand = delimiter_syntax(&prg->cmd.command, save, prg);
-		add_heredoc(&prg->heredocs,
-			get_heredoc(prg, expand, *save, prg->heredocs.index),
-			prg->heredocs.index, prg);
+		tmp = get_heredoc(prg, expand, *save, prg->heredocs.index);
+		if (tmp.str == NULL)
+			return (FAIL);
+		add_heredoc(&prg->heredocs, tmp, prg->heredocs.index, prg);
 		i = check_heredoc(prg->cmd.command.str, *save, &prg->heredocs.index);
 		i += 2;
 	}
+	return (SUCCESS);
 }

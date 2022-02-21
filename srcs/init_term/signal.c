@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:40:10 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 10:00:14 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 18:04:35 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ void	handler_forked(int signum)
 	{
 		write(1, "^\\Quit: 3\n", 10);
 		g_returnvalue = 131;
+	}
+}
+
+void	handler_heredoc(int signum)
+{
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		g_returnvalue = 1;
+		exit(1);
 	}
 }
 

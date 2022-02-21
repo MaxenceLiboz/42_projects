@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:47:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 13:28:49 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 18:07:48 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static t_bool	launch_parsing(t_prg *prg, t_bool status, char *line, int save)
 			|| syntax_special_char(&prg->cmd.command, prg) == FAIL
 			|| count_split_wog(prg->cmd.command.str, ' ') == 0)
 			return (FAIL);
-		init_table_heredoc(prg, &save);
+		if (init_table_heredoc(prg, &save) == FAIL)
+			return (FAIL);
 		change_arg_command(prg, &prg->cmd.command);
 		split_wog(prg, ' ');
 		status = check_pipes(prg->cmd);

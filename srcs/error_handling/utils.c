@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:39:26 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 11:54:46 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:15:14 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ int	ft_dup2(int fd1, int fd2, t_prg *prg)
 
 int	ft_open(char *file, char *options, int *fd, t_prg *prg)
 {
-	file = ft_strdup_and_trim(file, 0, prg);
 	if (!file)
 		return (FAIL);
+	file = ft_strdup_and_trim(file, 0, prg);
 	if (*fd > 0 && *fd != prg->fd.stdin_save && *fd != prg->fd.stdout_save)
 		if (ft_close(*fd, prg) != SUCCESS)
 			return (FAIL);

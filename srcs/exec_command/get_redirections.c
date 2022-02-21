@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 08:38:49 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 14:31:33 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:02:56 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	get_redirections(t_prg *prg, t_lst_cmd *cmd)
 	int		i;
 
 	i = 0;
-	while (cmd->cmd[i])
+	while (cmd->cmd[i] && cmd->cmd[i + 1])
 	{
 		if (ft_strncmp(cmd->cmd[i], "<", 2) == 0)
 			if (ft_open(cmd->cmd[i + 1], "ROK", &prg->fd.fd_in, prg) != SUCCESS)

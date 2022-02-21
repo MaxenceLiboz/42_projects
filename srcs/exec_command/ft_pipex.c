@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 11:19:25 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:39:49 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_pipex(t_prg *prg, char **envp)
 	set_signals(prg->lst_cmd->cmd[0]);
 	if (ft_one_builtin(prg) != -1)
 		return ;
-	while (++j <= prg->fd.pipe_nb + 1)
+	while (prg->lst_cmd && ++j <= prg->fd.pipe_nb + 1)
 	{
 		ft_get_fd(prg, &j, envp);
 		i = -1;

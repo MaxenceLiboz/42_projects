@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 13:34:21 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:08:03 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ int			count_split_wog(const char *str, char charset);
 t_bool		check_quotes(t_string cmd);
 t_bool		check_pipes(t_command cmd);
 t_bool		syntax_special_char(t_string *cmd, t_prg *prg);
-void		init_table_heredoc(t_prg *prg, int *save);
+t_bool		init_table_heredoc(t_prg *prg, int *save);
 int			check_heredoc(char *str, int i, int *index);
 void		find_arg_and_replace(t_prg *prg, int start, t_string *str);
 void		pass_quotes(char *src, int *i, char c);
@@ -244,6 +244,7 @@ t_bool		is_arg(char *arg, int *start);
 void		handler_forked(int signum);
 void		handler_main(int signum);
 void		handler_forked_sigquit(int signum);
+void		handler_heredoc(int signum);
 
 /************* PIPEX Utils **********/
 void		ft_execve(char *cmd, char **args, char **envp, int *eacces);
