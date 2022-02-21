@@ -6,19 +6,18 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:36:00 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 12:01:49 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 10:38:36 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	pass_quotes(char *src, int *i, int *quotes, char c)
+void	pass_quotes(char *src, int *i, char c)
 {
 	*i += 1;
 	while (src[*i] && src[*i] != c)
 		*i += 1;
 	*i += 1;
-	*quotes += 2;
 }
 
 /*
@@ -36,9 +35,15 @@ static int	get_size_to_dup(char *src)
 	while (src[i])
 	{
 		if (src[i] == '\"')
-			pass_quotes(src, &i, &quotes, '\"');
+		{
+			pass_quotes(src, &i, '\"');
+			quotes += 2;
+		}
 		else if (src[i] == '\'')
-			pass_quotes(src, &i, &quotes, '\'');
+		{
+			pass_quotes(src, &i, '\'');
+			quotes += 2;
+		}
 		else
 			i++;
 	}

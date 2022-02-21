@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 08:44:01 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 13:24:16 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 11:50:58 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_error_exit(t_prg *prg, int size, char *s1, ...)
 	va_list	arg;
 
 	va_start(arg, s1);
-	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	if (s1)
 	{
 		ft_putstr_fd(s1, 2);

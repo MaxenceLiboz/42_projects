@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:31:57 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 10:25:21 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 10:45:30 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void	inittermios(struct termios *old, t_prg *prg)
 	struct termios	new;
 
 	if (tcgetattr(0, old) == ERR)
-		ft_error_exit(prg, 2, "exit: tcgetattr: ", strerror(errno));
+		ft_error_exit(prg, 2, "tcgetattr: ", strerror(errno));
 	new = *old;
 	new.c_lflag &= (ECHO | ISIG | ICANON);
 	if (tcsetattr(0, TCSANOW, &new) == ERR)
-		ft_error_exit(prg, 2, "exit: tcsetattr: ", strerror(errno));
+		ft_error_exit(prg, 2, "tcsetattr: ", strerror(errno));
 }
 
 static void	init_pwd(t_string *pwd, t_prg *prg)
@@ -33,7 +33,7 @@ static void	init_pwd(t_string *pwd, t_prg *prg)
 
 	getpwd = getcwd(NULL, 0);
 	if (getpwd == NULL)
-		ft_error_exit(prg, 1, "exit: getcwd: error initializing pwd");
+		ft_error_exit(prg, 1, "getcwd: error initializing pwd");
 	init_string(pwd, getpwd, TRUE, prg);
 	free(getpwd);
 }
@@ -48,12 +48,12 @@ static void	set_term_env(t_prg *prg, struct termios *old)
 
 	inittermios(old, prg);
 	if (tgetent(NULL, getenv("TERM")) == ERR)
-		ft_error_exit(prg, 1, "exit: getent: error");
+		ft_error_exit(prg, 1, "getent: error");
 	tmp = tgetstr("cl", NULL);
 	if (tmp == NULL)
-		ft_error_exit(prg, 1, "exit: tgetstr: error");
+		ft_error_exit(prg, 1, "tgetstr: error");
 	if (tputs(tmp, 10, putchar) == ERR)
-		ft_error_exit(prg, 1, "exit: tputs: error");
+		ft_error_exit(prg, 1, "tputs: error");
 }
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 11:34:57 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 13:46:29 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 10:44:39 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_string	sub_string(char *src, size_t start, size_t size, t_prg *prg)
 
 	dst = ft_substr(src, start, size);
 	if (!dst)
-		ft_error_exit(prg, 1, "exit: substr: error malloc occured");
+		ft_error_exit(prg, 1, "substr: error malloc occured");
 	init_string(&string, dst, TRUE, prg);
 	free(dst);
 	return (string);

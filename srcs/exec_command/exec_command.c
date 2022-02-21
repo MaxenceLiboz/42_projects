@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 11:30:42 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 10:57:18 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	**get_path(t_lst_env *export, t_prg *prg)
 		return (0);
 	paths = split_string(envp_path.str, ':', prg);
 	if (!paths)
-		ft_error_exit(prg, 1, "exit: envp_path.str: error not found");
+		ft_error_exit(prg, 1, "envp_path.str: error not found");
 	while (paths[i].str)
 	{
 		add_string(&paths[i], "/", paths[i].size - 1, prg);
@@ -46,13 +46,14 @@ static void	init_prg(t_prg *prg)
 	errno = 0;
 	prg->fd.stdin_save = dup(STDIN_FILENO);
 	if (prg->fd.stdin_save == -1)
-		ft_error_exit(prg, 1, "exit: STDIN_FILENO save failed");
+		ft_error_exit(prg, 1, "STDIN_FILENO save failed");
 	prg->fd.stdout_save = dup(STDOUT_FILENO);
 	if (prg->fd.stdout_save == -1)
-		ft_error_exit(prg, 1, "exit: STDOUT_FILENO save failed");
+		ft_error_exit(prg, 1, "STDOUT_FILENO save failed");
 	prg->fd.fd_in = 0;
 	prg->fd.fd_out = 0;
 	prg->paths = get_path(prg->env.export, prg);
+	prg->fd.pid = 1;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 11:43:51 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:19:25 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static int	ft_one_builtin(t_prg *prg)
 {
 	if (prg->fd.pipe_nb == 1 && is_builtin(prg))
 	{
-		get_redirections(prg, prg->lst_cmd);
+		if (get_redirections(prg, prg->lst_cmd) != SUCCESS)
+			return (2);
 		if (!prg->lst_cmd->cmd || !*prg->lst_cmd->cmd)
 			return (g_returnvalue);
 		prg->lst_cmd->cmd = trim_quotes_unneeded(prg->lst_cmd->cmd, prg);

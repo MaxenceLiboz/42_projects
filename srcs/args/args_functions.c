@@ -6,7 +6,7 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 13:18:56 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/21 09:49:39 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 10:38:11 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,32 +98,26 @@ t_bool	is_arg(char *arg, int *index)
 */
 void	change_arg_command(t_prg *prg, t_string *str)
 {
-	int			index;
+	int			i;
 	int			dquotes;
 
-	index = 0;
+	i = 0;
 	dquotes = -1;
-	while (str->str[index])
+	while (str->str[i])
 	{
-		if (str->str[index] == '\"')
+		if (str->str[i] == '\"')
 			dquotes *= -1;
-		if (str->str[index] == '\'' && dquotes < 1)
+		if (str->str[i] == '\'' && dquotes < 1)
+			pass_quotes(str->str, &i, '\'');
+		if (str->str[i] && str->str[i] != '\0')
 		{
-			index++;
-			while (str->str[index] && str->str[index] != '\'')
-				index++;
-			if (str->str[index])
-				index++;
-		}
-		if (str->str[index])
-		{
-			if (is_arg(str->str, &index) == TRUE)
-				find_arg_and_replace(prg, index, str);
-			if (dquotes < 1 && str->str[index] == '$' && str->str[index + 1]
-				&& (str->str[index + 1] == '\'' || str->str[index + 1] == '\"'))
-				erase_string(str, "$", index, prg);
+			if (is_arg(str->str, &i) == TRUE)
+				find_arg_and_replace(prg, i, str);
+			if (dquotes < 1 && str->str[i] == '$' && str->str[i + 1]
+				&& (str->str[i + 1] == '\'' || str->str[i + 1] == '\"'))
+				erase_string(str, "$", i, prg);
 			else
-				index++;
+				i++;
 		}
 	}
 }
