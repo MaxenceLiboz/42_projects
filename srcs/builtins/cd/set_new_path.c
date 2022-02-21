@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_new_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:20:48 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/17 10:23:55 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 09:30:27 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	trim_last_dir(t_string *path, t_prg *prg)
 		i--;
 	while (path->str[i] && path->str[i] != '/')
 		i--;
-	*path = sub_string(path->str, 0, i, prg);
+	*path = sub_string(path->str, 0, i + 1, prg);
 }
 
 /*
