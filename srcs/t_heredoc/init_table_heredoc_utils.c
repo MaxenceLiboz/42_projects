@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:26:33 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 14:32:43 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 14:45:29 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,10 @@ t_string	get_heredoc(t_prg *prg, int expand, int i, int h_index)
 		return (file);
 	if (prg->fd.pid == 0)
 		launch_heredoc(prg, expand, fd, i);
-	waitpid(-1, NULL, 0);
-	ft_close(fd, prg);
+	else
+	{	
+		waitpid(-1, NULL, 0);
+		ft_close(fd, prg);
+	}
 	return (file);
 }

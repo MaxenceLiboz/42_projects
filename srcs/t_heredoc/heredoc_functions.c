@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 11:55:50 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 13:50:52 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 14:52:05 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,13 @@ t_heredoc	realloc_heredoc(t_heredoc heredocs, t_prg *prg)
 	{
 		dst.table = ft_malloc(prg, sizeof(t_string) * 2);
 		dst.malloc_size = 2;
+		dst.size = 0;
+		return (dst);
 	}
-	else
-	{
-		dst.table = ft_malloc(prg, sizeof(t_string)
-				* heredocs.malloc_size * 2);
-		dst.malloc_size *= 2;
-	}
+	dst.table = ft_malloc(prg, sizeof(t_string) * heredocs.malloc_size * 2);
+	dst.malloc_size *= 2;
 	dst.size = heredocs.size;
 	dst.index = heredocs.index;
-	dst.malloc_size = heredocs.malloc_size * 2;
 	while (heredocs.size--)
 		dst.table[heredocs.size] = heredocs.table[heredocs.size];
 	return (dst);
