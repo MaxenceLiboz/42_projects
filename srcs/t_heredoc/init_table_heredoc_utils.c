@@ -6,11 +6,27 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:26:33 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 12:31:09 by tarchimb         ###   ########.fr       */
+/*   Updated: 2022/02/21 09:31:08 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/*
+	Find envp varaible or $? and replace it by its value
+*/
+void	change_arg_command_heredoc(t_prg *prg, t_string *str)
+{
+	int			index;
+
+	index = 0;
+	while (str->str[index])
+	{
+		if (is_arg(str->str, &index) == TRUE)
+			find_arg_and_replace(prg, index, str);
+		index++;
+	}
+}
 
 /*
 	Get delimiter size
@@ -85,7 +101,7 @@ static t_string	launch_heredoc(t_prg *prg, int expand,
 		if (ft_strncmp(delimiter, temp.str, ft_strlen(delimiter) + 1) == 0)
 			break ;
 		if (expand == TRUE)
-			change_arg_command(prg, &temp);
+			change_arg_command_heredoc(prg, &temp);
 		add_string(&final_str, temp.str, final_str.size - 1, prg);
 		add_string(&final_str, "\n", final_str.size - 1, prg);
 	}

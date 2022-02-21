@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/17 13:50:30 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/21 09:23:57 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ t_bool		check_pipes(t_command cmd);
 t_bool		syntax_special_char(t_string *cmd, t_prg *prg);
 void		init_table_heredoc(t_prg *prg, int *save);
 int			check_heredoc(char *str, int i, int *index);
+void		find_arg_and_replace(t_prg *prg, int start, t_string *str);
 
 /**************** Exec_command *************/
 int			exec_command(t_prg *prg);
