@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_table_heredoc_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:26:33 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/22 08:45:35 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 10:20:34 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	get_file_heredoc(t_string *file, t_prg *prg, int h_index)
 		if (is_existing_heredoc(*file, prg, h_index) == FALSE)
 			fd = open(file->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		index++;
+		free(index_char);
 	}
 	return (fd);
 }
