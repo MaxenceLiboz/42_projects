@@ -6,7 +6,11 @@
 /*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:26:33 by tarchimb          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/22 10:20:34 by tarchimb         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/22 10:55:30 by mliboz           ###   ########.fr       */
+>>>>>>> a620ff6ea7f3d70e105c8f06b640f1927027e755
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,51 +84,6 @@ static char	*get_delimiter(char *str, t_prg *prg)
 	}
 	delimiter.str[i] = '\0';
 	return (delimiter.str);
-}
-
-/*
-	Check if filename already exist in heredoc
-*/
-t_bool	is_existing_heredoc(t_string file, t_prg *prg, int h_index)
-{
-	int		i;
-
-	i = 0;
-	while (i < prg->heredocs.size && prg->heredocs.table
-		&& prg->heredocs.table[i].str)
-	{
-		if (i != h_index && ft_strncmp(file.str, prg->heredocs.table[i].str,
-				file.size - 1) == 0)
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}
-
-/*
-	Get the file name
-*/
-int	get_file_heredoc(t_string *file, t_prg *prg, int h_index)
-{
-	int			index;
-	char		*index_char;
-	int			fd;
-
-	index = 0;
-	fd = -1;
-	while (fd < 0)
-	{
-		init_string(file, "/private/tmp/.heredoc", TRUE, prg);
-		index_char = ft_itoa(index);
-		if (index_char == NULL)
-			ft_error_exit(prg, 1, "itoa: malloc error");
-		add_string(file, index_char, file->size - 1, prg);
-		if (is_existing_heredoc(*file, prg, h_index) == FALSE)
-			fd = open(file->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		index++;
-		free(index_char);
-	}
-	return (fd);
 }
 
 static t_string	launch_heredoc(t_prg *prg, int expand, int fd, int i)

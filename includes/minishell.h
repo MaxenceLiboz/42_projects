@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/22 09:01:00 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 10:56:12 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ char		**trim_quotes_unneeded(char **cmd, t_prg *prg);
 t_bool		is_builtin(t_prg *prg);
 void		ft_exec_process(t_prg *prg, char **envp);
 void		rm_heredocs_files(t_prg *prg, char **envp);
+int			get_file_heredoc(t_string *file, t_prg *prg, int h_index);
 
 /**************** Utils *************/
 int			ft_double_dup(int fd1, int fd2, t_prg *prg);
