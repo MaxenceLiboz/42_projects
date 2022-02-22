@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 15:25:36 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/17 13:44:38 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 11:11:51 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,15 @@ void	replace_string(t_string *string, int *indexs, char *replace_with,
 	init_string(&save, &string->str[indexs[1] + indexs[0]], TRUE, prg);
 	dup_string(string, replace_with, indexs[0], prg);
 	dup_string(string, save.str, indexs[0] + ft_strlen(replace_with), prg);
+}
+
+void	trim_string(t_string *string, t_prg *prg, char *to_trim)
+{
+	char	*dst;
+
+	dst = ft_strtrim(string->str, to_trim);
+	if (!dst)
+		ft_error_exit(prg, 1, "Malloc error");
+	init_string(string, dst, TRUE, prg);
+	free(dst);
 }

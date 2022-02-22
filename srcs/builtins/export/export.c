@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxenceliboz <maxenceliboz@student.42.f    +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:40:44 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/18 21:49:53 by maxencelibo      ###   ########.fr       */
+/*   Updated: 2022/02/22 11:17:22 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,21 @@ static int	get_builtin_path(t_lst_env *export, t_lst_env *env, t_prg *prg)
 /*
 	Try all the PATH with out command to see witch one will execute
 */
-int	try_path(t_prg *prg, t_lst_env *export, t_lst_env *env)
+void	try_path(t_prg *prg, t_lst_env *export, t_lst_env *env)
 {
 	int			i;
 	t_string	cmd;
 
 	i = -1;
+	trim_string(&export->var, prg, " ");
+	trim_string(&env->var, prg, " ");
 	if (is_builtin(prg) == TRUE)
 	{
-		if (get_builtin_path(export, env, prg) == TRUE)
-			return (TRUE);
-		return (FALSE);
+		get_builtin_path(export, env, prg);
+		return ;
 	}
 	if (prg->paths == NULL)
-		return (FALSE);
+		return ;
 	while (prg->paths[++i])
 	{
 		cmd = join_string(prg->paths[i], export->var.str, prg);
@@ -58,10 +59,9 @@ int	try_path(t_prg *prg, t_lst_env *export, t_lst_env *env)
 		{
 			export->var.str = cmd.str;
 			env->var.str = cmd.str;
-			return (TRUE);
+			return ;
 		}
 	}
-	return (FALSE);
 }
 
 /*
@@ -83,6 +83,8 @@ void	init_env__(t_prg *prg)
 		export = export->next;
 	while (prg->cmd.command.str[i])
 		i++;
+	while (--i && prg->cmd.command.str[i] == ' ')
+		;
 	while (--i && prg->cmd.command.str[i] != ' ')
 		;
 	if (prg->cmd.command.str[i] == ' ')
@@ -91,8 +93,7 @@ void	init_env__(t_prg *prg)
 			ft_strlen(prg->cmd.command.str), prg);
 	env->var = sub_string(prg->cmd.command.str, i,
 			ft_strlen(prg->cmd.command.str) - i + 1, prg);
-	if (try_path(prg, export, env) == TRUE)
-		return ;
+	try_path(prg, export, env);
 }
 
 /*

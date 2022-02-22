@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tarchimb <tarchimb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:45:00 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/22 10:56:12 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 11:16:28 by tarchimb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void		add_string(t_string *string, char *to_add, size_t index,
 t_string	*split_string(char *s, char c, t_prg *prg);
 char		**strings_to_array(t_string *strings, t_prg *prg);
 t_string	join_string(char *s1, char *s2, t_prg *prg);
+void		trim_string(t_string *string, t_prg *prg, char *to_trim);
 
 /**************** ENV *****************/
 t_lst_env	*lst_env_new(char *name_var, char *var, t_prg *prg);
@@ -264,6 +265,6 @@ void		add_elem_to_lst(char *arg, t_head_env *head, t_prg *prg);
 void		replace_elem_of_lst(t_head_env *head, char *var, char *var_name,
 				t_prg *prg);
 void		init_env__(t_prg *prg);
-int			try_path(t_prg *prg, t_lst_env *export, t_lst_env *env);
+void		try_path(t_prg *prg, t_lst_env *export, t_lst_env *env);
 
 #endif
