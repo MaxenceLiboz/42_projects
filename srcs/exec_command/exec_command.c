@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 08:20:07 by maxencelibo       #+#    #+#             */
-/*   Updated: 2022/02/21 16:40:15 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 09:01:15 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ int	exec_command(t_prg *prg)
 	ft_double_dup(prg->fd.stdin_save, prg->fd.stdout_save, prg);
 	ft_close(prg->fd.stdin_save, prg);
 	ft_close(prg->fd.stdout_save, prg);
+	rm_heredocs_files(prg, envp);
 	return (g_returnvalue);
 }

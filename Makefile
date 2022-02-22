@@ -36,6 +36,7 @@ SRCS		=	command_parsing/create_prompt.c			\
 				exec_command/ft_pipex.c					\
 				exec_command/ft_pipex_utils.c			\
 				exec_command/trim_quotes_uneeded.c		\
+				exec_command/rm_heredoc_files.c			\
 				error_handling/utils.c					\
 				args/args_functions.c					\
 				t_heredoc/heredoc_functions.c			\

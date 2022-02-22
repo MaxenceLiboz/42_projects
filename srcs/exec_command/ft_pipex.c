@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:33:51 by mliboz            #+#    #+#             */
-/*   Updated: 2022/02/21 16:39:49 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 08:57:07 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	Execute the command send with execve, check for different error case and
 	exit status
 */
-static void	ft_exec_process(t_prg *prg, char **envp)
+void	ft_exec_process(t_prg *prg, char **envp)
 {
 	struct stat	file;
 	int			eacces;

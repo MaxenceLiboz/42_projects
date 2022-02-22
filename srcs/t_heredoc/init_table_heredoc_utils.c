@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:26:33 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 18:11:42 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 08:45:35 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	get_file_heredoc(t_string *file, t_prg *prg, int h_index)
 	fd = -1;
 	while (fd < 0)
 	{
-		init_string(file, "/tmp/.heredoc", TRUE, prg);
+		init_string(file, "/private/tmp/.heredoc", TRUE, prg);
 		index_char = ft_itoa(index);
 		if (index_char == NULL)
 			ft_error_exit(prg, 1, "itoa: malloc error");
