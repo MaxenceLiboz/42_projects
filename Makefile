@@ -42,6 +42,7 @@ SRCS		=	command_parsing/create_prompt.c			\
 				t_heredoc/heredoc_functions.c			\
 				t_heredoc/init_table_heredoc.c			\
 				t_heredoc/init_table_heredoc_utils.c	\
+				t_heredoc/init_table_heredoc_utils2.c	\
 			
 OBJS		=	$(addprefix ${OBJS_DIR}/, ${SRCS:.c=.o})
 

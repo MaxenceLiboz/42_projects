@@ -6,7 +6,7 @@
 /*   By: mliboz <mliboz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:31:57 by tarchimb          #+#    #+#             */
-/*   Updated: 2022/02/21 13:53:12 by mliboz           ###   ########.fr       */
+/*   Updated: 2022/02/22 11:01:06 by mliboz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,21 @@ static void	init_pwd(t_string *pwd, t_prg *prg)
 /*
 	Use inittermios();
 	Set the environment for our minishell
+	tputs(tmp, 10, putchar);
+	tgetent(NULL, getenv("TERM"));
 */
 static void	set_term_env(t_prg *prg, struct termios *old)
 {
 	char	*tmp;
 
 	inittermios(old, prg);
-	tgetent(NULL, getenv("TERM"));
-	// if (tgetent(NULL, getenv("TERM")) == ERR)
-	// 	ft_error_exit(prg, 1, "getent: error");
+	if (tgetent(NULL, getenv("TERM")) == ERR)
+		ft_error_exit(prg, 1, "getent: error");
 	tmp = tgetstr("cl", NULL);
-	// if (tmp == NULL)
-	// 	ft_error_exit(prg, 1, "tgetstr: error");
-	tputs(tmp, 10, putchar);
-	// if (tputs(tmp, 10, putchar) == ERR)
-	// 	ft_error_exit(prg, 1, "tputs: error");
+	if (tmp == NULL)
+		ft_error_exit(prg, 1, "tgetstr: error");
+	if (tputs(tmp, 10, putchar) == ERR)
+		ft_error_exit(prg, 1, "tputs: error");
 }
 
 /*
