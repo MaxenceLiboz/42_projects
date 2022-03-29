@@ -41,7 +41,6 @@ so we had to create one.
 
 ## Technologies Used
 - C
-- Makefile
 
 ## Static variable
 
