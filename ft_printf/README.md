@@ -1,18 +1,5 @@
-# ft_printf project at 42 school
-
-### Create a function that copy the functionnality of the real printf.
-
-ft_printf will be able to manage %c, %s, %d, %i, %u, %x, %X, %% convertions.
-
-### What I learned:
-
-* stdarg -> va_list, va_start, va_arg, va_end.
-* Array of pointer to function.
-* Manage undefined behavior from the real function.
-
-
 # ft_printf
-> Recreate a part of the printf function.
+> Re-create a part of the printf function.
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -26,20 +13,18 @@ ft_printf will be able to manage %c, %s, %d, %i, %u, %x, %X, %% convertions.
 * [Contact](#contact)
 
 ## General Information
-- The goal of this project is to re-create a part of the printf function
-- In order to do that, we had to use the stdarg library, in order to implement  
-the va_list.
+- In order to re-create printf, we had to use the stdarg library to implement the va_list.
 - The purpose of this project is to really understand a new concept that is  
 passing an undefined number of argument in a function.
 
 ## Stdarg library
 * What is va_list  
-In C programing, va_list is a list of argument that will be used by the function:  
+In C programing, va_list is a list of arguments that will be used by the function:  
 va_start, va_args, va_copy, va_end.
 * How did I used it ?  
-The main function would thake as argument `int ft_printf(char *str, ...)`.  
-The goal was to check different value inside the `char *str` (%c, %s, %d, %i, %u, %x, %X, %%),  
-and convert it with the arguments, that we can get with the function `va_args(va_list, type);`.  
+The main function would take as argument `int ft_printf(char *str, ...)`.  
+The goal is to check different value inside the `char *str` (%c, %s, %d, %i, %u, %x, %X, %%),  
+and convert it with the argument that we can get with the function `va_args(va_list, type);`.  
 When the function is call the va_list goes to the next argument, I can then loop  
 throughout the va_list to convert all the (%) into actual string to print.
 
@@ -91,7 +76,7 @@ In our project we had to convert mutliple arguments, see the list below:
 - %u: print an unsigned integer
 - %x: print the convertion of integer in hexadecimal lowercase
 - %X: print the convertion of integer in hexadecimal upercase
-- %%: print a "%"
+- %%: print a percent
 
 Some code example with results:  
 `ft_printf("%c, %s, %d, %x, %%", 'a', "Hello", 10, 20)`
@@ -103,8 +88,8 @@ The project is complete and turned in.
 
 ## Room for Improvement
 Room for improvement:
-- Better file management
-- Use of libft (wich was not allowed for the project)
+- Better files management.
+- Use of libft (wich was not allowed for the project).
 
 ## Contact
 Created by [@mliboz](https://github.com/MaxenceLiboz)
