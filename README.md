@@ -8,4 +8,5 @@
 #### minitalk:  [[Link to project page]](minitalk/)  <br/> <hr/>
 
 ## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+Created by [@mliboz](https://github.com/MaxenceLiboz)
+
