@@ -6,6 +6,7 @@
 #### get_next_line:  [[Link to project page]](get_next_line/)  <br/> <hr/>
 #### ft_printf:  [[Link to project page]](ft_printf/)  <br/> <hr/>
 #### minitalk:  [[Link to project page]](minitalk/)  <br/> <hr/>
+#### push_swap:  [[Link to project page]](push_swap/)  <br/> <hr/>
 
 ## Contact
 Created by [@mliboz](https://github.com/MaxenceLiboz)
