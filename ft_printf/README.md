@@ -44,7 +44,7 @@ Learn more about the stdarg Library and the functions:
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 ## Setup
-There are no dependency for this project.
+There are no dependencies for this project.
 
 First of all clone the repo inside your current working repository:
 ```
