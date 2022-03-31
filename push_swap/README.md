@@ -18,10 +18,10 @@ We then need to parse the argument in a stack, I chose to use a list to represen
 - The subject allowed us to use only two stack in order to sort the list number.
 - As you can see [here](#screenshots), we must use several function to sort the list.
 - The subject also asked use a maximum number of iteration depending on the size of the list:  
-Maximum iteration for 3 numbers is 3  
-Maximum iteration for 5 is 12  
-Maximum iteration for 100 is -900 to get 80% grade  
-Maximum iteration for 500 is -7000 to get 80% grade
+Maximum iteration for 3 numbers is 3: [Check it here](./srcs/small_sort.c)  
+Maximum iteration for 5 is 12: [Check it here](./srcs/mid_sort.c)  
+Maximum iteration for 100 is -900 to get 80% grade: [Check it here](./srcs/big_sort.c)   
+Maximum iteration for 500 is -7000 to get 80% grade: [Check it here](./srcs/radix.c)  
 - In order to do that, I use my own algorithm for 3/5/100 size list, and the radix  
 algorithm for the 500 size list
 
