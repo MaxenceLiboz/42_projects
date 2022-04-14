@@ -3,21 +3,21 @@
 
 ## Table of Contents
 * [General Info](#general-information)
-* [Screenshots](#screenshots)
+* [Levels](#levels)
 * [Project Status](#project-status)
 * [Contact](#contact)
 
 ## General Information
 - For this project we have different type of infrastructure  
 and we had to connect two interface between them or/and on the net etc.
-- Check the link here to see all the [levels](#screenshots)
+- Check the link here to see all the [levels](#levels)
 
-## Screenshots
+## Levels
 - In the first level, we had to make comunication between two client in the same network.
 
 ![Level one](./img/level1.png) <br/> <br/> <br/>
 
-- In the second level, we had to do the same than level 1, but we had an introduction to the [mask](#mask).
+- In the second level, we had to do the same than level 1, but we had an introduction to the mask.
 
 ![Level two](./img/level2.png) <br/> <br/> <br/>
 
