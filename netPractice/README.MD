@@ -12,16 +12,49 @@
 and we had to connect two interface between them or/and on the net etc.
 - Check the link here to see all the [levels](#levels)
 
+## Networking
+
+
 ## Levels
-- In the first level, we had to make comunication between two client in the same network.
+In the first level, we had to make comunication between two client in the same network.
 
-![Level one](./img/level1.png) <br/> <br/> <br/>
+![Level one](./img/level1.png)
 
-- In the second level, we had to do the same than level 1, but we had an introduction to the mask.
+<details>
+<summary>Check how to resolve level 1</summary>
 
-![Level two](./img/level2.png) <br/> <br/> <br/>
+- Goal 1:  
+We have to change the Interface A1 IP address to be between `104.96.23.0` and `104.96.23.255`. Learn how to get the range => [here](#networking)
 
-- In the level 3, we now have 3 client to connect. All of them are connected to a switch.
+- Goal 2:  
+We have to change the Interface D1 IP address to be between `211.191.0.0` and `211.191.255.255`. Learn how to get the range => [here](#networking)
+
+
+![Level two](./img/level2_done.png) <br/> <br/> <br/>
+</details>
+
+<br/>
+
+In the second level, we had to do the same than level 1, but we had an introduction to different type of masks.
+
+![Level two](./img/level2.png)  
+<details>
+<summary>Check how to resolve level 2</summary>
+
+- Goal 1:  
+We have to change the Interface A1 IP address to be between `192/168.93.193` and `104.96.23.222`. Learn how to get the range => [here](#networking)  
+We also have to give the same mask for both inteface. Therfore, we have in Interface B1 the mask `255.255.255.224` or `/27`. Click [here](#mask) to learn how to convert between one and the other
+
+- Goal 2:  
+We have to change the Interface D1 IP address to be between `211.191.0.0` and `211.191.255.255`. Learn how to get the range => [here](#networking)
+
+
+![Level one](./img/level2_done.png) <br/> <br/> <br/>
+</details>
+
+<br/>
+
+In the level 3, we now have 3 client to connect. All of them are connected to a switch.
 
 ![Level three](./img/level3.png) <br/> <br/> <br/>
 
