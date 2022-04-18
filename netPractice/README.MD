@@ -65,10 +65,10 @@ In the first level, we had to make comunication between two client in the same n
 <summary>How to resolve level 1 ?</summary>
 
 - Goal 1:  
-We have to change the Interface A1 IP address to be between `104.96.23.0` and `104.96.23.255`. [Learn how](#network-range-and-mask) to get the range.
+We have to change the Interface A1 IP address to be between `104.96.23.1` and `104.96.23.254`. [Learn how](#network-range-and-mask) to get the range.
 
 - Goal 2:  
-We have to change the Interface D1 IP address to be between `211.191.0.0` and `211.191.255.255`. [Learn how](#network-range-and-mask) to get the range.
+We have to change the Interface D1 IP address to be between `211.191.0.1` and `211.191.255.254`. [Learn how](#network-range-and-mask) to get the range.
 
 ![Level one](./img/level1_done.png) <br/> <br/> <br/>
 </details>
@@ -86,7 +86,7 @@ We have to change the Interface A1 IP address to be between `192.168.93.193` and
 We also have to give the same mask for both inteface. Therfore, we have in Interface B1 the mask `255.255.255.224` or `/27`. Click [here](#mask) to learn how to convert between one and the other
 
 - Goal 2:  
-We have to change the Interface D1 IP address to be between `211.191.0.1` and `211.191.255.254`. [Learn how](#network-range-and-mask) to get the range.
+We have to change the Interface D1 IP address to be between `192.168.94.193` and `192.168.94.194`. [Learn how](#network-range-and-mask) to get the range.
 
 ![Level two](./img/level2_done.png) <br/> <br/> <br/>
 </details>
@@ -116,26 +116,42 @@ In this level 4, we had a brief introduction to interface, that will allow us to
 
 ![Level four](./img/level4.png)
 <details>
-<summary>How to resolve level 4 ?</summary>
-- The easiest for the mask is to be `/24` or `255.255.255.0` 
-- First of all we see that the mask of the network is `/25` or `255.255.255.128`. Moreover, we also know that the address `104.198.216.125` is in the network.
-- Goal 1:  
-We have to change both mask of Interface B1 and A1 to `/25`. [Learn more](#mask) about mask.
-We alse have to change the Interface B1 IP address to be between `104.198.216.1` and `104.198.216.126`. [Learn how](#network-range-and-mask) to get the range.
+<summary>How to resolve level 4 ?</summary>  
 
-- Goal 2 and 3:  
-We have to change the Interface C1 IP address to be between `104.198.216.1` and `104.198.216.126`. [Learn how](#network-range-and-mask) to get the range.
+The easiest for the mask is to be `/24` or `255.255.255.0`
+
+We have to change both mask of Interface B1 and A1 to `/24`.[Learn more](#network-range-and-mask) about mask.
+
+We alse have to change the Interface B1 IP address to be between `112.88.117.1` and `112.88.117.254`. [Learn how](#network-range-and-mask) to get the range.
+
+All the goals should be resolved.
 
 ![Level four](./img/level4_done.png) <br/> <br/> <br/>
 </details>
 
 <br/>
 
-In the level 5, we use this interface to make comunication between two client that are not on the same network. We have to create routes from clients to the interface.
+In the level 5, we use this interface to make comunication between two client that are not on the same network. We have to create routes from clients to the router.
 
-![Level five](./img/level5.png) <br/> <br/> <br/>
+![Level five](./img/level5.png)
 
-- In the level 6, we have an introduction to comunication between a client and an interface somewhere on the net. We take the notion learned before between client to router. In order to make the way back from internet to the client, the internet interface need to create a route toward the client router.
+<details>
+<summary>How to resolve level 5 ?</summary>  
+
+The easiest for the mask is to be `/24` or `255.255.255.0`
+
+We have to change both mask of Interface B1 and A1 to `/24`.[Learn more](#network-range-and-mask) about mask.
+
+We alse have to change the Interface B1 IP address to be between `112.88.117.1` and `112.88.117.254`. [Learn how](#network-range-and-mask) to get the range.
+
+All the goals should be resolved.
+
+![Level five](./img/level5_done.png) <br/> <br/> <br/>
+</details>
+
+<br/>
+
+In the level 6, we have an introduction to comunication between a client and an interface somewhere on the net. We take the notion learned before between client to router. In order to make the way back from internet to the client, the internet interface need to create a route toward the client router.
 
 ![Level six](./img/level6.png) <br/> <br/> <br/>
 
