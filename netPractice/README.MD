@@ -3,6 +3,7 @@
 
 ## Table of Contents
 * [General Info](#general-information)
+* [Network range and Mask](#network-range-and-mask)
 * [Levels](#levels)
 * [Project Status](#project-status)
 * [Contact](#contact)
