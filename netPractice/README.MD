@@ -138,11 +138,14 @@ In the level 5, we use this interface to make comunication between two client th
 <details>
 <summary>How to resolve level 5 ?</summary>  
 
-The easiest for the mask is to be `/24` or `255.255.255.0`
 
-We have to change both mask of Interface B1 and A1 to `/24`.[Learn more](#network-range-and-mask) about mask.
+- Goal 1:  
+We can see that the Mask needs to be `/25` or `255.255.255.129`. Therefore, the Ip address needs to be from `62.203.37.1` to `62.203.37.128`.  
+Finally we need to create a route from default to the Ip of the Router inteface 1: `62.203.37.126`.
 
-We alse have to change the Interface B1 IP address to be between `112.88.117.1` and `112.88.117.254`. [Learn how](#network-range-and-mask) to get the range.
+- Goal 2 and 3:
+We can see that the Mask needs to be `/18` or `255.255.192.0`. Therefore, the Ip address needs to be from `155.208.129.1` to `155.208.191.254`.  
+Finally we need to create a route from default to the Ip of the Router inteface 2: `155.208.149.254`.
 
 All the goals should be resolved.
 
@@ -151,21 +154,85 @@ All the goals should be resolved.
 
 <br/>
 
-In the level 6, we have an introduction to comunication between a client and an interface somewhere on the net. We take the notion learned before between client to router. In order to make the way back from internet to the client, the internet interface need to create a route toward the client router.
+In the level 6, we have an introduction to comunication between a client and an interface somewhere on the net. We take the notion learned before between client to router. In order to make the way back from internet to the client, the internet interface need to create a route toward the client router interface.
 
-![Level six](./img/level6.png) <br/> <br/> <br/>
+![Level six](./img/level6.png)
 
-- In the level 7, we deepen into router interface. Here, we have two router that comunicate between each other, and each one of them have a connection to a client. For client A and Client C to communicate they have to create a route to their router inteface. Then both router have themselves a route to communicate between each other.
+<details>
+<summary>How to resolve level 6 ?</summary>  
 
-![Level seven](./img/level7.png) <br/> <br/> <br/>
+- Goal 1:  
+First of all we need to create a communication between the client to the router interface. The mask needs to be `/25`. Therefore, the Ip address range is from `66.83.195.129` to `66.83.195.254`. Finally we create the route from default to the router Interface R1 Ip address.  
+Then we need to put default for the Router R, because the Router need to create a route from itself to the internet subnetwork.  
+Finally, in order for the Interface Somewhere on the Net to communicate back to the client it needs to create a route from the client subnetwork to the router. So for example: `66.83.195.226/32`.
 
-- In the level 8, all we learned before is put into practice. We have to make 2 client communicate between them with an interface. Moreover they have to communicate with the an interface somewhere on the web.
+![Level six](./img/level6_done.png) <br/> <br/> <br/>
+</details>
 
-![Level eight](./img/level8.png) <br/> <br/> <br/>
+<br/>
 
-- In the level 9, same as level 8, everything we have learn so far is put in application.
 
-![Level nine](./img/level9.png) <br/> <br/> <br/>
+In the level 7, we deepen into router interface. Here, we have two router that comunicate between each other, and each one of them have a connection to a client. For client A and Client C to communicate they have to create a route to their router inteface. Then both router have themselves a route to communicate between each other.
+
+![Level seven](./img/level7.png)
+
+<details>
+<summary>How to resolve level 7 ?</summary>  
+
+It is the same principle than the level 5, but we had one router.
+- Goal 1:  
+First of all we can see that 2 subnetwork start with `119.198.14` (R11 and R12). Therefore, the mask need to be more than `/24` in order to have to subnetwork that doesn't overpass each other.  
+We choose `/25`. The Client A Ip address range is from `119.198.14.1` to `119.198.14.126`. A route from default to `119.198.14.1` is created.  
+The second subnetwork between R12 and R21 have `/25` mask, Ip address range from `119.198.14.129` to `119.198.14.254`. A route R1 from default to R21 Ip adress is created, and for the going back a route R2 from default to R12 default Ip address.  
+Finally we need to do the same as always create a communication between Client C to Router:  
+Mask: `24`  
+Ip address from `119.199.14.1` to `119.199.14.254`  
+Route from default to R22 Ip address.
+
+![Level seven](./img/level7_done.png) <br/> <br/> <br/>
+</details>
+
+<br/>
+
+
+In the level 8, all we learned before is put into practice. We have to make 2 client communicate between them with an interface. Moreover they have to communicate with the an interface somewhere on the web.
+
+![Level eight](./img/level8.png)
+
+<details>
+<summary>How to resolve level 8 ?</summary>  
+
+We can see that the Internet send back information to `162.3.190.0/26` wich means that both client subnetwork need to start by `162.3.190`.
+- Goal 1:  
+The mask of Client D is `/28`, the Ip addresses of D1 and R23 need to be from `162.3.190.1` to `162.3.190.14`, and a route from default to R23 Ip address.  
+We are going to choose for the mask of Client C `/28`, the Ip addresses of C1 and R22 need to be from `162.3.190.17` to `162.3.190.30`, and a route from default to R22 Ip address.  
+
+- Goal 2 and 3:  
+We are going to choose for the mask of Client C `/28`, the Ip addresses of R13 is `162.3.190.62` because of the route. R22 need to be from `162.3.190.49` to `162.3.190.62`. The route backward is from default to R21 Ip address.  
+Finally Internet I route need to be from `162.3.190.0/26` to `163.27.250.12`
+
+
+![Level height](./img/level8_done.png) <br/> <br/> <br/>
+</details>
+
+<br/>
+
+In the level 9, same as level 8, everything we have learn so far is put in application.
+
+![Level nine](./img/level9.png)
+
+<details>
+<summary>How to resolve level 9 ?</summary>  
+
+- Goal 1 and 3:  
+
+
+
+![Level nine](./img/level9_done.png) <br/> <br/> <br/>
+</details>
+
+<br/>
+
 
 - The level ten look like the 9. It is a bit different but it put everything together from level 1 to level 7
 
