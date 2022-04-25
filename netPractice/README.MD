@@ -218,26 +218,8 @@ Finally Internet I route need to be from `162.3.190.0/26` to `163.27.250.12`
 
 <br/>
 
-In the level 9, same as level 8, everything we have learn so far is put in application.
-
-![Level nine](./img/level9.png)
-
-<details>
-<summary>How to resolve level 9 ?</summary>  
-
-- Goal 1 and 3:  
-
-
-
-![Level nine](./img/level9_done.png) <br/> <br/> <br/>
-</details>
-
-<br/>
-
-
-- The level ten look like the 9. It is a bit different but it put everything together from level 1 to level 7
-
-![Level ten](./img/level10.png) <br/> <br/> <br/>
+I will let you find out the last two levls, but with everything you've learned so far, you should find it !
+Good luck
 
 ## Project Status
 The project is complited
