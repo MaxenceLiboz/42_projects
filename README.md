@@ -7,6 +7,7 @@
 #### ft_printf:  [[Link to project page]](ft_printf/)  <br/> <hr/>
 #### minitalk:  [[Link to project page]](minitalk/)  <br/> <hr/>
 #### push_swap:  [[Link to project page]](push_swap/)  <br/> <hr/>
+#### netPractice:  [[Link to project page]](netPractice/)  <br/> <hr/>
 
 ## Contact
 Created by [@mliboz](https://github.com/MaxenceLiboz)
