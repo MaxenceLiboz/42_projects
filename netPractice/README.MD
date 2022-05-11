@@ -53,7 +53,7 @@ Every address converted to binary:
 - The subnet is find using an Binary AND operation with the Mask and the Ip address and convert it back.  
 - The first is the subnet + 1
 - The broadcast is the subnet + 256 - 128 (the mask) - 1. Soit 128 + 256 - 128 - 1 = `255`
-- The last Ip is the broadcast + 1
+- The last Ip is the broadcast - 1
 
 Therefore the range of Ip address that are usable is from `192.169.12.129` to `192.169.12.254`
 
