@@ -2,13 +2,6 @@
 > In this repository you will have access to all the project I did during my time at 42
 
 ## Pojects :
-
-#### [minitalk:](minitalk/)&nbsp;&nbsp;&nbsp;&nbsp;[![mliboz's 42 minitalk Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2436615)](https://github.com/JaeSeoKim/badge42) <br/> <hr/>
-
-#### [push_swap:](push_swap/)&nbsp;&nbsp;&nbsp;&nbsp;[![mliboz's 42 push_swap Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2431881)](https://github.com/JaeSeoKim/badge42)<br/> <hr/>
-
-#### [netPractice:](netPractice/)&nbsp;&nbsp;&nbsp;&nbsp;[![mliboz's 42 NetPractice Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2555713)](https://github.com/JaeSeoKim/badge42)<br/> <hr/>
-
 | Projet name | Grade | Link
 | --------------- | --------------- |--------------- |
 | libft | [![mliboz's 42 Libft Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2396504)](https://github.com/JaeSeoKim/badge42) |[📝](libft/) |
