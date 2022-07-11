@@ -1,18 +1,5 @@
-# Fdf project at 42 school
-
-### Create a 3D representation of a landscape using minilibx
-
-The first big part of fdf is to parse the map correctly to be able to use data to create your 3D representation.
-For this project each point in a map is converted a vector_4 containing x, y, z and its color.
-I am then using an isometric convertion on those vector_4, the z varaible is then add or substrac to y to create a 3D effect.
-
-### What I learned:
-* Using minilibx (create img, put image, key hooks ...)
-* Use of vectors
-
-
 # FdF
-> Representing a loandscape as a 3D object in which all suface are o;utlined in lines. 
+> Representing a loandscape as a 3D object in which all suface are outlined in lines. 
 
 ## Table of Contents
 * [General Info](#general-information)
