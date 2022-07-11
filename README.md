@@ -8,7 +8,7 @@
 | get_next_line | [![mliboz's 42 Libft Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2396504)](https://github.com/JaeSeoKim/badge42) | [📝](get_next_line/) |
 | ft_printf |[![mliboz's 42 ft_printf Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2404093)](https://github.com/JaeSeoKim/badge42) | [📝](ft_printf/) |
  Born2beroot |[![mliboz's 42 Born2beroot Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2404092)](https://github.com/JaeSeoKim/badge42)| To be done |
-| FdF | [![mliboz's 42 FdF Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2419153)](https://github.com/JaeSeoKim/badge42) | [📝](ft_printf/) |
+| FdF | [![mliboz's 42 FdF Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2419153)](https://github.com/JaeSeoKim/badge42) | [📝](fdf/) |
 | push_swap | [![mliboz's 42 push_swap Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2431881)](https://github.com/JaeSeoKim/badge42) | [📝](push_swap/) |
 | minishell | [![mliboz's 42 minishell Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2462131)](https://github.com/JaeSeoKim/badge42) | To be done |
 | philosophers | [![mliboz's 42 Philosophers Score](https://badge42.vercel.app/api/v2/cl4zedjb9001109l1ueui4m1z/project/2489372)](https://github.com/JaeSeoKim/badge42) | To be done |
