@@ -1,9 +1,14 @@
-# Philosopher
-> Re-create the [dining philosopher problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) 
+# Minishell
+> Create a simple shell, our own little bash 
 
 ## Table of Contents
-* [General Info](#general-information)
 * [Technologies Used](#technologies-used)
+* [General Info](#general-information)
+* [Our workflow](#our-workflow)
+* [The parsing](#the-parsing)
+* [The built-ins](#the-built-ins)
+* [The execution](#the-execution)
+* [The redirection](#the-redirections)
 * [Examples](#examples)
 * [Setup](#setup)
 * [Usage](#usage)
@@ -11,26 +16,43 @@
 * [Room for Improvement](#room-for-improvement)
 * [Contact](#contact)
 
-## General Information
-- The purpose of this project is to learn the basics of threads.
-- We will have to use mutex and semaphore in order to protect our program form data-raise
-- This program will take 4 to 5 different variable:
-  - The number of philospher
-  - The time to die in ms
-  - The time to eat in ms
-  - The time to sleep in ms
-  - The number of time a philosopher must eat before leaving the table (optional)
-
-Terefore, the philospher have a certain amount of time before diying, and this time is reset each time they eat. Each philopher <br/>
-will have to first eat, then sleep and finally think, over and over until one die or the number of the fifth variable is hit. <br/>
-Of course, it is not that easy. Indeed, each philosopher need 2 forks to eat, but there are only as many forks as many philosopher, <br/>
-which means that when one philosopher is eating another need to wait his turn to take the fork. <br/>
-All of this project is about making a program that will make the philosopher survive as much as possible, for example, <br/>
-when there are 4 philosopher that have 410 ms to die, 200 to it and 200 to sleep, the program should run infinitly.
-
 ## Technologies Used
 - C
 - Makefile
+
+## General Information
+This project is the first project in group, I personally made this project with my friend [Tarchimb](https://github.com/Tarchimb)
+
+More than just the first project in duo, it was also the very **first big project** of my time at **42**. Indeed, we took about **three months** to complete it.
+
+The main goal of this project is to **create a small bash** with the execution of **one or several command** (pipes) and with several built-in commands.
+
+First of all we thought that we could separate this project in several pieces: <br/>
+**Primary**, we had the **parsing** that was a really big part, it could have been done in several different way (we will explain it to you latter in the doc [here](the-parsing)).<br/>
+**Secondary**, we had the *built-in commands**, those needed to really understand how the standard command worked in order to replicate as perfectly as we could.<br/>
+**Tertiary**, we had the **execution** to handle. Indeed, all the other command needed to be executed by our minishell, a part of this execution is to handle the pipes [ ls | ls ].<br/>
+**Finaly**, we had to take care of the different types of redirection: infile, outfile, outfile appended and heredocs
+
+**All those part will be detail in this doc, find the like [above here](#table-of-contents)**
+
+After all that being said, we decided to firsly separate our work, [Tarchimb](https://github.com/Tarchimb) decided to take the built-ins part and I took the parsing one. Check about our [workflow below](#our-workflow)
+
+## Our workflow
+You need to know that it was the first time we worked as a team with the same git repository. So, we started by working on the same branch, that made a lot of mess. We then decided to proprely document ourself on how to use git as a team. Hence, we started to puts tickets for each feature we wanted to make, and create a branch acrodingly.
+![Example workflow](./img/git-workflow.png)
+
+
+## The parsing
+WRITE ABOUT THE PARSING
+
+## The built-ins
+WRITE ABOUT THE BUILT-INS
+
+## The execution
+WRITE ABOUT THE EXECUTION
+
+## The redirections
+WRITE ABOUT THE REDIRECTIONS
 
 ## Examples
 ADD EXAMPLES OF THE PROGRAM
