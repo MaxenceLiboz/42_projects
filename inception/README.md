@@ -50,6 +50,8 @@ Access from the container to a directory on the host machine in order for the co
 Can be share with multiple container
 ex: VOLUME ["~/container_holder"]
 
+BIND MOUNT command:
+
 EXAMPLE DOCKERFILE for APACHE:
 
 FROM ubuntu:12.04
@@ -72,3 +74,5 @@ docker build -t DOCKER_NAME PATH
 
 TO RUN THE APPLICATION CREATED WITH THE DOCKER CREATED:
 docker run -p PORT DOCKER_NAME
+
+docker exec -it ID_CONTAINER [COMMAND] => usefull to lauch bash 
