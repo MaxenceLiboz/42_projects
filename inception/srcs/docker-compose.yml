@@ -1,5 +1,9 @@
-version: 3.8
+version: "3.8"
 
 services:
-  nginx:
-    build: nginx/Dockerfile
+  mariadb:
+    container_name: mariadb-container
+    image: mariadb-image
+    build: requirements/mariadb
+    restart: always
+    env_file: .env
