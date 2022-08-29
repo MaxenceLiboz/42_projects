@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/maxenceliboz/Development/42_projects/inception/srcs'
+docker-compose up --build -d 
+make: Leaving directory `/Users/maxenceliboz/Development/42_projects/inception/srcs'
+ 
