@@ -1,0 +1,43 @@
+# Redirect all http request to https
+server {
+    listen 80;
+	listen [::]:80;
+    server_name *.mliboz.42.fr;
+    return 301 https://$host$request_uri;
+}
+
+# Server listening to https request
+server {
+	listen     443 ssl;
+	listen [::]:443 ssl http2;
+
+	root /var/www/mliboz.42.fr;
+	index index.php;
+
+	# Defuault "_" catch all server_name that will never be trigger
+	# However it can be use for the server to be trigger by only specific domain and subdomain
+	# like *.mliboz.42.fr
+	server_name *.mliboz.42.fr;
+
+	# Turn on ssl and give both certificate and key for https
+	ssl on;
+	ssl_certificate /etc/certs/mliboz.42.fr.crt;
+	ssl_certificate_key /etc/certs/mliboz.42.fr.key;
+
+	ssl_protocols TLSv1.2 TLSv1.3;
+	ssl_prefer_server_ciphers on;
+
+	# Specify the path for all static file to search, if not found return 404 error
+	location / {
+		try_files $uri $uri/  =404;
+		# Specify what to do for .php files (check if it's the right extension)
+		location ~ \.php$ {
+			fastcgi_split_path_info ^(.+\.php)(/.+)$; # Capable to correctly handle all */*.php request
+	
+			fastcgi_pass wordpress:9000; # Forward all php request to wordpress:9000 (port set in www.conf)
+			fastcgi_index index.php;
+	
+			include fastcgi_params; # Include the fastcgi_params
+		}
+	}
+}

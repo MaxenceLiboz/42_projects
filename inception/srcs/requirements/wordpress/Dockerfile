@@ -17,12 +17,14 @@ RUN chmod +x /tmp/wordpress-config.sh
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN	chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
-RUN	wp core download --path=/wordpress --allow-root
+RUN mkdir -p /var/www/
+RUN	wp core download --path=/wordpress-install --allow-root
 
 EXPOSE 9000
 
-WORKDIR /var/www
+WORKDIR /var/www/mliboz.42.fr
 ENTRYPOINT [ "/tmp/wordpress-config.sh" ]
+# ENTRYPOINT [ "tail", "-f", "/dev/null" ]
 
 
 

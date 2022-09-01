@@ -1,14 +1,14 @@
-DOCKER_IMAGE_LIST		=	$(shell docker images -aq)
-DOCKER_CONTAINER_LIST	=	$(shell docker ps -aq)
-DOCKER_VOLUME_LIST		=	$(shell docker volume ls -q)
-# DOCKER_NETWORK_LIST		=	$(shell docker network ls -q | tail -n +3)
+DOCKER_NETWORK		=	$(shell docker network ls -q | grep inception-network)
 
 all : up
 
+# Add change for the /etc/hosts => localhost to mliboz.42.fr
 up:
-	docker-compose up --build -d 
+	docker compose up --build -d 
+
 run-mariadb:
 	docker exec -it mariadb-container bash
+
 run-wordpress:
 	docker exec -it wordpress-container bash
 
@@ -16,38 +16,34 @@ run-nginx:
 	docker exec -it nginx-container bash
 
 down:
-	docker-compose down
+	docker compose down
+
+reload: down up
 
 clean-volumes:
-	@if [ -n "$(DOCKER_VOLUME_LIST)" ]; \
-	then \
-		echo "[ REMOVING VOLUMES ]"; \
-		docker volume rm $(DOCKER_VOLUME_LIST); \
-	fi
+	# Cleaning volumes
+	@docker volume rm -f mariadb-volume 2> /dev/null
+	@docker volume rm -f wordpress-volume 2> /dev/null
 
-fclean:
-	@if [ -n "$(DOCKER_CONTAINER_LIST)" ]; \
-	then \
-		echo "[ REMOVING CONTAINER ]"; \
-		docker rm -f $(DOCKER_CONTAINER_LIST); \
-	fi
+clean:
+	# Cleaning containers
+	@docker rm -f mariadb-container 2> /dev/null
+	@docker rm -f wordpress-container 2> /dev/null
+	@docker rm -f nginx-container 2> /dev/null
 
-	@if [ -n "$(DOCKER_IMAGE_LIST)" ]; \
-	then \
-		echo "[ REMOVING IAMGES ]"; \
-		docker rmi $(DOCKER_IMAGE_LIST); \
-	fi
+fclean: clean
+	# Cleaning images
+	@docker rmi -f mariadb-image 2> /dev/null
+	@docker rmi -f wordpress-image 2> /dev/null
+	@docker rmi -f nginx-image 2> /dev/null
 
-	@if [ -n "$(DOCKER_VOLUME_LIST)" ]; \
-	then \
-		echo "[ REMOVING VOLUMES ]"; \
-		docker volume rm $(DOCKER_VOLUME_LIST); \
-	fi
+	# Cleaning volumes
+	@docker volume rm -f mariadb-volume 2> /dev/null
+	@docker volume rm -f wordpress-volume 2> /dev/null
 
-	@# @if [ -n $(DOCKER_NETWORK_LIST) ]; \
-	then \
-		docker network rm $(DOCKER_NETWORK_LIST); \
-		echo "[ REMOVING NETWORK ]"; \
+	# Cleaning network
+	@if [ -n "$(DOCKER_NETWORK)" ]; then\
+		docker network rm inception-network; \
 	fi
 
 re:	fclean all 
