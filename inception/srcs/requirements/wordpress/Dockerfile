@@ -20,7 +20,7 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 RUN mkdir -p /var/www/
 RUN	wp core download --path=/wordpress-install --allow-root
 
-EXPOSE 9000
+# EXPOSE 9000
 
 WORKDIR /var/www/mliboz.42.fr
 ENTRYPOINT [ "/tmp/wordpress-config.sh" ]

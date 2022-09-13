@@ -7,8 +7,6 @@ services:
     build: requirements/mariadb
     restart: always
     env_file: .env
-    ports:
-      - 3306:3306
     volumes:
       - mariadb:/var/lib/mysql/
     networks:
@@ -20,9 +18,9 @@ services:
     build: requirements/nginx
     restart: always
     env_file: .env
+    # Using port here because we also want to communicate with the host machine
     ports:
       - 443:443
-      - 80:80
     volumes:
       - wordpress:/var/www
     networks:
@@ -34,8 +32,6 @@ services:
     build: requirements/wordpress
     restart: always
     env_file: .env
-    ports:
-      - 9000:9000
     volumes:
       - wordpress:/var/www
     networks:

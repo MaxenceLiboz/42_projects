@@ -2,9 +2,16 @@ DOCKER_NETWORK		=	$(shell docker network ls -q | grep inception-network)
 
 all : up
 
+############################## TO DO LIST #####################################
+#
 # Add change for the /etc/hosts => localhost to mliboz.42.fr
+# Make sure the volumes point as the subject demand 
+# Make sure it is working on a vm 
+#
+#
+############################## TO DO LIST #####################################
 up:
-	docker compose up --build -d 
+	docker-compose -f ./srcs/docker-compose.yml up --build -d 
 
 run-mariadb:
 	docker exec -it mariadb-container bash
@@ -16,7 +23,10 @@ run-nginx:
 	docker exec -it nginx-container bash
 
 down:
-	docker compose down
+	docker-compose ./srcs/docker-compose.yml down
+
+stop:
+	docker-compose ./srcs/docker-compose.yml stop
 
 reload: down up
 
@@ -31,11 +41,12 @@ clean:
 	@docker rm -f wordpress-container 2> /dev/null
 	@docker rm -f nginx-container 2> /dev/null
 
-fclean: clean
 	# Cleaning images
 	@docker rmi -f mariadb-image 2> /dev/null
 	@docker rmi -f wordpress-image 2> /dev/null
 	@docker rmi -f nginx-image 2> /dev/null
+
+fclean: clean
 
 	# Cleaning volumes
 	@docker volume rm -f mariadb-volume 2> /dev/null

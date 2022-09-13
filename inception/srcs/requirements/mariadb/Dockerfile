@@ -9,6 +9,6 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 RUN chmod +x /tmp/mariadb-config.sh
 
-EXPOSE 3306
+# EXPOSE 3306
 
 ENTRYPOINT [ "/tmp/mariadb-config.sh" ]
