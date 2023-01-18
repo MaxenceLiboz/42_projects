@@ -42,8 +42,16 @@ services:
 volumes:
   wordpress:
     name: wordpress-volume
+    driver: local
+    driver_opts:
+      type: bind
+      device: /home/mliboz/data/wordpress
   mariadb:
     name: mariadb-volume
+    driver: local
+    driver_opts:
+      type: bind
+      device: /home/mliboz/data/mariadb
 
 networks:
   inception:
