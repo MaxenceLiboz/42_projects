@@ -11,7 +11,7 @@ all : up
 #
 ############################## TO DO LIST #####################################
 up:
-	docker-compose -f ./srcs/docker-compose.yml up --build -d 
+	docker compose -f ./srcs/docker-compose.yml up --build -d 
 
 run-mariadb:
 	docker exec -it mariadb-container bash
@@ -23,10 +23,10 @@ run-nginx:
 	docker exec -it nginx-container bash
 
 down:
-	docker-compose ./srcs/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 stop:
-	docker-compose ./srcs/docker-compose.yml stop
+	docker compose -f ./srcs/docker-compose.yml stop
 
 reload: down up
 
