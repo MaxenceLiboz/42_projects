@@ -11,6 +11,9 @@ all : up
 #
 ############################## TO DO LIST #####################################
 up:
+	mkdir -p /home/mliboz/data
+	mkdir -p /home/mliboz/data/wordpress
+	mkdir -p /home/mliboz/data/mariadb
 	docker compose -f ./srcs/docker-compose.yml up --build -d 
 
 run-mariadb:
@@ -34,6 +37,7 @@ clean-volumes:
 	# Cleaning volumes
 	@docker volume rm -f mariadb-volume 2> /dev/null
 	@docker volume rm -f wordpress-volume 2> /dev/null
+	rm -rf /home/mliboz/data
 
 clean:
 	# Cleaning containers
@@ -42,15 +46,11 @@ clean:
 	@docker rm -f nginx-container 2> /dev/null
 
 	# Cleaning images
-	@docker rmi -f mariadb-image 2> /dev/null
-	@docker rmi -f wordpress-image 2> /dev/null
-	@docker rmi -f nginx-image 2> /dev/null
+	@docker rmi -f mariadb 2> /dev/null
+	@docker rmi -f wordpress 2> /dev/null
+	@docker rmi -f nginx 2> /dev/null
 
-fclean: clean
-
-	# Cleaning volumes
-	@docker volume rm -f mariadb-volume 2> /dev/null
-	@docker volume rm -f wordpress-volume 2> /dev/null
+fclean: clean clean-volumes
 
 	# Cleaning network
 	@if [ -n "$(DOCKER_NETWORK)" ]; then\
